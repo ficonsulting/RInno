@@ -10,7 +10,7 @@ Getting Started
     install.packages('devtools'); require(devtools)
 
     # Use install_github to get RInno
-    devtools::install_github('fi_consulting/RInno',  build_vignettes = TRUE)
+    devtools::install_github('Dripdrop12/RInno',  build_vignettes = TRUE)
 
     # Require Package
     require(RInno)
