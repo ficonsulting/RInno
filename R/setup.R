@@ -1,0 +1,106 @@
+#' Setup Section of ISS
+#'
+#' This section contains global settings used by the installer and uninstaller. See \href{http://www.jrsoftware.org/ishelp/topic_setupsection.htm}{[Setup]} or call \code{inno_doc()} for details.
+#'
+#' @inheritParams create_app
+#' @param iss Character vector which cummulatively becomes an Inno Setup Script (ISS).
+#'
+#' @param app_version Version number of the app being installed, defaults to \code{'0.0.0'}. It is displayed in the Version field of the app's \emph{Add/Remove Programs} entry. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appversion.htm}{[Setup]:AppVersion} for details.
+#'
+#' @param name Defaults to ISPP directive, \code{'{#MyAppName}'} set by \code{directives(app_name)}.
+#'
+#' @param publisher String displayed on the "Support" dialogue of the \emph{Add/Remove Programs} Control Panel applet, defaults to " ". See \href{http://www.jrsoftware.org/ishelp/topic_setup_apppublisher.htm}{[Setup]:AppPublisher} for details.
+#'
+#' @param default_dir The default directory name used by the \emph{Select Destination Page} of the installer. See \href{http://www.jrsoftware.org/ishelp/topic_setup_defaultdirname.htm}{[Setup]:DefaultDirName} and \href{http://www.jrsoftware.org/ishelp/topic_consts.htm}{Constants} for details.
+#'
+#' @param privilege Valid options: \code{'poweruser', 'admin', 'lowest'}. Defaults to \code{'lowest'}. This directive affects whether elevated rights are requested when an installation is started. See \href{http://www.jrsoftware.org/ishelp/topic_setup_privilegesrequired.htm}{[Setup]:PrivilegesRequired} for details.
+#'
+#' @param info_before,info_after File, in .txt or .rtf format, which is displayed on the first/last page of the installer. It must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/topic_setup_infobeforefile.htm}{[Setup]:InfoBeforeFile} and \href{http://www.jrsoftware.org/ishelp/topic_setup_infoafterfile.htm}{[Setup]:InfoAfterFile} for details.
+#'
+#' @param setup_icon File name of the icon used for installer/uninstaller. The file must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/topic_setup_setupiconfile.htm}{[Setup]:SetupIconFile} for details.
+#'
+#' @param license_file File, in .txt or .rtf format, which is displayed before the \emph{Select Destination Page} of the wizard. See \href{http://www.jrsoftware.org/ishelp/topic_setup_licensefile.htm}{[Setup]:LicenseFile} for details.
+#'
+#' @param inst_pw Installer password, string. If a password is supplied then the contents of the installer will be encrypted using a 160-bit key derived from the password string. See \href{http://www.jrsoftware.org/ishelp/topic_setup_password.htm}{[Setup]:Password} and \href{http://www.jrsoftware.org/ishelp/topic_setup_encryption.htm}{[Setup]:Encryption} for details.
+#'
+#' @param pub_url,sup_url,upd_url String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used in all three locations, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/topic_setup_apppublisherurl.htm}{[Setup]:AppPublisherURL}, \href{http://www.jrsoftware.org/ishelp/topic_setup_appsupporturl.htm}{[Setup]:AppSupportURL}, or \href{http://www.jrsoftware.org/ishelp/topic_setup_appupdatesurl.htm}{[Setup]:AppUpdatesURL} for details.
+#'
+#' @param compression Defaults to \code{'lzma2/ultra64'}, which has the best compression ratio available. Other valid options include: \code{'zip'}, \code{'bzip'}, \code{'lzma'}, and \code{'none'}.  See \href{http://www.jrsoftware.org/ishelp/topic_setup_compression.htm}{[Setup]:Compression} for details.
+#'
+#' @return Chainable character vector, which can be used as the \code{text} argument of \code{\link{writeLines}} to generate an ISS.
+#'
+#' @examples \dontrun{
+#' start_iss('myapp') %>%
+#'   directives(include_R = FALSE, R_version = '3.3.2') %>%
+#'   setup(dir_out = 'installer', default_dir = 'pf')
+#' }
+#'
+#' @seealso \code{\link{get_R}}, \code{\link{copy_deployment}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{create_pkgs}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+#' @author Jonathan M. Hill
+#' @export
+
+setup <- function(iss, dir_out,
+  app_version = '{#MyAppVersion}',
+  name        = '{#MyAppName}',
+  publisher   = '{#MyAppPublisher}',
+  default_dir = 'userdocs',
+  privilege   = 'lowest',
+  info_before = 'infobefore.txt',
+  info_after  = 'none',
+  license_file= 'none',
+  setup_icon  = 'setup.ico',
+  inst_pw     = 'none',
+  pub_url     = '{#MyAppURL}',
+  sup_url     = '{#MyAppURL}',
+  upd_url     = '{#MyAppURL}',
+  compression = 'lzma2/ultra64') {
+
+  # Reset defaults if empty
+  for (formal in names(formals(setup))) {
+    if (length(get(formal)) == 0) assign(formal, formals(setup)[formal])
+  }
+
+  # Encrypt the installer if a pw is provided
+  if (inst_pw == 'none') {
+    encrypt <- NULL; inst_pw <- NULL
+  } else {
+    encrypt <- 'yes'
+  }
+  if (license_file == 'none') license_file <- NULL
+  if (info_after == 'none') info_after <- NULL
+
+  # Inno Setup AppId must be a 32-bit random string that follows this pattern
+  iss <- c(iss, '\n[Setup]',
+    paste0('AppId = {{', paste0(lapply(lapply(c(8, 4, 4, 4, 12),
+      stringi::stri_rand_strings, length = 1, pattern = '[A-Z0-9]'), paste0, collapse = ''), collapse = '-'), '}'),
+
+  # Required options
+  sprintf('AppName = %s', name),
+  sprintf('DefaultDirName = {%s}\\%s', default_dir, name),
+  'DefaultGroupName = {#MyAppName}',
+  sprintf('OutputDir = %s', dir_out),
+  sprintf('OutputBaseFilename = setup_%s', name),
+  sprintf('SetupIconFile = %s', setup_icon),
+
+  # Optional options
+  sprintf('AppVersion = %s', app_version),
+  sprintf('AppPublisher = %s', publisher),
+  sprintf('AppPublisherURL = %s', pub_url),
+  sprintf('AppSupportURL = %s', sup_url),
+  sprintf('AppUpdatesURL = %s', upd_url),
+  sprintf('PrivilegesRequired = %s', privilege),
+  sprintf('InfoBeforeFile = %s', info_before),
+  sprintf('InfoAfterFile = %s', info_after),
+  sprintf('Compression = %s', compression),
+  sprintf('Password = %s', inst_pw),
+  sprintf('Encryption = %s', encrypt),
+  sprintf('LicenseFile = %s', license_file),
+
+  # Hardcoded option
+  'SolidCompression = yes')
+
+  iss
+}
+
+
+
