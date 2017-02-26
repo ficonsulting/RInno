@@ -1,0 +1,25 @@
+Package: RInno
+Type: Package
+Title: Deploy Local Shiny Apps Using Inno Setup
+Version: 0.0.0.9001
+Author: person('Jonathan', 'Hill', email = 'hill@ficonsulting.com', role = c("aut", "cre"))
+Maintainer: Jonathan M. Hill <hill@ficonsulting.com>
+URL: www.ficonsulting.com
+Description: This package helps introduce Inno Setup to R users. Inno Setup is an open source software project, which is focused on building installers for Windows with a complete feature set to manage software deployments. It can be used to deploy local Shiny applications, reports or R scripts like any other software with a setup wizard.
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    jsonlite
+Suggests:
+    curl,
+    httr,
+    installr,
+    knitr,
+    magrittr,
+    rmarkdown,
+    shiny,
+    stringi,
+    stringr
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
