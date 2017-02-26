@@ -1,7 +1,7 @@
 
-RInno makes it easy to deploy local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for windows programs. It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
+RInno makes it easy to deploy local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs. It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
-If your client does not have R installed, the RInno's installation wizard will ask them to install it. It also provides a framework for managing R software packages required by your shiny apps and error logging features.
+If a user does not have R installed, the RInno installer will ask them to install R along with your shiny app. It also provides a framework for managing R software packages required by your app and error logging features.
 
 Getting Started
 ---------------
@@ -9,37 +9,30 @@ Getting Started
     # If you don't have development tools, install them
     install.packages('devtools'); require(devtools)
 
-    # Use install_bitbucket to get RInno
-    devtools::install_bitbucket(
-      repo            = 'fi_consulting/RInno',
-      auth_user       = <username>,
-      password        = <password>,
-      build_vignettes = TRUE)
+    # Use install_github to get RInno
+    devtools::install_github('fi_consulting/RInno',  build_vignettes = TRUE)
 
-    # Required Packages
+    # Require Package
     require(RInno)
-    require(installr)
-    require(magrittr)
-    require(stringr)
 
     # Use RInno to get Inno Setup
     RInno::install_inno()
 
-If you don't use [installr](https://github.com/talgalili/installr) to update your R version, you should. The next release of installr will include `install_inno` along with a lot of other cool stuff. After that release, `install_inno` will no longer be supported here.
+If you don't use [installr](https://github.com/talgalili/installr) to update your R version, you should. The next release of installr will include `install.inno` along with a lot of other cool stuff. After that release, `install_inno` will no longer be supported here.
 
 Minimal example
 ---------------
 
-    # Create an example app in your working directory
+Once you have developed a shiny app and you are ready to deploy, you can build an installer with `create_app` followed by `compile_iss`.
+
+    # Example app included with RInno package
     example_app(wd = getwd())
 
     # Build a deployment
     create_app(app_name = 'Your appname', app_dir = 'app')
     compile_iss()
 
-With simple apps, you should be able to build an installation wizard with `create_app` followed by `compile_iss`.
-
-After you call `create_app`, there will be a lot of new files in your app's directory. Feel free to customize them before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message in readme.txt. Just remember that the default values for those files have not changed. The .iss script will not know if you create a new icon called "myicon.ico". `compile_iss` will look for "default.ico", so you must replace it.
+After you call `create_app`, there will be a lot of new files in your app's directory, `app_dir`. Feel free to customize them before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message in infobefore.txt. Just remember that the default values for those files have not changed. The Inno Setup Script (ISS) will not know if you create a new icon called "myicon.ico". The ISS will look for "default.ico", so you must replace it, or rename the file in the ISS.
 
 For custom installations, see below.
 
@@ -48,8 +41,8 @@ server.R Requirements
 
 In order to close the app when your user's session completes:
 
-1.  add `session` to your `server` function
-2.  call `stopApp()` when the session ends
+1.  Add `session` to your `server` function
+2.  Call `stopApp()` when the session ends
 
 <!-- -->
 
@@ -61,10 +54,12 @@ In order to close the app when your user's session completes:
       })
     }
 
-Custom Installation Wizards
----------------------------
+If you forget to do this, users will complain that their icons are broken and rightly blame you for it (an R session will be running in the background hosting the app, but they will need to press ctrl + alt + delete and use their task manager to close it). **Not cool**.
 
-If you would like create a custom installation wizard from within R, you can slowly build up to it with `create_app`, like this:
+Custom Installer
+----------------
+
+If you would like create a custom installer from within R, you can slowly build up to it with `create_app`, like this:
 
     create_app(
       app_name  = 'My AppName', 
@@ -76,7 +71,7 @@ If you would like create a custom installation wizard from within R, you can slo
       privilege = 'high', # Admin only installation
       default_dir = 'pf') # Program Files
 
-`create_app` passes its arguments to other functions, so you can specify most things there or provide detailed instructions directly to those functions like this:
+`create_app` passes its arguments to most of the other support functions in RInno, so you can specify most things there and they will get passed on, or you can provide detailed instructions directly to those functions like this:
 
     # Copy deployment scripts (JavaScript, icons, readme.txt, run.R, app.R)
     copy_deployment(app_dir = 'my/app/path')
@@ -148,4 +143,4 @@ If you would like create a custom installation wizard from within R, you can slo
       # Check your files, then
       compile_iss()
 
-Feel free to read the Inno Setup [documentation](http://www.jrsoftware.org/ishelp/) and RInno's documentation to get a sense for what is possible. Please also suggest useful features or build them yourself!
+Feel free to read the Inno Setup [documentation](http://www.jrsoftware.org/ishelp/) and RInno's documentation to get a sense for what is possible. Please also suggest useful features or build them yourself! We have a very positive culture here at FI, and we would love to get your feedback.
