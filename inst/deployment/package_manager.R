@@ -42,7 +42,7 @@ pb = winProgressBar(
 # Package dependency list
 pkgs = read.table(file.path(appwd, 'packages.txt'), stringsAsFactors = F)$V1
 
-if (length(config$app_repo[[1]]) != 0) {
+if (config$app_repo[[1]] != 'none') {
   # Get remote version of app
   source('get_remote_version.R')
   api_response <- get_remote_version(
@@ -52,7 +52,7 @@ if (length(config$app_repo[[1]]) != 0) {
     auth_pw   = config$auth_pw[[1]])
 
   # If information about an app repo has been supplied,
-  if (length(api_response) != 0) {
+  if (api_response != 'none') {
     local_version <- try(packageVersion(config$appname[[1]]))
 
     # A try-error indicates that the package has not been installed

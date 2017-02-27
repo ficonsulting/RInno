@@ -2,7 +2,7 @@ get_remote_version <- function(
   app_repo = 'none', host = 'none', auth_user = 'none', auth_pw  = 'none') {
 
   # Fail early
-  if (app_repo == 'none') return(character())
+  if (app_repo == 'none') return('none')
 
   # Method to provide more specific feedback
   warn_user <- function(response) {
