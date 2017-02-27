@@ -1,4 +1,6 @@
 
+[![Travis-CI Build Status](https://travis-ci.org/Dripdrop12/RInno.svg?branch=master)](https://travis-ci.org/Dripdrop12/RInno)
+
 RInno makes it easy to deploy local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs. It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
 If a user does not have R installed, the RInno installer can be configured to ask them to install R along with your shiny app, `include_R = TRUE`. And building upon Dr. Lee Pang's [DesktopDeployR](https://github.com/wleepang/DesktopDeployR) project, it provides a framework for managing R software packages required by your app and error logging features.
