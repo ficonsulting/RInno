@@ -32,7 +32,7 @@ Once you have developed a shiny app and you are ready to deploy, you can build a
     create_app(app_name = 'Your appname', app_dir = 'app')
     compile_iss()
 
-After you call `create_app`, there will be a lot of new files in your app's directory, `app_dir`. Feel free to customize them before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message in infobefore.txt. Just remember that the default values for those files have not changed. The Inno Setup Script (ISS) will not know if you create a new icon called "myicon.ico". The ISS will look for "default.ico", so you must replace it, or rename the file in the ISS.
+After you call `create_app`, there will be a lot of new files in your app's directory, `app_dir`. Feel free to customize them before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message, *infobefore.txt*. Just remember that the default values for those files have not changed. The Inno Setup Script (ISS), *app\_name.iss*, will still look for *default.ico* even after you create a new icon called *myicon.ico*. You must replace *default.ico*, or rename the filename in the ISS to be *myicon.ico*.
 
 For custom installations, see below.
 
