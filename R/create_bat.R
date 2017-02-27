@@ -12,5 +12,6 @@
 #' @export
 
 create_bat <- function(app_name, app_dir) {
-  writeLines('wscript wsf\\run.wsf', file.path(app_dir, paste0(app_name, '.bat')))
+  writeLines("wscript wsf\\run.wsf",
+             file.path(app_dir, paste0(app_name, ".bat")))
 }

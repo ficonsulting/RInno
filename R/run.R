@@ -7,7 +7,7 @@
 #' @export
 
 run <- function(iss) {
- iss <- c(iss, '\n[Run]',
+ iss <- c(iss, "\n[Run]",
     paste0('#if IncludeR\n\tFilename: "{tmp}\\R-{#RVersion}-win.exe"; Parameters: "/SILENT"; WorkingDir: {tmp}; Flags: skipifdoesntexist; StatusMsg: "Installing R if needed"\n#endif\nFilename: "{app}\\{#MyAppExeName}"; Description: "', "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&'", ')}}"; Flags: shellexec postinstall skipifsilent\n\n'))
 
  iss

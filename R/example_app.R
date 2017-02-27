@@ -14,11 +14,11 @@
 #' @export
 
 example_app <- function(wd) {
-  x <- list.files(system.file('app', package = 'Rinno'), full.names = T)
+  x <- list.files(system.file("app", package = "Rinno"), full.names = T)
 
-  if (!dir.exists(file.path(wd, 'app'))) dir.create(file.path(wd, 'app'))
+  if (!dir.exists(file.path(wd, "app"))) dir.create(file.path(wd, "app"))
 
-  x[file.copy(x, 'app')]
+  x[file.copy(x, "app")]
 
-  cat('Example:', file.path(wd, 'app'))
+  cat("Example:", file.path(wd, "app"))
 }

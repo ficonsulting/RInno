@@ -14,7 +14,7 @@ tasks <- function(iss, desktop_icon = TRUE) {
   }
 
   if (as.logical(desktop_icon)) {
-  iss <- c(iss, '\n[Tasks]',
+  iss <- c(iss, "\n[Tasks]",
     'Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"')
   }
 

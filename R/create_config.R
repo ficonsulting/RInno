@@ -14,8 +14,8 @@
 #' @export
 
 create_config <- function(app_name, R_version, app_dir,
-  repo = 'http://cran.rstudio.com',  error_log = 'error.log',
-  app_repo_url = 'none', auth_user = 'none', auth_pw = 'none') {
+  repo = "http://cran.rstudio.com",  error_log = "error.log",
+  app_repo_url = "none", auth_user = "none", auth_pw = "none") {
 
   # Reset defaults if empty
   for (formal in names(formals(create_config))) {
@@ -23,19 +23,19 @@ create_config <- function(app_name, R_version, app_dir,
   }
 
   # Set R_HOME
-  r_home <- sprintf('C:\\Program Files\\R\\R-%s\\bin', R_version)
+  r_home <- sprintf("C:\\Program Files\\R\\R-%s\\bin", R_version)
 
-  if (app_repo_url != 'none') {
+  if (app_repo_url != "none") {
     # Set app_repo
-    app_repo <- strsplit(app_repo_url, 'org/|com/')[[1]][2]
+    app_repo <- strsplit(app_repo_url, "org/|com/")[[1]][2]
 
     # Set host
-    if (grepl('bitbucket.org', app_repo_url)) host <- 'bitbucket'
-    else host <- 'github'
+    if (grepl("bitbucket.org", app_repo_url)) host <- "bitbucket"
+    else host <- "github"
 
   } else {
-    host     <- 'none'
-    app_repo <- 'none'
+    host     <- "none"
+    app_repo <- "none"
   }
 
   jsonlite::write_json(
@@ -48,5 +48,5 @@ create_config <- function(app_name, R_version, app_dir,
       app_repo = app_repo,
       auth_user = auth_user,
       auth_pw = auth_pw),
-    file.path(app_dir, 'config.cfg'), pretty = T, auto_unbox = T)
+    file.path(app_dir, "config.cfg"), pretty = T, auto_unbox = T)
 }

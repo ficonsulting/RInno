@@ -19,19 +19,19 @@
 copy_deployment <- function(app_dir) {
 
   # Set option for location of app
-  options('RInno.app_dir'   = app_dir)
+  options("RInno.app_dir"   = app_dir)
 
-  wsf <- file.path(app_dir, 'wsf')
-  wsf_js <- file.path(app_dir, 'wsf/js')
+  wsf <- file.path(app_dir, "wsf")
+  wsf_js <- file.path(app_dir, "wsf/js")
 
   if (!dir.exists(wsf)) dir.create(wsf)
   if (!dir.exists(wsf_js)) dir.create(file.path(wsf_js))
 
-  deploy_files <- list.files(system.file('deployment', package = 'RInno'),
+  deploy_files <- list.files(system.file("deployment", package = "RInno"),
     full.names = T)
 
   # Return files
-  file.copy(deploy_files[!grepl('iss$|wsf$|js$', deploy_files)], app_dir)
-  file.copy(deploy_files[grepl('wsf$', deploy_files)], file.path(wsf))
-  file.copy(deploy_files[grepl('js$', deploy_files)], file.path(wsf_js))
+  file.copy(deploy_files[!grepl("iss$|wsf$|js$", deploy_files)], app_dir)
+  file.copy(deploy_files[grepl("wsf$", deploy_files)], file.path(wsf))
+  file.copy(deploy_files[grepl("js$", deploy_files)], file.path(wsf_js))
 }

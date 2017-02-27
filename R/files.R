@@ -15,17 +15,17 @@ files <- function(iss, app_dir, file_list = character()) {
   # If a file list is not provided than list only files in app_dir
   if (length(file_list) == 0) {
     all_files <- list.files(app_dir, recursive = T)[
-      !grepl('iss$|readme.txt', list.files(app_dir, recursive = T))]
+      !grepl("iss$|readme.txt", list.files(app_dir, recursive = T))]
   } else {
     all_files <- c(file_list, list.files(app_dir, recursive = T)[
-      !grepl('iss$|readme.txt', list.files(app_dir, recursive = T))])
+      !grepl("iss$|readme.txt", list.files(app_dir, recursive = T))])
   }
 
-  file_dirs     <- gsub('\\.', '', dirname(all_files))
-  blank_dirs    <- file_dirs == ''
+  file_dirs     <- gsub("\\.", "", dirname(all_files))
+  blank_dirs    <- file_dirs == ""
   nonblank_dirs <- !blank_dirs
 
-  iss <- c(iss, gsub('/', '\\\\', c(
+  iss <- c(iss, gsub("/", "\\\\", c(
   '\n[Files]',
   'Source: "{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion',
 

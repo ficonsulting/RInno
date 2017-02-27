@@ -18,7 +18,7 @@
 
 code <- function(iss) {
   iss <- c(iss,
-    readLines(system.file('deployment/code.iss', package = 'RInno')))
+    readLines(system.file("deployment/code.iss", package = "RInno")))
 
   iss
 }

@@ -30,18 +30,18 @@
 #' @export
 
 directives <- function(app_name, include_R, R_version,
-  app_version = '0.0.0', publisher = '', main_url = '',
-  custom_vars = '', custom_values = '') {
+  app_version = "0.0.0", publisher = "", main_url = "",
+  custom_vars = "", custom_values = "") {
 
   # Reset defaults if empty
   for (formal in names(formals(directives))) {
     if (length(get(formal)) == 0) assign(formal, formals(directives)[formal])
   }
 
-  if (!custom_vars == '') {
+  if (!custom_vars == "") {
     custom_ispp <- sprintf('#define %s "%s"', custom_vars, custom_values)
   } else {
-    custom_ispp <- ''
+    custom_ispp <- ""
   }
 
   opts <- c(

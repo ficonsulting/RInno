@@ -18,7 +18,7 @@
 #' @export
 
 icons <- function(iss,
-  app_desc = '', app_icon = 'default.ico',
+  app_desc = "", app_icon = "default.ico",
   prog_menu_icon = TRUE, desktop_icon = TRUE) {
 
   # Reset defaults if empty
@@ -26,7 +26,7 @@ icons <- function(iss,
     if (length(get(formal)) == 0) assign(formal, formals(icons)[formal])
   }
 
-  if (app_desc == '') {
+  if (app_desc == "") {
     icon_string <- sprintf('IconFilename: "{app}\\%s"', app_icon)
 
   } else {
@@ -34,7 +34,7 @@ icons <- function(iss,
       sprintf('Comment: "%s"; IconFilename: "{app}\\%s"', app_desc, app_icon)
   }
 
-  iss <- c(iss, '\n[Icons]',
+  iss <- c(iss, "\n[Icons]",
     paste('Name: "{group}\\{#MyAppName}"; Filename: "{app}\\{#MyAppExeName}";',
           icon_string),
     'Name: "{group}\\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"')

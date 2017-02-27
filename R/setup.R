@@ -40,20 +40,20 @@
 #' @export
 
 setup <- function(iss, dir_out,
-  app_version = '{#MyAppVersion}',
-  name        = '{#MyAppName}',
-  publisher   = '{#MyAppPublisher}',
-  default_dir = 'userdocs',
-  privilege   = 'lowest',
-  info_before = 'infobefore.txt',
-  info_after  = 'none',
-  license_file= 'none',
-  setup_icon  = 'setup.ico',
-  inst_pw     = 'none',
-  pub_url     = '{#MyAppURL}',
-  sup_url     = '{#MyAppURL}',
-  upd_url     = '{#MyAppURL}',
-  compression = 'lzma2/ultra64') {
+  app_version = "{#MyAppVersion}",
+  name        = "{#MyAppName}",
+  publisher   = "{#MyAppPublisher}",
+  default_dir = "userdocs",
+  privilege   = "lowest",
+  info_before = "infobefore.txt",
+  info_after  = "none",
+  license_file= "none",
+  setup_icon  = "setup.ico",
+  inst_pw     = "none",
+  pub_url     = "{#MyAppURL}",
+  sup_url     = "{#MyAppURL}",
+  upd_url     = "{#MyAppURL}",
+  compression = "lzma2/ultra64") {
 
   # Reset defaults if empty
   for (formal in names(formals(setup))) {
@@ -61,46 +61,44 @@ setup <- function(iss, dir_out,
   }
 
   # Encrypt the installer if a pw is provided
-  if (inst_pw == 'none') {
+  if (inst_pw == "none") {
     encrypt <- NULL; inst_pw <- NULL
   } else {
-    encrypt <- 'yes'
+    encrypt <- "yes"
   }
-  if (license_file == 'none') license_file <- NULL
-  if (info_after == 'none') info_after <- NULL
+  if (license_file == "none") license_file <- NULL
+  if (info_after == "none") info_after <- NULL
 
   # Inno Setup AppId must be a 32-bit random string that follows this pattern
-  iss <- c(iss, '\n[Setup]',
-    paste0('AppId = {{', paste0(lapply(lapply(c(8, 4, 4, 4, 12),
-      stringi::stri_rand_strings, length = 1, pattern = '[A-Z0-9]'), paste0, collapse = ''), collapse = '-'), '}'),
+  iss <- c(iss, "\n[Setup]",
+    paste0("AppId = {{", paste0(lapply(lapply(c(8, 4, 4, 4, 12),
+      stringi::stri_rand_strings, length = 1, pattern = "[A-Z0-9]"),
+      paste0, collapse = ""), collapse = "-"), "}"),
 
   # Required options
-  sprintf('AppName = %s', name),
-  sprintf('DefaultDirName = {%s}\\%s', default_dir, name),
-  'DefaultGroupName = {#MyAppName}',
-  sprintf('OutputDir = %s', dir_out),
-  sprintf('OutputBaseFilename = setup_%s', name),
-  sprintf('SetupIconFile = %s', setup_icon),
+  sprintf("AppName = %s", name),
+  sprintf("DefaultDirName = {%s}\\%s", default_dir, name),
+  "DefaultGroupName = {#MyAppName}",
+  sprintf("OutputDir = %s", dir_out),
+  sprintf("OutputBaseFilename = setup_%s", name),
+  sprintf("SetupIconFile = %s", setup_icon),
 
   # Optional options
-  sprintf('AppVersion = %s', app_version),
-  sprintf('AppPublisher = %s', publisher),
-  sprintf('AppPublisherURL = %s', pub_url),
-  sprintf('AppSupportURL = %s', sup_url),
-  sprintf('AppUpdatesURL = %s', upd_url),
-  sprintf('PrivilegesRequired = %s', privilege),
-  sprintf('InfoBeforeFile = %s', info_before),
-  sprintf('InfoAfterFile = %s', info_after),
-  sprintf('Compression = %s', compression),
-  sprintf('Password = %s', inst_pw),
-  sprintf('Encryption = %s', encrypt),
-  sprintf('LicenseFile = %s', license_file),
+  sprintf("AppVersion = %s", app_version),
+  sprintf("AppPublisher = %s", publisher),
+  sprintf("AppPublisherURL = %s", pub_url),
+  sprintf("AppSupportURL = %s", sup_url),
+  sprintf("AppUpdatesURL = %s", upd_url),
+  sprintf("PrivilegesRequired = %s", privilege),
+  sprintf("InfoBeforeFile = %s", info_before),
+  sprintf("InfoAfterFile = %s", info_after),
+  sprintf("Compression = %s", compression),
+  sprintf("Password = %s", inst_pw),
+  sprintf("Encryption = %s", encrypt),
+  sprintf("LicenseFile = %s", license_file),
 
   # Hardcoded option
-  'SolidCompression = yes')
+  "SolidCompression = yes")
 
   iss
 }
-
-
-

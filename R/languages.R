@@ -7,7 +7,7 @@
 #' @inherit setup return params
 #' @author Jonathan M. Hill
 #' @export
-languages <- function(iss, language = 'english') {
+languages <- function(iss, language = "english") {
 
   language <- tolower(language)
 
@@ -41,7 +41,7 @@ languages <- function(iss, language = 'english') {
   unsupported_language <- language[!language %in% supported_languages]
 
   if (!all(language %in% supported_languages)) {
-    stop(sprintf('%s is not supported.', unsupported_language))
+    stop(sprintf("%s is not supported.", unsupported_language))
   }
 
   opts <- c('Name: "english"; MessagesFile: "compiler:Default.isl"',
@@ -73,6 +73,6 @@ languages <- function(iss, language = 'english') {
 
   selected_opts <- opts[supported_languages %in% language]
 
-  iss <- c(iss, '\n[Languages]', selected_opts)
+  iss <- c(iss, "\n[Languages]", selected_opts)
   iss
 }

@@ -42,8 +42,8 @@
 #' @export
 create_app <- function(app_name,
   app_dir    = getwd(),
-  dir_out   = 'RInno_installer',
-  pkgs      = c('jsonlite', 'shiny', 'magrittr'),
+  dir_out   = "RInno_installer",
+  pkgs      = c("jsonlite", "shiny", "magrittr"),
   include_R = F,
   R_version = paste0(R.version$major, ".", R.version$minor),
   ...) {
@@ -61,8 +61,11 @@ create_app <- function(app_name,
 
   # Create app config file
   create_config(app_name, R_version, app_dir,
-    repo = dots$repo, error_log = dots$error_log,
-    app_repo_url = dots$app_repo_url, auth_user = dots$auth_user, auth_pw = dots$auth_pw)
+    repo         = dots$repo,
+    error_log    = dots$error_log,
+    app_repo_url = dots$app_repo_url,
+    auth_user    = dots$auth_user,
+    auth_pw      = dots$auth_pw)
 
   # Create package dependency list
   create_pkgs(pkgs, app_dir)
@@ -109,8 +112,5 @@ create_app <- function(app_name,
   iss9 <- code(iss8)
 
   # Write the Inno Setup script
-  writeLines(iss9, file.path(app_dir, paste0(app_name, '.iss')))
+  writeLines(iss9, file.path(app_dir, paste0(app_name, ".iss")))
 }
-
-
-

@@ -17,7 +17,7 @@
 #' @author Jonathan M. Hill
 #' @export
 start_iss <- function(app_name) {
-  options('RInno.app_name' = app_name)
+  options("RInno.app_name" = app_name)
 
   app_name
 }
