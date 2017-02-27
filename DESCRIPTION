@@ -2,10 +2,11 @@ Package: RInno
 Type: Package
 Title: Deploy Local Shiny Apps Using Inno Setup
 Version: 0.0.0.9001
-Author: person('Jonathan', 'Hill', email = 'hill@ficonsulting.com', role = c("aut", "cre"))
+Author: person('Jonathan', 'Hill', email = 'hill@ficonsulting.com', role = c("aut", "cre", "cph"))
 Maintainer: Jonathan M. Hill <hill@ficonsulting.com>
 URL: www.ficonsulting.com
-Description: This package helps introduce Inno Setup to R users. Inno Setup is an open source software project, which is focused on building installers for Windows with a complete feature set to manage software deployments. It can be used to deploy local Shiny applications, reports or R scripts like any other software with a setup wizard.
+BugReports: https://github.com/Dripdrop12/RInno/issues
+Description: This package helps you deploy local shiny apps using Inno Setup, an open source software that builds installers for Windows with a complete feature set to manage software deployments. It can be used to deploy local Shiny applications, reports or R scripts like any other application with an installer.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
