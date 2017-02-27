@@ -13,7 +13,6 @@ LazyData: true
 Imports:
     curl,
     httr,
-    installr,
     jsonlite,
     stringr
 Suggests:
@@ -22,5 +21,6 @@ Suggests:
     rmarkdown,
     shiny,
     stringi
+Remotes: talgalili/installr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
