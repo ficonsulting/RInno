@@ -3,7 +3,7 @@
 
 RInno makes it easy to deploy local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs. It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
-If a user does not have R installed, the RInno installer can be configured to ask them to install R along with your shiny app, `include_R = TRUE`. And building upon Dr. Lee Pang's [DesktopDeployR](https://github.com/wleepang/DesktopDeployR) project, it provides a framework for managing R software packages required by your app and error logging features.
+If a user does not have R installed, the RInno installer can be configured to ask them to install R along with your shiny app, `include_R = TRUE`. And building upon Dr. Lee Pang's [DesktopDeployR](https://github.com/wleepang/DesktopDeployR) project, RInno provides a framework for managing R software packages required by your app and error logging features.
 
 Getting Started
 ---------------
@@ -145,4 +145,4 @@ If you would like create a custom installer from within R, you can slowly build 
       # Check your files, then
       compile_iss()
 
-Feel free to read the Inno Setup [documentation](http://www.jrsoftware.org/ishelp/) and RInno's documentation to get a sense for what is possible. Please also suggest useful features or build them yourself! We have a very positive culture here at FI, and we would love to get your feedback.
+Feel free to read the Inno Setup [documentation](http://www.jrsoftware.org/ishelp/) and RInno's documentation to get a sense for what is possible. Also, please suggest useful features or build them yourself! We have a very positive culture at FI consulting, and we would love to get your feedback.
