@@ -11,7 +11,7 @@ vignette: >
 
 RInno makes deploying local shiny apps easier by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php) (an installer for windows programs), an R package management framework, and app start up error logging. It is designed to be simple to use (two lines of code at a minimum), yet fully customizable.
 
-If users do not have R installed, the installation wizard will ask them to install it if `include_R = TRUE`.
+If users do not have R installed, the installer will ask them to install it if `include_R = TRUE`.
 
 ```{R, eval=FALSE}
 require(installr)
@@ -32,7 +32,7 @@ create_app(app_name = 'Your appname', app_dir = 'app')
 compile_iss()
 ```
 
-With simple apps, you should be able to build an installation wizard with `create_app` followed by `compile_iss`. 
+With simple apps, you should be able to build an installer with `create_app` followed by `compile_iss`. 
 
 After you call `create_app`, there will be a lot of new files in your app's directory.  Feel free to customize them before you call `compile_iss`.  For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message in readme.txt. Just remember that the default values for those files have not changed. The .iss script will not know if you create a new icon called "myicon.ico". `compile_iss` will look for "default.ico", so you must replace it.
 
@@ -56,9 +56,9 @@ function(input, output, session) {
 }
 ```
 
-## Custom Installation Wizards
+## Custom installers
 
-If you would like create a custom installation wizard from within R, you can slowly build up to it with `create_app`, like this:
+If you would like create a custom installer from within R, you can slowly build up to it with `create_app`, like this:
 
 ```{R, eval=FALSE}
 create_app(

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-02-24" />
+<meta name="date" content="2017-02-26" />
 
 <title>Introduction</title>
 
@@ -70,12 +70,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-02-24</em></h4>
+<h4 class="date"><em>2017-02-26</em></h4>
 
 
 
 <p>RInno makes deploying local shiny apps easier by providing an interface between R and <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a> (an installer for windows programs), an R package management framework, and app start up error logging. It is designed to be simple to use (two lines of code at a minimum), yet fully customizable.</p>
-<p>If users do not have R installed, the installation wizard will ask them to install it if <code>include_R = TRUE</code>.</p>
+<p>If users do not have R installed, the installer will ask them to install it if <code>include_R = TRUE</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(installr)
 <span class="kw">require</span>(magrittr)
 <span class="kw">require</span>(stringr)
@@ -89,7 +89,7 @@ Rinno::<span class="kw">install_inno</span>()</code></pre></div>
 <span class="co"># Build a deployment</span>
 <span class="kw">create_app</span>(<span class="dt">app_name =</span> <span class="st">'Your appname'</span>, <span class="dt">app_dir =</span> <span class="st">'app'</span>)
 <span class="kw">compile_iss</span>()</code></pre></div>
-<p>With simple apps, you should be able to build an installation wizard with <code>create_app</code> followed by <code>compile_iss</code>.</p>
+<p>With simple apps, you should be able to build an installer with <code>create_app</code> followed by <code>compile_iss</code>.</p>
 <p>After you call <code>create_app</code>, there will be a lot of new files in your app’s directory. Feel free to customize them before you call <code>compile_iss</code>. For example, you can replace the default/setup icon at <a href="http://www.flaticon.com/">Flaticon.com</a>, or you can customize the pre-install message in readme.txt. Just remember that the default values for those files have not changed. The .iss script will not know if you create a new icon called “myicon.ico”. <code>compile_iss</code> will look for “default.ico”, so you must replace it.</p>
 <p>For custom installations, see below.</p>
 </div>
@@ -108,9 +108,9 @@ Rinno::<span class="kw">install_inno</span>()</code></pre></div>
   })
 }</code></pre></div>
 </div>
-<div id="custom-installation-wizards" class="section level2">
-<h2>Custom Installation Wizards</h2>
-<p>If you would like create a custom installation wizard from within R, you can slowly build up to it with <code>create_app</code>, like this:</p>
+<div id="custom-installers" class="section level2">
+<h2>Custom installers</h2>
+<p>If you would like create a custom installer from within R, you can slowly build up to it with <code>create_app</code>, like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">create_app</span>(
   <span class="dt">app_name  =</span> <span class="st">'My AppName'</span>, 
   <span class="dt">app_dir    =</span> <span class="st">'My/app/path'</span>,
