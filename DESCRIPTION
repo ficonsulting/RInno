@@ -11,16 +11,16 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    installr,
-    jsonlite
-Suggests:
     curl,
     httr,
+    installr,
+    jsonlite,
+    stringr
+Suggests:
     knitr,
     magrittr,
     rmarkdown,
     shiny,
-    stringi,
-    stringr
+    stringi
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
