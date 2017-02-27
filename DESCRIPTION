@@ -13,6 +13,7 @@ LazyData: true
 Imports:
     curl,
     httr,
+    installr,
     jsonlite,
     stringr
 Suggests:
