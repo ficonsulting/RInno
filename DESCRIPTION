@@ -11,11 +11,11 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    installr,
     jsonlite
 Suggests:
     curl,
     httr,
-    installr,
     knitr,
     magrittr,
     rmarkdown,
