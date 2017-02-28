@@ -6,4 +6,4 @@
 There were no ERRORs, WARNINGs, or NOTEs
 
 ## Downstream dependencies
-RInno does not have any downstream dependendies.
+RInno does not have any downstream dependencies.
