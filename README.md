@@ -145,4 +145,4 @@ If you would like create a custom installer from within R, you can slowly build 
       # Check your files, then
       compile_iss()
 
-Feel free to read the Inno Setup [documentation](http://www.jrsoftware.org/ishelp/) and RInno's documentation to get a sense for what is possible. Also, please suggest useful features or build them yourself! We have a very positive culture at FI consulting, and we would love to get your feedback.
+Feel free to read the Inno Setup [documentation](http://www.jrsoftware.org/ishelp/) and RInno's documentation to get a sense for what is possible. Also, please suggest useful features or build them yourself! We have a very positive culture at FI Consulting, and we would love to get your feedback.
