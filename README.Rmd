@@ -2,6 +2,7 @@
 output: github_document
 ---
 [![Travis-CI Build Status](https://travis-ci.org/Dripdrop12/RInno.svg?branch=master)](https://travis-ci.org/Dripdrop12/RInno)
+[![codecov](https://codecov.io/github/Dripdrop12/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/Dripdrop12/RInno) 
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
