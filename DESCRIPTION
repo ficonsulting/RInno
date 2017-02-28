@@ -22,6 +22,5 @@ Suggests:
     rmarkdown,
     shiny,
     stringi
-
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
