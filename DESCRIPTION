@@ -1,7 +1,7 @@
 Package: RInno
 Type: Package
 Title: A Local Deployment Framework for Shiny Apps
-Version: 0.0.0.9001
+Version: 0.0.1
 Author: person('Jonathan', 'Hill', email = list('hill@ficonsulting.com', 'jon.mark.hill@gmail.com'), role = c("aut", "cre", "cph"))
 Maintainer: Jonathan M. Hill <jon.mark.hill@gmail.com>
 URL: www.ficonsulting.com
@@ -22,6 +22,6 @@ Suggests:
     rmarkdown,
     shiny,
     stringi
-Remotes: talgalili/installr
+
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
