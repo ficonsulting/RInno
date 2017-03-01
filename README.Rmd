@@ -162,3 +162,7 @@ start_iss(app_name = 'My AppName') %>%
 ```
 
 Feel free to read the Inno Setup [documentation](http://www.jrsoftware.org/ishelp/) and RInno's documentation to get a sense for what is possible. Also, please suggest useful features or build them yourself! We have a very positive culture at FI Consulting, and we would love to get your feedback.
+
+## License
+
+The RInno package is licensed under the GPLv3. See LICENSE for details.

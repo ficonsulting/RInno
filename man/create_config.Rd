@@ -19,7 +19,7 @@ create_config(app_name, R_version, app_dir, repo = "http://cran.rstudio.com",
 
 \item{error_log}{Name of error logging file. Contains start up errors from \emph{run.R}.}
 
-\item{app_repo_url}{Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}).}
+\item{app_repo_url}{Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are currently supported.}
 
 \item{auth_user}{Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.}
 
