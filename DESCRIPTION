@@ -3,7 +3,7 @@ Type: Package
 Title: A Local Deployment Framework for Shiny Apps
 Version: 0.0.1
 Authors@R: c(
-    person("Jonathan Mark", "Hill", role = c("aut", "cre", "cph"), email = "jon.mark.hill@gmail.com"),
+    person("Jonathan M.", "Hill", role = c("aut", "cre", "cph"), email = "jon.mark.hill@gmail.com"),
     person("W. Lee", "Pang", role = c("aut", "cph"), comment = "DesktopDeployR project at https://github.com/wleepang/DesktopDeployR")
     )
 Maintainer: Jonathan M. Hill <jon.mark.hill@gmail.com>
