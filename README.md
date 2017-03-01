@@ -147,7 +147,7 @@ If you would like create a custom installer from within R, you can slowly build 
 
 Feel free to read the Inno Setup [documentation](http://www.jrsoftware.org/ishelp/) and RInno's documentation to get a sense for what is possible. Also, please suggest useful features or build them yourself! We have a very positive culture at FI Consulting, and we would love to get your feedback.
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project has a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 License
 -------
