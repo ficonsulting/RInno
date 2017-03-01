@@ -1,5 +1,5 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/Dripdrop12/RInno.svg?branch=master)](https://travis-ci.org/Dripdrop12/RInno) [![codecov](https://codecov.io/github/Dripdrop12/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/Dripdrop12/RInno)
+[![Travis-CI Build Status](https://travis-ci.org/ficonsulting/RInno.svg?branch=master)](https://travis-ci.org/ficonsulting/RInno) [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno)
 
 RInno makes it easy to deploy local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs. It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
@@ -12,7 +12,7 @@ Getting Started
     install.packages('devtools'); require(devtools)
 
     # Use install_github to get RInno
-    devtools::install_github('Dripdrop12/RInno',  build_vignettes = TRUE)
+    devtools::install_github('ficonsulting/RInno',  build_vignettes = TRUE)
 
     # Require Package
     require(RInno)
