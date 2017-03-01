@@ -4,3 +4,5 @@
 ^README-.*\.png$
 ^\.travis\.yml$
 ^cran-comments\.md$
+^codecov\.yml$
+^appveyor\.yml$

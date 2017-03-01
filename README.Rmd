@@ -3,6 +3,7 @@ output: github_document
 ---
 [![Travis-CI Build Status](https://travis-ci.org/ficonsulting/RInno.svg?branch=master)](https://travis-ci.org/ficonsulting/RInno)
 [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno) 
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ficonsulting/RInno?branch=master&svg=true)](https://ci.appveyor.com/project/ficonsulting/RInno)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(

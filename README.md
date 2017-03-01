@@ -1,5 +1,5 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/ficonsulting/RInno.svg?branch=master)](https://travis-ci.org/ficonsulting/RInno) [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno)
+[![Travis-CI Build Status](https://travis-ci.org/ficonsulting/RInno.svg?branch=master)](https://travis-ci.org/ficonsulting/RInno) [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ficonsulting/RInno?branch=master&svg=true)](https://ci.appveyor.com/project/ficonsulting/RInno)
 
 RInno makes it easy to deploy local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs. It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
