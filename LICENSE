@@ -1,7 +1,5 @@
 The RInno package is distributed under GPL-3 (GNU GENERAL PUBLIC
-LICENSE version 3).
-
-The RInno package includes modified open source software components from:
+LICENSE version 3), and it includes modified open source software components from:
 
   - DesktopDeployR, https://github.com/wleepang/DesktopDeployR
 
