@@ -3,7 +3,7 @@
 #' @inheritParams create_app
 #' @param repo Default repository to install package dependencies from.
 #' @param error_log Name of error logging file. Contains start up errors from \emph{run.R}.
-#' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are currently supported.
+#' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
 #' @param auth_user Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
 #' @param auth_pw Password to Bitbucket or Github.
 #'
