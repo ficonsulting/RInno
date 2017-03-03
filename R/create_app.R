@@ -55,12 +55,7 @@ create_app <- function(app_name,
   if (class(app_name) != "character") stop("app_name must be a character.")
 
   # If app_dir does not exist create it
-  if (!dir.exists(app_dir)) {
-    resp <- winDialog("okcancel",
-      sprintf("%s does not exist. Would you like to create it now or cancel?", app_dir))
-
-    if (resp == "OK") dir.create(app_dir) else stop("Find your app's directory and try again.")
-  }
+  if (!dir.exists(app_dir)) dir.create(app_dir)
 
   # If dir_out is not a character, exit
   if (class(dir_out) != "character") stop("dir_out must be a character.")
