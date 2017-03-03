@@ -93,11 +93,11 @@ create_app <- function(app_name,
   iss <- start_iss(app_name)
 
   # C-like directives
-  iss2 <- directives(iss, include_R, R_version, app_version = dots$app_version,
+  iss <- directives(iss, include_R, R_version, app_version = dots$app_version,
     publisher = dots$publisher, main_url = dots$main_url)
 
   # Setup Section
-  iss3 <- setup(iss2, dir_out, app_version = dots$app_version,
+  iss <- setup(iss, dir_out, app_version = dots$app_version,
     default_dir = dots$default_dir, privilege = dots$privilege,
     info_before = dots$info_before, info_after = dots$info_after,
     setup_icon = dots$setup_icon, inst_pw = dots$inst_pw,
@@ -105,21 +105,22 @@ create_app <- function(app_name,
     sup_url = dots$sup_url, upd_url = dots$upd_url)
 
   # Languages Section
-  iss4 <- languages(iss3)
+  iss <- languages(iss)
 
   # Tasks Section
-  iss5 <- tasks(iss4, desktop_icon = dots$desktop_icon)
+  iss <- tasks(iss, desktop_icon = dots$desktop_icon)
 
   # Files Section
-  iss6 <- files(iss5, app_dir, file_list = dots$file_list)
+  iss <- files(iss, app_dir, file_list = dots$file_list)
 
   # Icons Section
-  iss7 <- icons(iss6, app_desc = dots$app_desc, app_icon = dots$app_icon,
+  iss <- icons(iss, app_desc = dots$app_desc, app_icon = dots$app_icon,
         prog_menu_icon = dots$prog_menu_icon, desktop_icon = dots$desktop_icon)
 
   # Execution & Pascal code to check registry during installation
-  iss8 <- run(iss7); iss9 <- code(iss8)
+  iss <- run(iss); iss <- code(iss)
 
   # Write the Inno Setup script
-  writeLines(iss9, file.path(app_dir, paste0(app_name, ".iss")))
+  writeLines(iss, file.path(app_dir, paste0(app_name, ".iss")))
+  return(iss)
 }
