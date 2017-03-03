@@ -59,11 +59,7 @@ create_app <- function(app_name,
     resp <- winDialog("okcancel",
       sprintf("%s does not exist. Would you like to create it now or cancel?", app_dir))
 
-    if (resp == "OK") {
-      dir.create(app_dir)
-    } else {
-      stop("Find your app's directory and try again.")
-    }
+    if (resp == "OK") dir.create(app_dir) else stop("Find your app's directory and try again.")
   }
 
   # If dir_out is not a character, exit
@@ -86,12 +82,9 @@ create_app <- function(app_name,
   create_bat(app_name, app_dir)
 
   # Create app config file
-  create_config(app_name, R_version, app_dir,
-    repo         = dots$repo,
-    error_log    = dots$error_log,
-    app_repo_url = dots$app_repo_url,
-    auth_user    = dots$auth_user,
-    auth_pw      = dots$auth_pw)
+  create_config(app_name, R_version, app_dir, repo = dots$repo,
+    error_log = dots$error_log, app_repo_url = dots$app_repo_url,
+    auth_user = dots$auth_user, auth_pw = dots$auth_pw)
 
   # Create package dependency list
   create_pkgs(pkgs, app_dir)
@@ -100,23 +93,16 @@ create_app <- function(app_name,
   iss <- start_iss(app_name)
 
   # C-like directives
-  iss2 <- directives(iss, include_R, R_version,
-    app_version = dots$app_version, publisher = dots$publisher,
-    main_url = dots$main_url)
+  iss2 <- directives(iss, include_R, R_version, app_version = dots$app_version,
+    publisher = dots$publisher, main_url = dots$main_url)
 
   # Setup Section
-  iss3 <- setup(iss2, dir_out,
-    app_version = dots$app_version,
-    default_dir = dots$default_dir,
-    privilege = dots$privilege,
-    info_before = dots$info_before,
-    info_after = dots$info_after,
-    setup_icon = dots$setup_icon,
-    inst_pw = dots$inst_pw,
-    license_file = dots$license_file,
-    pub_url = dots$pub_url,
-    sup_url = dots$sup_url,
-    upd_url = dots$upd_url)
+  iss3 <- setup(iss2, dir_out, app_version = dots$app_version,
+    default_dir = dots$default_dir, privilege = dots$privilege,
+    info_before = dots$info_before, info_after = dots$info_after,
+    setup_icon = dots$setup_icon, inst_pw = dots$inst_pw,
+    license_file = dots$license_file, pub_url = dots$pub_url,
+    sup_url = dots$sup_url, upd_url = dots$upd_url)
 
   # Languages Section
   iss4 <- languages(iss3)
@@ -128,14 +114,11 @@ create_app <- function(app_name,
   iss6 <- files(iss5, app_dir, file_list = dots$file_list)
 
   # Icons Section
-  iss7 <- icons(iss6, app_desc = dots$app_desc,
-        app_icon = dots$app_icon,
-        prog_menu_icon = dots$prog_menu_icon,
-        desktop_icon = dots$desktop_icon)
+  iss7 <- icons(iss6, app_desc = dots$app_desc, app_icon = dots$app_icon,
+        prog_menu_icon = dots$prog_menu_icon, desktop_icon = dots$desktop_icon)
 
   # Execution & Pascal code to check registry during installation
-  iss8 <- run(iss7)
-  iss9 <- code(iss8)
+  iss8 <- run(iss7); iss9 <- code(iss8)
 
   # Write the Inno Setup script
   writeLines(iss9, file.path(app_dir, paste0(app_name, ".iss")))
