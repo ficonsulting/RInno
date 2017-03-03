@@ -28,8 +28,7 @@ create_config <- function(app_name, R_version, app_dir,
   if (app_repo_url != "none") {
     # Fail early
     if (!any(grepl('bitbucket', app_repo_url), grepl('github', app_repo_url))) {
-      stop(sprintf("%s is not a valid app_repo_url. Make sure there are not any
-                   typos and try again.", app_repo_url))
+      stop(sprintf("%s is not a valid app_repo_url.", app_repo_url))
     }
 
     # Set app_repo
