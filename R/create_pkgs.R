@@ -9,6 +9,8 @@
 
 create_pkgs <- function(pkgs, app_dir) {
 
+  if (!class(pkgs) == 'character') stop('pkgs must be a character vector.')
+
 writeLines(c("# Package dependencies for the application that are loaded during
 # start up.
 #

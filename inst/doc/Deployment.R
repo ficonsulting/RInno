@@ -3,7 +3,7 @@
 #    app_name     = 'myapp',
 #    app_repo_url = 'https://bitbucket.org/fi_consulting/myapp',
 #    auth_user    = '<read_only_username>',
-#    pw           = '<password>')
+#    auth_pw      = '<password>')
 #  
 #  compile_iss()
 
@@ -11,10 +11,10 @@
 #  create_config(
 #    app_name     = 'myapp',
 #    R_version    = '3.3.2',
-#    app_dir       = 'app',
+#    app_dir      = 'app',
 #    app_repo_url = 'https://bitbucket.org/fi_consulting/myapp',
 #    auth_user    = '<read_only_username>',
-#    pw           = '<password>')
+#    auth_pw      = '<password>')
 #  
 #  # -------------------------------------------------- Many steps later
 #  compile_iss()
@@ -24,7 +24,7 @@
 #    app_name     = 'myapp',
 #    app_repo_url = 'https://github.com/fi_consulting/myapp',
 #    auth_user    = '<read_only_username>',
-#    pw           = '<password>')
+#    auth_pw      = '<password>')
 #  
 #  compile_iss()
 
@@ -32,10 +32,10 @@
 #  create_config(
 #    app_name     = 'myapp',
 #    R_version    = '3.3.2',
-#    app_dir       = 'app',
+#    app_dir      = 'app',
 #    app_repo_url = 'https://github.com/fi_consulting/myapp',
 #    auth_user    = '<read_only_username>',
-#    pw           = '<password>')
+#    auth_pw      = '<password>')
 #  
 #  # -------------------------------------------------- Many steps later
 #  compile_iss()

@@ -43,7 +43,7 @@ get_R <- function(app_dir, R_version) {
 
     tryCatch(curl::curl_download(base_url, filename),
       error = function(e) {
-      cat("\nThat is not a valid .EXE URL. \nThis is likely to have happened because there was a change in the URL of the installer file in the download page of the software. \n\nThis might have already been fixed in the latest version of RInno. Install the latest version using devtools::install_github('ficonsulting/RInno') and try again.\n\nIf this doesn't help please submit an issue, and let me know this function needs updating/fixing (please include the output of sessionInfo() ) - thanks!\n")
+      cat("\nThat is not a valid .EXE URL. \nThis is likely to have happened because there was a change in the URL of the installer file in the download page of the software. \n\nThis might have already been fixed in the latest version of RInno. Install the latest version using devtools::install_github('ficonsulting/RInno') and try again.\n\nIf this doesn't help please submit an issue, and let us know this function needs updating/fixing (please include the output of sessionInfo() ) - thanks!\n")
   })
 
   if (!file.exists(filename)) stop(sprintf("%s failed to download.", filename))

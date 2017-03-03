@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-02-26" />
+<meta name="date" content="2017-03-02" />
 
 <title>Introduction</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-02-26</em></h4>
+<h4 class="date"><em>2017-03-02</em></h4>
 
 
 
@@ -79,7 +79,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(installr)
 <span class="kw">require</span>(magrittr)
 <span class="kw">require</span>(stringr)
-Rinno::<span class="kw">install_inno</span>()</code></pre></div>
+Rinno<span class="op">::</span><span class="kw">install_inno</span>()</code></pre></div>
 <p>If you don’t use <a href="https://github.com/talgalili/installr">installr</a> to update your R version, you should. The next release of installr will include this function along with a lot of other cool stuff. After that release, install_inno will no longer be supported here.</p>
 <div id="minimal-example" class="section level2">
 <h2>Minimal example</h2>
@@ -100,9 +100,9 @@ Rinno::<span class="kw">install_inno</span>()</code></pre></div>
 <li>add <code>session</code> to your <code>server</code> function</li>
 <li>call <code>stopApp()</code> when the session ends</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">function(input, output, session) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">function</span>(input, output, session) {
 
-  session$<span class="kw">onSessionEnded</span>(function() {
+  session<span class="op">$</span><span class="kw">onSessionEnded</span>(<span class="cf">function</span>() {
       <span class="kw">stopApp</span>()
       <span class="kw">q</span>(<span class="st">&quot;no&quot;</span>)
   })
@@ -117,7 +117,7 @@ Rinno::<span class="kw">install_inno</span>()</code></pre></div>
   <span class="dt">dir_out   =</span> <span class="st">'wizard'</span>,
   <span class="dt">pkgs      =</span> <span class="kw">c</span>(<span class="st">'jsonlite'</span>, <span class="st">'shiny'</span>, <span class="st">'magrittr'</span>, <span class="st">'xkcd'</span>),
   <span class="dt">include_R =</span> <span class="ot">TRUE</span>,   <span class="co"># Download R and install it with your app</span>
-  <span class="dt">R_version =</span> <span class="fl">2.2.1</span>,  <span class="co"># Old versions of R</span>
+  <span class="dt">R_version =</span> <span class="fl">2.2</span>.<span class="dv">1</span>,  <span class="co"># Old versions of R</span>
   <span class="dt">privilege =</span> <span class="st">'high'</span>, <span class="co"># Admin only installation</span>
   <span class="dt">default_dir =</span> <span class="st">'pf'</span>) <span class="co"># Program Files</span></code></pre></div>
 <p><code>create_app</code> passes its arguments to its supporting functions, so you can specify most things there or provide detailed instructions directly to those functions like this:</p>
@@ -127,7 +127,7 @@ Rinno::<span class="kw">install_inno</span>()</code></pre></div>
 <span class="co"># If your users need R installed:</span>
 <span class="kw">get_R_exe</span>(
   <span class="dt">app_dir    =</span> <span class="st">'my/app/path'</span>, 
-  <span class="dt">R_version =</span> <span class="fl">2.2.1</span>)
+  <span class="dt">R_version =</span> <span class="fl">2.2</span>.<span class="dv">1</span>)
 
 <span class="co"># Create batch file</span>
 <span class="kw">create_bat</span>(<span class="dt">app_name =</span> <span class="st">'My AppName'</span>, <span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>)
@@ -135,7 +135,7 @@ Rinno::<span class="kw">install_inno</span>()</code></pre></div>
 <span class="co"># Create app config file</span>
 <span class="kw">create_config</span>(
   <span class="dt">app_name =</span> <span class="st">'My AppName'</span>, 
-  <span class="dt">R_version =</span> <span class="fl">2.2.1</span>, 
+  <span class="dt">R_version =</span> <span class="fl">2.2</span>.<span class="dv">1</span>, 
   <span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>)
 
 <span class="co"># Create package dependency list</span>
@@ -144,46 +144,46 @@ Rinno::<span class="kw">install_inno</span>()</code></pre></div>
   <span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>)
 
 <span class="co"># Build the iss script</span>
-<span class="kw">start_iss</span>(<span class="dt">app_name =</span> <span class="st">'My AppName'</span>) %&gt;%
+<span class="kw">start_iss</span>(<span class="dt">app_name =</span> <span class="st">'My AppName'</span>) <span class="op">%&gt;%</span>
 
 <span class="st">  </span><span class="co"># C-like directives</span>
-<span class="st">  </span><span class="kw">directives</span>(<span class="dt">R_version   =</span> <span class="fl">2.2.1</span>, 
+<span class="st">  </span><span class="kw">directives</span>(<span class="dt">R_version   =</span> <span class="fl">2.2</span>.<span class="dv">1</span>, 
              <span class="dt">include_R   =</span> <span class="ot">TRUE</span>, 
              <span class="dt">app_version =</span> <span class="st">'0.1.2'</span>,
              <span class="dt">publisher   =</span> <span class="st">'Your Company'</span>, 
-             <span class="dt">main_url    =</span> <span class="st">'yourcompany.com'</span>) %&gt;%
+             <span class="dt">main_url    =</span> <span class="st">'yourcompany.com'</span>) <span class="op">%&gt;%</span>
 
 <span class="st">  </span><span class="co"># Setup Section</span>
 <span class="st">  </span><span class="kw">setup</span>(<span class="dt">output_dir  =</span> <span class="st">'wizard'</span>, 
-        <span class="dt">app_version =</span> <span class="fl">2.2.1</span>,
+        <span class="dt">app_version =</span> <span class="fl">2.2</span>.<span class="dv">1</span>,
         <span class="dt">default_dir =</span> <span class="st">'pf'</span>, 
         <span class="dt">privilege   =</span> <span class="st">'high'</span>,
         <span class="dt">inst_readme =</span> <span class="st">'pre-install instructions.txt'</span>, 
         <span class="dt">setup_icon  =</span> <span class="st">'myicon.ico'</span>,
         <span class="dt">pub_url     =</span> <span class="st">'mycompany.com'</span>, 
         <span class="dt">sup_url     =</span> <span class="st">'mycompany.github.com/issues'</span>,
-        <span class="dt">upd_url     =</span> <span class="st">'mycompany.github.com'</span>) %&gt;%
+        <span class="dt">upd_url     =</span> <span class="st">'mycompany.github.com'</span>) <span class="op">%&gt;%</span>
 
 <span class="st">  </span><span class="co"># Languages Section</span>
-<span class="st">  </span><span class="kw">languages</span>() %&gt;%
+<span class="st">  </span><span class="kw">languages</span>() <span class="op">%&gt;%</span>
 
 <span class="st">  </span><span class="co"># Tasks Section</span>
-<span class="st">  </span><span class="kw">tasks</span>(<span class="dt">desktop_icon =</span> <span class="ot">FALSE</span>) %&gt;%
+<span class="st">  </span><span class="kw">tasks</span>(<span class="dt">desktop_icon =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
 
 <span class="st">  </span><span class="co"># Files Section</span>
-<span class="st">  </span><span class="kw">files</span>(<span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>, <span class="dt">file_list =</span> <span class="st">'path/to/extra/files'</span>) %&gt;%
+<span class="st">  </span><span class="kw">files</span>(<span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>, <span class="dt">file_list =</span> <span class="st">'path/to/extra/files'</span>) <span class="op">%&gt;%</span>
 
 <span class="st">  </span><span class="co"># Icons Section</span>
 <span class="st">  </span><span class="kw">icons</span>(<span class="dt">app_desc       =</span> <span class="st">'This is my local shiny app'</span>,
         <span class="dt">app_icon       =</span> <span class="st">'notdefault.ico'</span>,
         <span class="dt">prog_menu_icon =</span> <span class="ot">FALSE</span>,
-        <span class="dt">desktop_icon   =</span> <span class="ot">FALSE</span>) %&gt;%
+        <span class="dt">desktop_icon   =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
 
 <span class="st">  </span><span class="co"># Execution &amp; Pascal code to check registry during installation</span>
 <span class="st">  </span><span class="co"># If the user has R, don't give them an extra copy</span>
 <span class="st">  </span><span class="co"># If the user needs R, give it to them</span>
-<span class="st">  </span><span class="kw">run</span>() %&gt;%
-<span class="st">  </span><span class="kw">code</span>() %&gt;%
+<span class="st">  </span><span class="kw">run</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">code</span>() <span class="op">%&gt;%</span>
 
 <span class="st">  </span><span class="co"># Write the Inno Setup script</span>
 <span class="st">  </span><span class="kw">writeLines</span>(<span class="kw">file.path</span>(<span class="st">'my/app/path'</span>, <span class="st">'My AppName.iss'</span>))

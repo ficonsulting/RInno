@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-02-26" />
+<meta name="date" content="2017-03-02" />
 
 <title>Deployment</title>
 
@@ -70,14 +70,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Deployment</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-02-26</em></h4>
+<h4 class="date"><em>2017-03-02</em></h4>
 
 
 
 <p>RInno supports continuous local deployment of shiny apps through APIs to public/private BitBucket and GitHub repos. On start up, RInno apps call your repository. If there have been any hotfixes or releases since installation, the app automatically updates, letting its user know through a windows progress bar, and then opens normally.</p>
 <p>This feature requires:</p>
 <ol style="list-style-type: decimal">
-<li>A URL to the app’s repo, <code>app_repo_url</code> (for private repos, provide <code>auth_user</code> and <code>pw</code>).</li>
+<li>A URL to the app’s repo, <code>app_repo_url</code> (for private repos, provide <code>auth_user</code> and <code>auth_pw</code>).</li>
 <li>A release tag on GitHub, or a version on BitBucket.</li>
 <li>An R package structure that can be installed via <code>devtools::install_github</code> or <code>devtools::install_bitbucket</code>.</li>
 </ol>
@@ -141,17 +141,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <span class="dt">app_name     =</span> <span class="st">'myapp'</span>, 
   <span class="dt">app_repo_url =</span> <span class="st">'https://bitbucket.org/fi_consulting/myapp'</span>,
   <span class="dt">auth_user    =</span> <span class="st">'&lt;read_only_username&gt;'</span>,
-  <span class="dt">pw           =</span> <span class="st">'&lt;password&gt;'</span>)
+  <span class="dt">auth_pw      =</span> <span class="st">'&lt;password&gt;'</span>)
 
 <span class="kw">compile_iss</span>()</code></pre></div>
 <p>Or for custom installers, directly through <code>create_config</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">create_config</span>(
   <span class="dt">app_name     =</span> <span class="st">'myapp'</span>, 
   <span class="dt">R_version    =</span> <span class="st">'3.3.2'</span>, 
-  <span class="dt">app_dir       =</span> <span class="st">'app'</span>, 
+  <span class="dt">app_dir      =</span> <span class="st">'app'</span>, 
   <span class="dt">app_repo_url =</span> <span class="st">'https://bitbucket.org/fi_consulting/myapp'</span>,
   <span class="dt">auth_user    =</span> <span class="st">'&lt;read_only_username&gt;'</span>, 
-  <span class="dt">pw           =</span> <span class="st">'&lt;password&gt;'</span>)
+  <span class="dt">auth_pw      =</span> <span class="st">'&lt;password&gt;'</span>)
 
 <span class="co"># -------------------------------------------------- Many steps later</span>
 <span class="kw">compile_iss</span>()</code></pre></div>
@@ -165,17 +165,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <span class="dt">app_name     =</span> <span class="st">'myapp'</span>, 
   <span class="dt">app_repo_url =</span> <span class="st">'https://github.com/fi_consulting/myapp'</span>,
   <span class="dt">auth_user    =</span> <span class="st">'&lt;read_only_username&gt;'</span>,
-  <span class="dt">pw           =</span> <span class="st">'&lt;password&gt;'</span>)
+  <span class="dt">auth_pw      =</span> <span class="st">'&lt;password&gt;'</span>)
 
 <span class="kw">compile_iss</span>()</code></pre></div>
 <p>Or for custom installers, directly through <code>create_config</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">create_config</span>(
   <span class="dt">app_name     =</span> <span class="st">'myapp'</span>, 
   <span class="dt">R_version    =</span> <span class="st">'3.3.2'</span>, 
-  <span class="dt">app_dir       =</span> <span class="st">'app'</span>, 
+  <span class="dt">app_dir      =</span> <span class="st">'app'</span>, 
   <span class="dt">app_repo_url =</span> <span class="st">'https://github.com/fi_consulting/myapp'</span>,
   <span class="dt">auth_user    =</span> <span class="st">'&lt;read_only_username&gt;'</span>, 
-  <span class="dt">pw           =</span> <span class="st">'&lt;password&gt;'</span>)
+  <span class="dt">auth_pw      =</span> <span class="st">'&lt;password&gt;'</span>)
 
 <span class="co"># -------------------------------------------------- Many steps later</span>
 <span class="kw">compile_iss</span>()</code></pre></div>
@@ -183,10 +183,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="a-note-on-versions" class="section level3">
 <h3>A Note on Versions</h3>
 <p>A released version number consists of three numbers, <code>major.minor.patch</code>. <a href="http://semver.org/">Semantic Versioning 2.0.0</a> is a good specification to follow because <code>numeric_version</code> will interpret it correctly:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">numeric_version</span>(<span class="st">'0.1.0'</span>) ==<span class="st"> </span><span class="kw">numeric_version</span>(<span class="st">'0.1'</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">numeric_version</span>(<span class="st">'0.1.0'</span>) <span class="op">==</span><span class="st"> </span><span class="kw">numeric_version</span>(<span class="st">'0.1'</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># First release!</span>
-<span class="kw">numeric_version</span>(<span class="st">'0.0.1'</span>) &gt;<span class="st"> </span><span class="kw">numeric_version</span>(<span class="st">'0.0.0.9000'</span>)</code></pre></div>
+<span class="kw">numeric_version</span>(<span class="st">'0.0.1'</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw">numeric_version</span>(<span class="st">'0.0.0.9000'</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>This is important because RInno determines the <code>local_version</code> of the app via <code>installed.packages()</code>. If R cannot parse the version correctly, the continuous deployment will be… nonstop. Users will love you.</p>
 </div>

@@ -13,7 +13,7 @@ RInno supports continuous local deployment of shiny apps through APIs to public/
 
 This feature requires:
 
-1. A URL to the app's repo, `app_repo_url` (for private repos, provide `auth_user` and `pw`).
+1. A URL to the app's repo, `app_repo_url` (for private repos, provide `auth_user` and `auth_pw`).
 2. A release tag on GitHub, or a version on BitBucket.
 3. An R package structure that can be installed via `devtools::install_github` or `devtools::install_bitbucket`.
 
@@ -48,7 +48,7 @@ create_app(
   app_name     = 'myapp', 
   app_repo_url = 'https://bitbucket.org/fi_consulting/myapp',
   auth_user    = '<read_only_username>',
-  pw           = '<password>')
+  auth_pw      = '<password>')
 
 compile_iss()
 ```
@@ -59,10 +59,10 @@ Or for custom installers, directly through `create_config`:
 create_config(
   app_name     = 'myapp', 
   R_version    = '3.3.2', 
-  app_dir       = 'app', 
+  app_dir      = 'app', 
   app_repo_url = 'https://bitbucket.org/fi_consulting/myapp',
   auth_user    = '<read_only_username>', 
-  pw           = '<password>')
+  auth_pw      = '<password>')
 
 # -------------------------------------------------- Many steps later
 compile_iss()
@@ -82,7 +82,7 @@ create_app(
   app_name     = 'myapp', 
   app_repo_url = 'https://github.com/fi_consulting/myapp',
   auth_user    = '<read_only_username>',
-  pw           = '<password>')
+  auth_pw      = '<password>')
 
 compile_iss()
 ```
@@ -93,10 +93,10 @@ Or for custom installers, directly through `create_config`:
 create_config(
   app_name     = 'myapp', 
   R_version    = '3.3.2', 
-  app_dir       = 'app', 
+  app_dir      = 'app', 
   app_repo_url = 'https://github.com/fi_consulting/myapp',
   auth_user    = '<read_only_username>', 
-  pw           = '<password>')
+  auth_pw      = '<password>')
 
 # -------------------------------------------------- Many steps later
 compile_iss()
