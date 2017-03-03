@@ -15,21 +15,16 @@
 
 get_R <- function(app_dir, R_version) {
   latest_R_version <-
-    unique(stats::na.omit(stringr::str_extract(
-      readLines("https://cran.rstudio.com/bin/windows/base/", warn = F),
-      "[1-3]\\.[0-9]+\\.[0-9]+")))
+    unique(stats::na.omit(stringr::str_extract(readLines("https://cran.rstudio.com/bin/windows/base/", warn = F), "[1-3]\\.[0-9]+\\.[0-9]+")))
 
-  old_R_versions <- stats::na.omit(stringr::str_extract(
-    readLines("https://cran.rstudio.com/bin/windows/base/old/", warn = F),
-    "[1-3]\\.[0-9]+\\.[0-9]+"))
+  old_R_versions <- stats::na.omit(stringr::str_extract(readLines("https://cran.rstudio.com/bin/windows/base/old/", warn = F), "[1-3]\\.[0-9]+\\.[0-9]+"))
 
   if (!R_version %in% c(latest_R_version, old_R_versions)) stop("That version of R does not exist, or there is an issue with RInno. Take your pick.")
 
   if (latest_R_version == R_version) {
     base_url <- sprintf("https://cran.r-project.org/bin/windows/base/R-%s-win.exe", R_version)
   } else {
-    base_url <- sprintf("https://cran.r-project.org/bin/windows/base/old/%s/R-%s-win.exe",
-      R_version, R_version)
+    base_url <- sprintf("https://cran.r-project.org/bin/windows/base/old/%s/R-%s-win.exe", R_version, R_version)
   }
 
   filename <- file.path(app_dir, sprintf("R-%s-win.exe", R_version))
