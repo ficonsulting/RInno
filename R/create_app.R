@@ -51,6 +51,32 @@ create_app <- function(app_name,
   # To capture arguments for other function calls
   dots <- list(...)
 
+  # If app_name is not a character, exit
+  if (class(app_name) != "character") stop("app_name must be a character.")
+
+  # If app_dir does not exist create it
+  if (!dir.exists(app_dir)) {
+    resp <- winDialog("okcancel",
+      sprintf("%s does not exist. Would you like to create it now or cancel?", app_dir))
+
+    if (resp == "OK") {
+      dir.create(app_dir)
+    } else {
+      stop("Find your app's directory and try again.")
+    }
+  }
+
+  # If dir_out is not a character, exit
+  if (class(dir_out) != "character") stop("dir_out must be a character.")
+
+  # If include_R is not TRUE/FALSE, exit
+  if (class(include_R) != "logical") stop("include_R must be TRUE/FALSE.")
+
+  # If R_version is not valid, exit
+  if (any(
+    length(strsplit(R_version, "\\.")[[1]]) != 3,
+    !grepl("[1-3]\\.[0-9]+\\.[0-9]+", R_version))) {stop("R_version is not valid.")}
+
   # Copy deployment scripts
   copy_deployment(app_dir)
 
