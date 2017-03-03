@@ -26,11 +26,9 @@ get_R <- function(app_dir, R_version) {
   if (!R_version %in% c(latest_R_version, old_R_versions)) stop("That version of R does not exist, or there is an issue with RInno. Take your pick.")
 
   if (latest_R_version == R_version) {
-    base_url <- sprintf(
-      "https://cran.r-project.org/bin/windows/base/R-%s-win.exe", R_version)
+    base_url <- sprintf("https://cran.r-project.org/bin/windows/base/R-%s-win.exe", R_version)
   } else {
-    base_url <- sprintf(
-      "https://cran.r-project.org/bin/windows/base/old/%s/R-%s-win.exe",
+    base_url <- sprintf("https://cran.r-project.org/bin/windows/base/old/%s/R-%s-win.exe",
       R_version, R_version)
   }
 

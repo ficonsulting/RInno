@@ -14,7 +14,7 @@ inno_doc <- function() {
 
   if (!file.exists(inno_help)) stop('You must install Inno Setup to view its local documentation. Call install_inno() and try again.')
 
-  shell.exec()
+  shell.exec(inno_help)
 }
 
 #' Inno Setup Preprossor Help
