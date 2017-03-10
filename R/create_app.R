@@ -117,5 +117,4 @@ create_app <- function(app_name,
 
   # Write the Inno Setup script
   writeLines(iss, file.path(app_dir, paste0(app_name, ".iss")))
-  return(iss)
 }
