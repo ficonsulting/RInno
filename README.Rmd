@@ -5,6 +5,7 @@ output: github_document
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ficonsulting/RInno?branch=master&svg=true)](https://ci.appveyor.com/project/ficonsulting/RInno)
 [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/RInno)](https://cran.r-project.org/package=RInno)
+[![Downloads](http://cranlogs.r-pkg.org/badges/RInno)](http://cran.rstudio.com/package=RInno)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
