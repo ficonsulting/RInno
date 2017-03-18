@@ -1,21 +1,21 @@
 ---
 output: github_document
 ---
+```{r, out.width = "100px", echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-")
+```
+
+`r knitr::include_graphics("inst/app/www/RInno.png", dpi = 1250)`
+
 [![Travis-CI Build Status](https://travis-ci.org/ficonsulting/RInno.svg?branch=master)](https://travis-ci.org/ficonsulting/RInno)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ficonsulting/RInno?branch=master&svg=true)](https://ci.appveyor.com/project/ficonsulting/RInno)
 [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/RInno)](https://cran.r-project.org/package=RInno)
 [![Downloads](http://cranlogs.r-pkg.org/badges/RInno)](http://cran.rstudio.com/package=RInno)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/RInno)](http://cran.rstudio.com/package=RInno)
-
-
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
-```
 
 RInno makes it easy to deploy local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs. It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
