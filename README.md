@@ -1,5 +1,5 @@
 
-<img src="inst/app/www/RInno.png" width="100" />
+<img src="inst/app/www/RInno.png" width="101" />
 
 [![Travis-CI Build Status](https://travis-ci.org/ficonsulting/RInno.svg?branch=master)](https://travis-ci.org/ficonsulting/RInno) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ficonsulting/RInno?branch=master&svg=true)](https://ci.appveyor.com/project/ficonsulting/RInno) [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/RInno)](https://cran.r-project.org/package=RInno) [![Downloads](http://cranlogs.r-pkg.org/badges/RInno)](http://cran.rstudio.com/package=RInno) [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/RInno)](http://cran.rstudio.com/package=RInno)
 
