@@ -32,8 +32,11 @@ copy_installation <- function(app_dir) {
   install_files <- list.files(system.file("installation", package = "RInno"),
     full.names = T)
 
+  # Files for the base app_dir
+  base_dir <- !grepl("iss$|wsf$|js$|ensure|get_app", install_files)
+
   # Return files
-  file.copy(install_files[!grepl("iss$|wsf$|js$", install_files)], app_dir)
+  file.copy(install_files[base_dir], app_dir)
   file.copy(install_files[grepl("wsf$", install_files)], file.path(wsf))
   file.copy(install_files[grepl("js$", install_files)], file.path(wsf_js))
   file.copy(install_files[basename(install_files) %in% c("ensure.R", "get_app_from_app_url.R")], utils)
