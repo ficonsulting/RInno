@@ -1,15 +1,15 @@
 ---
-title: "Deployment"
+title: "Continuous Installation"
 author: "Jonathan M. Hill"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Deployment}
+  %\VignetteIndexEntry{Continuous Installation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-RInno supports continuous local deployment of shiny apps through APIs to public/private BitBucket and GitHub repos. On start up, RInno apps call your repository. If there have been any hotfixes or releases since installation, the app automatically updates, letting its user know through a windows progress bar, and then opens normally. 
+RInno supports continuous installation of shiny apps through APIs to public/private BitBucket and GitHub repos. On start up, RInno apps call your repository. If there have been any hotfixes or releases since installation, the app automatically updates, letting its user know through a windows progress bar, and then opens normally. 
 
 This feature requires:
 
@@ -117,7 +117,7 @@ numeric_version('0.1.0') == numeric_version('0.1')
 numeric_version('0.0.1') > numeric_version('0.0.0.9000')
 ```
 
-This is important because RInno determines the `local_version` of the app via `installed.packages()`. If R cannot parse the version correctly, the continuous deployment will be... nonstop. Users will love you.
+This is important because RInno determines the `local_version` of the app via `installed.packages()`. If R cannot parse the version correctly, the continuous installation will be... nonstop. Users will love you.
 
 
 

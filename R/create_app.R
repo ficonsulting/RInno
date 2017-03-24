@@ -1,4 +1,4 @@
-#' Creates deployment files and Inno Setup Script (ISS), "app_name.iss"
+#' Creates installation files and Inno Setup Script (ISS), "app_name.iss"
 #'
 #' This function manages installation and app start up. To accept all defaults, just provide \code{app_name}. After calling \code{create_app}, call \code{\link{compile_iss}} to create an installer in \code{dir_out}.
 #'
@@ -13,7 +13,7 @@
 #'   \item An Inno Setup Script, \emph{app_name.iss}.
 #' }
 #'
-#' @param app_name The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous deployments, \code{app_name} is used to check for an R package of the same name, and update it. The Deployment vignette has more details.
+#' @param app_name The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.
 #' @param app_dir Shiny app's directory, defaults to \code{getwd()}.
 #' @param dir_out Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.
 #' @param pkgs String vector of the shiny app's package dependencies.
@@ -67,8 +67,8 @@ create_app <- function(app_name,
     length(strsplit(R_version, "\\.")[[1]]) != 3,
     !grepl("[1-3]\\.[0-9]+\\.[0-9]+", R_version))) {stop("R_version is not valid.")}
 
-  # Copy deployment scripts
-  copy_deployment(app_dir)
+  # Copy installation scripts
+  copy_installation(app_dir)
 
   if (include_R) get_R(app_dir, R_version)
 
