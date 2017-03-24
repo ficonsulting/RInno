@@ -8,7 +8,6 @@
 #'   \item Files that manage app start up, \emph{package_manager.R} and \emph{app.R}.
 #'   \item First/last page of the installer, \emph{infobefore.txt} and \emph{infoafter.txt}.
 #'   \item Batch support files, \emph{wsf/run.wsf}, \emph{wsf/js/run.js}, \emph{wsf/js/json2.js}, \emph{wsf/js/JSON.minify.js}.
-#'   \item List of package dependencies from \code{pkgs}, \emph{packages.txt}.
 #'   \item A configuration file, \emph{config.cfg}. See \code{\link{create_config}} for details.
 #'   \item A batch file, \emph{app_name.bat}. See \code{\link{create_bat}} for details.
 #'   \item An Inno Setup Script, \emph{app_name.iss}.
@@ -54,14 +53,14 @@ create_app <- function(app_name,
   # If app_name is not a character, exit
   if (class(app_name) != "character") stop("app_name must be a character.")
 
-  # If app_dir does not exist create it
-  if (!dir.exists(app_dir)) dir.create(app_dir)
-
   # If dir_out is not a character, exit
   if (class(dir_out) != "character") stop("dir_out must be a character.")
 
   # If include_R is not TRUE/FALSE, exit
   if (class(include_R) != "logical") stop("include_R must be TRUE/FALSE.")
+
+  # If app_dir does not exist create it
+  if (!dir.exists(app_dir)) dir.create(app_dir)
 
   # If R_version is not valid, exit
   if (any(
@@ -77,12 +76,9 @@ create_app <- function(app_name,
   create_bat(app_name, app_dir)
 
   # Create app config file
-  create_config(app_name, R_version, app_dir, repo = dots$repo,
+  create_config(app_name, R_version, app_dir, pkgs, repo = dots$repo,
     error_log = dots$error_log, app_repo_url = dots$app_repo_url,
     auth_user = dots$auth_user, auth_pw = dots$auth_pw)
-
-  # Create package dependency list
-  create_pkgs(pkgs, app_dir)
 
   # Build the iss script
   iss <- start_iss(app_name)
