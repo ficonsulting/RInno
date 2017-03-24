@@ -8,7 +8,7 @@
 #' @inheritParams setup
 #'
 #' @examples \dontrun{
-#' readLines(system.file('deployment/code.iss', package = 'RInno'))
+#' readLines(system.file('installation/code.iss', package = 'RInno'))
 #' }
 #'
 #' @inherit setup return seealso
@@ -18,7 +18,7 @@
 
 code <- function(iss) {
   iss <- c(iss,
-    readLines(system.file("deployment/code.iss", package = "RInno")))
+    readLines(system.file("installation/code.iss", package = "RInno")))
 
   iss
 }

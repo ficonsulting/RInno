@@ -21,12 +21,12 @@ This script checks the registry for R, so that R will only be installed if neces
 }
 \examples{
 \dontrun{
-readLines(system.file('deployment/code.iss', package = 'RInno'))
+readLines(system.file('installation/code.iss', package = 'RInno'))
 }
 
 }
 \seealso{
-\code{\link{get_R}}, \code{\link{copy_deployment}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{create_pkgs}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{create_pkgs}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
 }
 \author{
 Jonathan M. Hill

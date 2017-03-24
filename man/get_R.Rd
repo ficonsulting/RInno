@@ -21,7 +21,7 @@ Downloads R in \code{app_dir}. If it has already been downloaded, \code{get_R} w
 If \code{\link{create_app}(include_R = TRUE)}, then \code{get_R}.
 }
 \seealso{
-\code{\link{get_R}}, \code{\link{copy_deployment}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{create_pkgs}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{create_pkgs}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
 }
 \author{
 Jonathan M. Hill

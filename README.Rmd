@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 [![Downloads](http://cranlogs.r-pkg.org/badges/RInno)](http://cran.rstudio.com/package=RInno)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/RInno)](http://cran.rstudio.com/package=RInno)
 
-RInno makes it easy to deploy local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs. It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
+RInno makes it easy to install local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs (sorry Mac and Linux users). It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
 If a user does not have R installed, the RInno installer can be configured to ask them to install R along with a shiny app, `include_R = TRUE`. And building upon Dr. Lee Pang's [DesktopDeployR](https://github.com/wleepang/DesktopDeployR) project, RInno provides a framework for managing software dependencies and error logging features.
 
@@ -41,18 +41,18 @@ If you don't use [installr](https://github.com/talgalili/installr) to update you
 
 ## Minimal example
 
-Once you have developed a shiny app and you are ready to deploy, you can build an installer with `create_app` followed by `compile_iss`.
+Once you have developed a shiny app, you can build an installer with `create_app` followed by `compile_iss`.
 
 ```
 # Example app included with RInno package
 example_app(wd = getwd())
 
-# Build a deployment
+# Build an installer
 create_app(app_name = "Your appname", app_dir = "app")
 compile_iss()
 ```
 
-`create_app` creates a local deployment framework in your app's directory, `app_dir`.  Feel free to customize it before you call `compile_iss`.  For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message, *infobefore.txt*. Just remember, the default values for those files have not changed. The Inno Setup Script (ISS), *app_name.iss*, will look for *default.ico* and use it as your app's icon. You must replace *default.ico*, or rename *default.ico* in the ISS to use a different one.
+`create_app` creates an installation framework in your app's directory, `app_dir`.  Feel free to customize it before you call `compile_iss`.  For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message, *infobefore.txt*. Just remember, the default values for those files have not changed. The Inno Setup Script (ISS), *app_name.iss*, will look for *default.ico* and use it as your app's icon. You must replace *default.ico*, or rename *default.ico* in the ISS to use a different one.
 
 For custom installations, see below.
 
@@ -94,8 +94,8 @@ create_app(
 `create_app` passes its arguments to most of the other support functions in RInno, so you can specify most things there and they will get passed on, or you can provide detailed instructions directly to those functions like this:
 
 ```
-# Copy deployment scripts (JavaScript, icons, readme.txt, run.R, app.R)
-copy_deployment(app_dir = "my/app/path")
+# Copy installation scripts (JavaScript, icons, readme.txt, run.R, app.R)
+copy_installation(app_dir = "my/app/path")
 
 # If your users need R installed:
 get_R_exe(app_dir = "my/app/path", R_version = 2.2.1)
@@ -104,12 +104,8 @@ get_R_exe(app_dir = "my/app/path", R_version = 2.2.1)
 create_bat(app_name = "My AppName", app_dir = "my/app/path")
 
 # Create app config file
-create_config(app_name = "My AppName", R_version = 2.2.1, app_dir = "my/app/path")
-
-# Create package dependency list
-create_pkgs(
-  pkgs    = c("jsonlite", "shiny", "magrittr", "dplyr", "caret", "xkcd"), 
-  app_dir = "my/app/path")
+create_config(app_name = "My AppName", R_version = 2.2.1, app_dir = "my/app/path",
+  pkgs = c("jsonlite", "shiny", "magrittr", "dplyr", "caret", "xkcd"))
 
 # Build the iss script
 start_iss(app_name = "My AppName") %>%
