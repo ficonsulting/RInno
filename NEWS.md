@@ -1,12 +1,21 @@
-# RInno version '0.0.1'
+# RInno v0.0.2.9000
+* Added support for GitHub package dependencies
+    * Thanks Dean Attali for this feature request
+* Added Firefox to the browser search path in `app.R`:
+    1. Chrome
+    2. Firefox
+    3. Internet Explorer
+    4. User prompt
+* Moved *packages.txt* from deployment files into a json array in *config.cfg*
+
+# RInno v0.0.1
 * Submitted to CRAN
 * Updated LICENSE to conform with GPL-3 standards
 * Added DesktopDeployR's Aphache 2.0 copyright notice
 * Added Travis-ci, Appveyor, and Codecov to repo
 * Added Code of Conduct for contributors
 
-# RInno version '0.0.0.9001'
-
+# RInno v0.0.0.9001
 * Added a `NEWS.md` file to track changes to the package.
 * Built function to install Inno Setup.
 * Added support for Bitbucket and GitHub APIs, so that locally deployed shiny apps automatically update during start up sequence.
@@ -15,6 +24,3 @@
 * Added package management file which manages a local R library for your shiny app's package dependencies.
 * Added error logging
 * Modified .onAttach to include information about package version and maintenance
-
-
-
