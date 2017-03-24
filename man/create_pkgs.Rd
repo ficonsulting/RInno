@@ -7,7 +7,7 @@
 create_pkgs(pkgs, app_dir)
 }
 \arguments{
-\item{pkgs}{String vector of the shiny app's package dependencies.}
+\item{pkgs}{String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.}
 
 \item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
 }

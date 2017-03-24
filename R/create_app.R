@@ -16,7 +16,7 @@
 #' @param app_name The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.
 #' @param app_dir Shiny app's directory, defaults to \code{getwd()}.
 #' @param dir_out Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.
-#' @param pkgs String vector of the shiny app's package dependencies.
+#' @param pkgs String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.
 #' @param include_R To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if that check returns FALSE.
 #' @param R_version R version to use, defaults to: \code{paste0(R.version$major, '.', R.version$minor)}.
 #' @inheritDotParams setup -iss -dir_out
@@ -76,8 +76,8 @@ create_app <- function(app_name,
   create_bat(app_name, app_dir)
 
   # Create app config file
-  create_config(app_name, R_version, app_dir, pkgs, repo = dots$repo,
-    error_log = dots$error_log, app_repo_url = dots$app_repo_url,
+  create_config(app_name, R_version, app_dir, pkgs, remotes = dots$remotes,
+    repo = dots$repo, error_log = dots$error_log, app_repo_url = dots$app_repo_url,
     auth_user = dots$auth_user, auth_pw = dots$auth_pw)
 
   # Build the iss script

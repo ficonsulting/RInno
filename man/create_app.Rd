@@ -15,7 +15,7 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.}
 
-\item{pkgs}{String vector of the shiny app's package dependencies.}
+\item{pkgs}{String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.}
 
 \item{include_R}{To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if that check returns FALSE.}
 

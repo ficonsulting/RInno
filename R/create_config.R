@@ -1,12 +1,12 @@
 #' Creates an app config file, "config.cfg"
 #'
 #' @inheritParams create_app
-#' @param repo Default repository to install package dependencies from.
+#' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.
+#' @param repo Default repository to install package dependencies from. This defaults to \code{repo = "http://cran.rstudio.com"}.
 #' @param error_log Name of error logging file. Contains start up errors from \emph{run.R}.
 #' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
 #' @param auth_user Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
 #' @param auth_pw Password to Bitbucket or Github.
-#' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.
 #'
 #' @author Jonathan M. Hill
 #'
@@ -15,9 +15,8 @@
 #' @export
 
 create_config <- function(app_name, R_version, app_dir, pkgs,
-  repo = "http://cran.rstudio.com",  error_log = "error.log",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none",
-  remotes = "none") {
+  remotes = "none", repo = "http://cran.rstudio.com",  error_log = "error.log",
+  app_repo_url = "none", auth_user = "none", auth_pw = "none") {
 
   # Reset defaults if empty
   for (formal in names(formals(create_config))) {
