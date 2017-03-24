@@ -6,7 +6,7 @@
 #' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
 #' @param auth_user Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
 #' @param auth_pw Password to Bitbucket or Github.
-#' @param remotes Character vector of GitHub package dependenies in the format username/repo.
+#' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.
 #'
 #' @author Jonathan M. Hill
 #'

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-03-02" />
+<meta name="date" content="2017-03-24" />
 
 <title>Introduction</title>
 
@@ -70,11 +70,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-03-02</em></h4>
+<h4 class="date"><em>2017-03-24</em></h4>
 
 
 
-<p>RInno makes deploying local shiny apps easier by providing an interface between R and <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a> (an installer for windows programs), an R package management framework, and app start up error logging. It is designed to be simple to use (two lines of code at a minimum), yet fully customizable.</p>
+<p>RInno makes installing shiny apps easier by providing an interface between R and <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a> (an installer for windows programs), an R package management framework, and app start up error logging. It is designed to be simple to use (two lines of code at a minimum), yet fully customizable.</p>
 <p>If users do not have R installed, the installer will ask them to install it if <code>include_R = TRUE</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(installr)
 <span class="kw">require</span>(magrittr)
@@ -86,7 +86,7 @@ Rinno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create an example app in your working directory</span>
 <span class="kw">example_app</span>(<span class="dt">wd =</span> <span class="kw">getwd</span>())
 
-<span class="co"># Build a deployment</span>
+<span class="co"># Build an installer</span>
 <span class="kw">create_app</span>(<span class="dt">app_name =</span> <span class="st">'Your appname'</span>, <span class="dt">app_dir =</span> <span class="st">'app'</span>)
 <span class="kw">compile_iss</span>()</code></pre></div>
 <p>With simple apps, you should be able to build an installer with <code>create_app</code> followed by <code>compile_iss</code>.</p>
@@ -121,8 +121,8 @@ Rinno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
   <span class="dt">privilege =</span> <span class="st">'high'</span>, <span class="co"># Admin only installation</span>
   <span class="dt">default_dir =</span> <span class="st">'pf'</span>) <span class="co"># Program Files</span></code></pre></div>
 <p><code>create_app</code> passes its arguments to its supporting functions, so you can specify most things there or provide detailed instructions directly to those functions like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Copy deployment scripts (JavaScript, icons, readme.txt, package_manager.R, app.R)</span>
-<span class="kw">copy_deployment</span>(<span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Copy installation scripts (JavaScript, icons, readme.txt, package_manager.R, app.R)</span>
+<span class="kw">copy_installation</span>(<span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>)
 
 <span class="co"># If your users need R installed:</span>
 <span class="kw">get_R_exe</span>(
@@ -136,12 +136,8 @@ Rinno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
 <span class="kw">create_config</span>(
   <span class="dt">app_name =</span> <span class="st">'My AppName'</span>, 
   <span class="dt">R_version =</span> <span class="fl">2.2</span>.<span class="dv">1</span>, 
-  <span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>)
-
-<span class="co"># Create package dependency list</span>
-<span class="kw">create_pkgs</span>(
-  <span class="dt">pkgs =</span> <span class="kw">c</span>(<span class="st">'jsonlite'</span>, <span class="st">'shiny'</span>, <span class="st">'magrittr'</span>, <span class="st">'dplyr'</span>, <span class="st">'caret'</span>, <span class="st">'xkcd'</span>), 
-  <span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>)
+  <span class="dt">app_dir =</span> <span class="st">'my/app/path'</span>,
+  <span class="dt">pkgs =</span> <span class="kw">c</span>(<span class="st">'jsonlite'</span>, <span class="st">'shiny'</span>, <span class="st">'magrittr'</span>, <span class="st">'dplyr'</span>, <span class="st">'caret'</span>, <span class="st">'xkcd'</span>))
 
 <span class="co"># Build the iss script</span>
 <span class="kw">start_iss</span>(<span class="dt">app_name =</span> <span class="st">'My AppName'</span>) <span class="op">%&gt;%</span>

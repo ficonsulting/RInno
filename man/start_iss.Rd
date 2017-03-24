@@ -7,7 +7,7 @@
 start_iss(app_name)
 }
 \arguments{
-\item{app_name}{The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous deployments, \code{app_name} is used to check for an R package of the same name, and update it. The Deployment vignette has more details.}
+\item{app_name}{The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 }
 \value{
 \code{app_name} and set \code{options('Rinno.app_name' = app_name)}

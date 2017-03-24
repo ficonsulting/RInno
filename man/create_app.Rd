@@ -2,14 +2,14 @@
 % Please edit documentation in R/create_app.R
 \name{create_app}
 \alias{create_app}
-\title{Creates deployment files and Inno Setup Script (ISS), "app_name.iss"}
+\title{Creates installation files and Inno Setup Script (ISS), "app_name.iss"}
 \usage{
 create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
   pkgs = c("jsonlite", "shiny", "magrittr"), include_R = F,
   R_version = paste0(R.version$major, ".", R.version$minor), ...)
 }
 \arguments{
-\item{app_name}{The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous deployments, \code{app_name} is used to check for an R package of the same name, and update it. The Deployment vignette has more details.}
+\item{app_name}{The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 
 \item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
 
@@ -49,7 +49,6 @@ Creates the following files in \code{app_dir}:
   \item Files that manage app start up, \emph{package_manager.R} and \emph{app.R}.
   \item First/last page of the installer, \emph{infobefore.txt} and \emph{infoafter.txt}.
   \item Batch support files, \emph{wsf/run.wsf}, \emph{wsf/js/run.js}, \emph{wsf/js/json2.js}, \emph{wsf/js/JSON.minify.js}.
-  \item List of package dependencies from \code{pkgs}, \emph{packages.txt}.
   \item A configuration file, \emph{config.cfg}. See \code{\link{create_config}} for details.
   \item A batch file, \emph{app_name.bat}. See \code{\link{create_bat}} for details.
   \item An Inno Setup Script, \emph{app_name.iss}.

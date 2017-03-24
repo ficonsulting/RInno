@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-RInno makes deploying local shiny apps easier by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php) (an installer for windows programs), an R package management framework, and app start up error logging. It is designed to be simple to use (two lines of code at a minimum), yet fully customizable.
+RInno makes installing shiny apps easier by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php) (an installer for windows programs), an R package management framework, and app start up error logging. It is designed to be simple to use (two lines of code at a minimum), yet fully customizable.
 
 If users do not have R installed, the installer will ask them to install it if `include_R = TRUE`.
 
@@ -27,7 +27,7 @@ If you don't use [installr](https://github.com/talgalili/installr) to update you
 # Create an example app in your working directory
 example_app(wd = getwd())
 
-# Build a deployment
+# Build an installer
 create_app(app_name = 'Your appname', app_dir = 'app')
 compile_iss()
 ```
@@ -75,8 +75,8 @@ create_app(
 `create_app` passes its arguments to its supporting functions, so you can specify most things there or provide detailed instructions directly to those functions like this:
 
 ```{R, eval=FALSE}
-# Copy deployment scripts (JavaScript, icons, readme.txt, package_manager.R, app.R)
-copy_deployment(app_dir = 'my/app/path')
+# Copy installation scripts (JavaScript, icons, readme.txt, package_manager.R, app.R)
+copy_installation(app_dir = 'my/app/path')
 
 # If your users need R installed:
 get_R_exe(
@@ -90,12 +90,8 @@ create_bat(app_name = 'My AppName', app_dir = 'my/app/path')
 create_config(
   app_name = 'My AppName', 
   R_version = 2.2.1, 
-  app_dir = 'my/app/path')
-
-# Create package dependency list
-create_pkgs(
-  pkgs = c('jsonlite', 'shiny', 'magrittr', 'dplyr', 'caret', 'xkcd'), 
-  app_dir = 'my/app/path')
+  app_dir = 'my/app/path',
+  pkgs = c('jsonlite', 'shiny', 'magrittr', 'dplyr', 'caret', 'xkcd'))
 
 # Build the iss script
 start_iss(app_name = 'My AppName') %>%

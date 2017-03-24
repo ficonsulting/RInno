@@ -8,7 +8,7 @@
 #  # Create an example app in your working directory
 #  example_app(wd = getwd())
 #  
-#  # Build a deployment
+#  # Build an installer
 #  create_app(app_name = 'Your appname', app_dir = 'app')
 #  compile_iss()
 
@@ -33,8 +33,8 @@
 #    default_dir = 'pf') # Program Files
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  # Copy deployment scripts (JavaScript, icons, readme.txt, package_manager.R, app.R)
-#  copy_deployment(app_dir = 'my/app/path')
+#  # Copy installation scripts (JavaScript, icons, readme.txt, package_manager.R, app.R)
+#  copy_installation(app_dir = 'my/app/path')
 #  
 #  # If your users need R installed:
 #  get_R_exe(
@@ -48,12 +48,8 @@
 #  create_config(
 #    app_name = 'My AppName',
 #    R_version = 2.2.1,
-#    app_dir = 'my/app/path')
-#  
-#  # Create package dependency list
-#  create_pkgs(
-#    pkgs = c('jsonlite', 'shiny', 'magrittr', 'dplyr', 'caret', 'xkcd'),
-#    app_dir = 'my/app/path')
+#    app_dir = 'my/app/path',
+#    pkgs = c('jsonlite', 'shiny', 'magrittr', 'dplyr', 'caret', 'xkcd'))
 #  
 #  # Build the iss script
 #  start_iss(app_name = 'My AppName') %>%
