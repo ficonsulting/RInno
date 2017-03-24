@@ -44,34 +44,11 @@ pb <- winProgressBar(
 
 # If an app repository has been provided, install the app from there
 if (config$app_repo[[1]] != "none") {
-  source("get_app_from_app_url.R")
+  source("utils/get_app_from_app_url.R")
 }
 
-# Ensure that a package is installed
-ensure <- function(pkg, repo = config$pkgs$cran, load = TRUE) {
-  setWinProgressBar(pb,
-    value = grep(paste0("\\b", pkg, "\\b"), pkgs) / (length(pkgs) + 1),
-    label = sprintf("Loading - %s...", pkg))
-
-  if (!(pkg %in% row.names(installed.packages()))) {
-    install.packages(pkg, repo = repo, lib = applibpath)
-  }
-  if (load) {
-    library(pkg, character.only = TRUE)
-  }
-}
-
-# Ensure that remotes are installed
-ensure_remotes <- function(remote) {
-  setWinProgressBar(pb,
-    value = grep(paste0("\\b", remote, "\\b"), remotes) / (length(remotes) + 1),
-    label = sprintf("Loading - %s...", remote))
-  pkg <- basename(remote)
-  if (!(pkg %in% row.names(installed.packages()))) {
-    devtools::install_github(remote)
-  }
-  library(pkg, character.only = TRUE)
-}
+# Load functions to ensure software dependencies
+source("utils/ensure.R")
 
 # Use tryCatch to display error messages in config$logging$filename
 appexit_msg <- tryCatch({
