@@ -1,6 +1,6 @@
 Package: RInno
 Type: Package
-Title: A Local Deployment Framework for Shiny Apps
+Title: An Installation Framework for Shiny Apps
 Version: 0.0.2.9000
 Authors@R: c(
     person("Jon", "Hill", role = c("aut", "cre", "cph"), email = "jon.mark.hill@gmail.com"),
@@ -9,7 +9,7 @@ Authors@R: c(
 Maintainer: Jon Hill <jon.mark.hill@gmail.com>
 URL: www.ficonsulting.com
 BugReports: https://github.com/ficonsulting/RInno/issues
-Description: Deploys local shiny apps using Inno Setup, an open source software that builds installers for Windows programs <http://www.jrsoftware.org/ishelp/>.
+Description: Installs shiny apps using Inno Setup, an open source software that builds installers for Windows programs <http://www.jrsoftware.org/ishelp/>.
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
