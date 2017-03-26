@@ -11,7 +11,7 @@
 var oFSO = WScript.CreateObject("Scripting.FileSystemObject");
 var oShell = WScript.CreateObject("WScript.Shell");
 
-var fConfig = oFSO.OpenTextFile('config.cfg', 1); // 1 = for reading
+var fConfig = oFSO.OpenTextFile('utils\\config.cfg', 1); // 1 = for reading
 var sConfig = (fConfig.AtEndOfStream) ? "" : fConfig.ReadAll();
 
 if (this.JSON) {
@@ -60,7 +60,7 @@ if (!oFSO.FileExists(Rexe)) {
 	WScript.Quit(1);
 }
 
-var RScriptFile    = "package_manager.R";
+var RScriptFile    = "utils\\package_manager.R";
 if (!oFSO.FileExists(RScriptFile)) {
 	oShell.Popup('Error: package_manager.R not found:\n' + RScriptFile);
 	WScript.Quit(1);

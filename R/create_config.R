@@ -55,5 +55,5 @@ create_config <- function(app_name, R_version, app_dir, pkgs,
       auth_user = auth_user,
       auth_pw = auth_pw,
       remotes = remotes),
-    file.path(app_dir, "config.cfg"), pretty = T, auto_unbox = T)
+    file.path(app_dir, "utils/config.cfg"), pretty = T, auto_unbox = T)
 }

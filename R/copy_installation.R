@@ -21,23 +21,25 @@ copy_installation <- function(app_dir) {
   # Set option for location of app
   options("RInno.app_dir"   = app_dir)
 
-  wsf     <- file.path(app_dir, "wsf")
-  wsf_js  <- file.path(app_dir, "wsf/js")
   utils <- file.path(app_dir, "utils")
+  wsf     <- file.path(app_dir, "utils/wsf")
+  wsf_js  <- file.path(app_dir, "utils/wsf/js")
 
+  if (!dir.exists(utils)) dir.create(utils)
   if (!dir.exists(wsf)) dir.create(wsf)
-  if (!dir.exists(wsf_js)) dir.create(file.path(wsf_js))
-  if (!dir.exists(utils)) dir.create(file.path(utils))
+  if (!dir.exists(wsf_js)) dir.create(wsf_js)
 
-  install_files <- list.files(system.file("installation", package = "RInno"),
-    full.names = T)
+  install_files <- list.files(system.file("installation", package = "RInno"), full.names = T)
 
-  # Files for the base app_dir
-  base_dir <- !grepl("iss$|wsf$|js$|ensure|get_app", install_files)
+  # Files for each dir
+  base_files   <- grep("iss$|wsf$|js$|R$", install_files, value = TRUE, invert = TRUE)
+  wsf_files    <- grep("wsf$", install_files, value = TRUE)
+  wsf_js_files <- grep("js$", install_files, value = TRUE)
+  utils_files  <- grep(".R$", install_files, value = TRUE)
 
   # Return files
-  file.copy(install_files[base_dir], app_dir)
-  file.copy(install_files[grepl("wsf$", install_files)], file.path(wsf))
-  file.copy(install_files[grepl("js$", install_files)], file.path(wsf_js))
-  file.copy(install_files[basename(install_files) %in% c("ensure.R", "get_app_from_app_url.R")], utils)
+  file.copy(base_files,   app_dir)
+  file.copy(wsf_files,    wsf)
+  file.copy(wsf_js_files, wsf_js)
+  file.copy(utils_files,  utils)
 }

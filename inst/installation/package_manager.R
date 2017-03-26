@@ -32,10 +32,10 @@ message("working path:\n", paste("...", appwd))
 library("jsonlite", character.only = TRUE)
 library("devtools", character.only = TRUE)
 library("httr", character.only = TRUE)
-config <- jsonlite::fromJSON(file.path(appwd, "config.cfg"))
+config <- jsonlite::fromJSON(file.path(appwd, "utils/config.cfg"))
 
 # Package dependency list
-pkgs <- unlist(config$pkgs$pkgs); remotes <- unlist(config$remotes)
+pkgs <- config$pkgs$pkgs; remotes <- config$remotes
 
 # Provide some initialization status updates
 pb <- winProgressBar(
@@ -57,7 +57,7 @@ appexit_msg <- tryCatch({
   message("ensuring packages: ", paste(pkgs, collapse = ", "))
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
   ._ <- lapply(pkgs, ensure, repo = config$pkgs$cran)
-  if (remotes != "none") {
+  if (remotes[1] != "none") {
     setWinProgressBar(pb, 0, label = "Ensuring GitHub package dependencies ...")
     ._ <- lapply(remotes, ensure_remotes)
   }
@@ -75,7 +75,7 @@ appexit_msg <- tryCatch({
 
   # App is launched in the system default browser (if FF or Chrome, should work
   # fine, IE needs to be >= 10)
-  source(file.path(appwd, "app.R"))
+  source(file.path(appwd, "utils/app.R"))
 
   "application terminated normally"
 },
