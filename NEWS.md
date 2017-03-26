@@ -1,4 +1,4 @@
-# RInno v0.0.2.9000
+# RInno v0.0.2
 * Added support for GitHub package dependencies
     * Thanks Dean Attali for this feature request
 * Fixed `error_log` so that its name can be customized properly
