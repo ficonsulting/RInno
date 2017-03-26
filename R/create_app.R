@@ -5,9 +5,9 @@
 #' Creates the following files in \code{app_dir}:
 #' \itemize{
 #'   \item Icons for installer and app, \emph{setup.ico} and \emph{default.ico} respectively.
-#'   \item Files that manage app start up, \emph{package_manager.R} and \emph{app.R}.
+#'   \item Files that manage app start up, \emph{utils/package_manager.R} and \emph{utils/app.R}.
 #'   \item First/last page of the installer, \emph{infobefore.txt} and \emph{infoafter.txt}.
-#'   \item Batch support files, \emph{wsf/run.wsf}, \emph{wsf/js/run.js}, \emph{wsf/js/json2.js}, \emph{wsf/js/JSON.minify.js}.
+#'   \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, \emph{utils/wsf/js/JSON.minify.js}.
 #'   \item A configuration file, \emph{config.cfg}. See \code{\link{create_config}} for details.
 #'   \item A batch file, \emph{app_name.bat}. See \code{\link{create_bat}} for details.
 #'   \item An Inno Setup Script, \emph{app_name.iss}.

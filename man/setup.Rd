@@ -16,31 +16,31 @@ setup(iss, dir_out, app_version = "{#MyAppVersion}", name = "{#MyAppName}",
 
 \item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.}
 
-\item{app_version}{Version number of the app being installed, defaults to \code{'0.0.0'}. It is displayed in the Version field of the app's \emph{Add/Remove Programs} entry. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appversion.htm}{[Setup]:AppVersion} for details.}
+\item{app_version}{Version number of the app being installed, defaults to \code{'0.0.0'}. It is displayed in the Version field of the app's \emph{Add/Remove Programs} entry. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appversion}{[Setup]:AppVersion} for details.}
 
 \item{name}{Defaults to ISPP directive, \code{'{#MyAppName}'} set by \code{directives(app_name)}.}
 
-\item{publisher}{String displayed on the "Support" dialogue of the \emph{Add/Remove Programs} Control Panel applet, defaults to " ". See \href{http://www.jrsoftware.org/ishelp/topic_setup_apppublisher.htm}{[Setup]:AppPublisher} for details.}
+\item{publisher}{String displayed on the "Support" dialogue of the \emph{Add/Remove Programs} Control Panel applet, defaults to " ". See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_apppublisher}{[Setup]:AppPublisher} for details.}
 
-\item{default_dir}{The default directory name used by the \emph{Select Destination Page} of the installer. See \href{http://www.jrsoftware.org/ishelp/topic_setup_defaultdirname.htm}{[Setup]:DefaultDirName} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=consts}{Constants} for details.}
+\item{default_dir}{The default directory name used by the \emph{Select Destination Page} of the installer. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_defaultdirname}{[Setup]:DefaultDirName} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=consts}{Constants} for details.}
 
-\item{privilege}{Valid options: \code{'poweruser', 'admin', 'lowest'}. Defaults to \code{'lowest'}. This directive affects whether elevated rights are requested when an installation is started. See \href{http://www.jrsoftware.org/ishelp/topic_setup_privilegesrequired.htm}{[Setup]:PrivilegesRequired} for details.}
+\item{privilege}{Valid options: \code{'poweruser', 'admin', 'lowest'}. Defaults to \code{'lowest'}. This directive affects whether elevated rights are requested when an installation is started. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_privilegesrequired}{[Setup]:PrivilegesRequired} for details.}
 
-\item{info_before}{File, in .txt or .rtf format, which is displayed on the first page of the installer. It must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/topic_setup_infobeforefile.htm}{[Setup]:InfoBeforeFile} for details.}
+\item{info_before}{File, in .txt or .rtf format, which is displayed on the first page of the installer. It must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_infobeforefile}{[Setup]:InfoBeforeFile} for details.}
 
-\item{info_after}{File, in .txt or .rtf format, which is displayed on the last page of the installer. It must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/topic_setup_infoafterfile.htm}{[Setup]:InfoAfterFile} for details.}
+\item{info_after}{File, in .txt or .rtf format, which is displayed on the last page of the installer. It must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_infoafterfile}{[Setup]:InfoAfterFile} for details.}
 
 \item{license_file}{File, in .txt or .rtf format, which is displayed before the \emph{Select Destination Page} of the wizard. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_licensefile}{[Setup]:LicenseFile} for details.}
 
-\item{setup_icon}{File name of the icon used for installer/uninstaller. The file must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/topic_setup_setupiconfile.htm}{[Setup]:SetupIconFile} for details.}
+\item{setup_icon}{File name of the icon used for installer/uninstaller. The file must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_setupiconfile}{[Setup]:SetupIconFile} for details.}
 
-\item{inst_pw}{Installer password, string. If a password is supplied then the contents of the installer will be encrypted using a 160-bit key derived from the password string. See \href{http://www.jrsoftware.org/ishelp/topic_setup_password.htm}{[Setup]:Password} and \href{http://www.jrsoftware.org/ishelp/topic_setup_encryption.htm}{[Setup]:Encryption} for details.}
+\item{inst_pw}{Installer password, string. If a password is supplied then the contents of the installer will be encrypted using a 160-bit key derived from the password string. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_password}{[Setup]:Password} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_encryption}{[Setup]:Encryption} for details.}
 
-\item{pub_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/topic_setup_apppublisherurl.htm}{[Setup]:AppPublisherURL} for details.}
+\item{pub_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_apppublisherurl}{[Setup]:AppPublisherURL} for details.}
 
-\item{sup_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appsupporturl.htm}{[Setup]:AppSupportURL} for details.}
+\item{sup_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appsupporturl}{[Setup]:AppSupportURL} for details.}
 
-\item{upd_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appupdatesurl.htm}{[Setup]:AppUpdatesURL} for details.}
+\item{upd_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appupdatesurl}{[Setup]:AppUpdatesURL} for details.}
 
 \item{compression}{Defaults to \code{'lzma2/ultra64'}, which has the best compression ratio available. Other valid options include: \code{'zip'}, \code{'bzip'}, \code{'lzma'}, and \code{'none'}.  See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_compression}{[Setup]:Compression} for details.}
 }
@@ -48,7 +48,7 @@ setup(iss, dir_out, app_version = "{#MyAppVersion}", name = "{#MyAppName}",
 Chainable character vector, which can be used as the \code{text} argument of \code{\link{writeLines}} to generate an ISS.
 }
 \description{
-This section contains global settings used by the installer and uninstaller. See \href{http://www.jrsoftware.org/ishelp/topic_setupsection.htm}{[Setup]} or call \code{inno_doc()} for details.
+This section contains global settings used by the installer and uninstaller. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setupsection}{[Setup]} for details.
 }
 \examples{
 \dontrun{

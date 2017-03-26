@@ -14,9 +14,9 @@ directives(app_name, include_R, R_version, app_version = "0.0.0",
 
 \item{R_version}{R version to use, defaults to: \code{paste0(R.version$major, '.', R.version$minor)}.}
 
-\item{app_version}{Version number of the app being installed, defaults to \code{'0.0.0'}. It is displayed in the Version field of the app's \emph{Add/Remove Programs} entry. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appversion.htm}{[Setup]:AppVersion} for details.}
+\item{app_version}{Version number of the app being installed, defaults to \code{'0.0.0'}. It is displayed in the Version field of the app's \emph{Add/Remove Programs} entry. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appversion}{[Setup]:AppVersion} for details.}
 
-\item{publisher}{String displayed on the "Support" dialogue of the \emph{Add/Remove Programs} Control Panel applet, defaults to " ". See \href{http://www.jrsoftware.org/ishelp/topic_setup_apppublisher.htm}{[Setup]:AppPublisher} for details.}
+\item{publisher}{String displayed on the "Support" dialogue of the \emph{Add/Remove Programs} Control Panel applet, defaults to " ". See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_apppublisher}{[Setup]:AppPublisher} for details.}
 
 \item{main_url}{String. Defaults to " ".}
 

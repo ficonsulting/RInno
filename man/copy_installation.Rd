@@ -13,9 +13,9 @@ copy_installation(app_dir)
 This function moves files stored in \code{system.file('installation', package = 'RInno')} to \code{app_dir}:
 \itemize{
   \item Icons for installer and app, \emph{setup.ico} and \emph{default.ico}.
-  \item Files that manage app start up, \emph{package_manager.R} and \emph{app.R}.
+  \item Files that manage app start up, \emph{utils/package_manager.R} and \emph{utils/app.R}.
   \item First/last page of the installation wizard, \emph{infobefore.txt} and \emph{infoafter.txt}.
-  \item Batch support files, \emph{wsf/run.wsf}, \emph{wsf/js/run.js}, \emph{wsf/js/json2.js}, and \emph{wsf/js/JSON.minify.js}.
+  \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, and \emph{utils/wsf/js/JSON.minify.js}.
 }
 }
 \seealso{

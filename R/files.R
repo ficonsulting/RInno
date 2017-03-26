@@ -1,7 +1,7 @@
 #' File Section of ISS
 #'
 #' Files to be installed on user's computer. Everything in \code{app_dir} plus
-#' \code{file_list}. For more information, visit \href{http://www.jrsoftware.org/ishelp/topic_filessection.htm}{[Files] section} or call \code{inno_doc()}.
+#' \code{file_list}. For more information, visit \href{http://www.jrsoftware.org/ishelp/index.php?topic=filessection}{[Files] section}.
 #'
 #' @inheritParams create_app
 #' @param file_list Character vector. Extra files to be installed with the app.

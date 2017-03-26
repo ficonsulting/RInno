@@ -10,7 +10,7 @@
 #'
 #' @author Jonathan M. Hill
 #'
-#' @return A json file, \emph{config.cfg}, in \code{app_dir}.
+#' @return A json file, \emph{config.cfg}, in \code{app_dir}/utils.
 #' @seealso \code{\link{create_app}}.
 #' @export
 

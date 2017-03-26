@@ -30,7 +30,7 @@ create_config(app_name, R_version, app_dir, pkgs, remotes = "none",
 \item{auth_pw}{Password to Bitbucket or Github.}
 }
 \value{
-A json file, \emph{config.cfg}, in \code{app_dir}.
+A json file, \emph{config.cfg}, in \code{app_dir}/utils.
 }
 \description{
 Creates an app config file, "config.cfg"
