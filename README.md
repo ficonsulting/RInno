@@ -69,7 +69,8 @@ If you would like to create a custom installer from within R, you can slowly bui
       app_name    = "My AppName", 
       app_dir     = "My/app/path",
       dir_out     = "wizard",
-      pkgs        = c("jsonlite", "shiny", "magrittr", "xkcd"),
+      pkgs        = c("jsonlite", "shiny", "magrittr", "xkcd"),  # CRAN-like repo packages
+      remotes     = c("talgalili/installr", "daattali/shinyjs"), # GitHub packages
       include_R   = TRUE,   # Download R and install it with your app, if necessary
       R_version   = 2.2.1,  # Old versions of R
       privilege   = "high", # Admin only installation
