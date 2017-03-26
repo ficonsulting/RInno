@@ -1,12 +1,14 @@
 # RInno v0.0.2.9000
 * Added support for GitHub package dependencies
     * Thanks Dean Attali for this feature request
+* Fixed `error_log` so that its name can be customized properly
+* Cleaned up installation paths
 * Added Firefox to the browser search path in `app.R`:
     1. Chrome
     2. Firefox
     3. Internet Explorer
     4. User prompt
-* Moved *packages.txt* from deployment files into a json array in *config.cfg*
+* Removed *packages.txt* from installation files. Now using a json array in *utils/config.cfg*
 
 # RInno v0.0.1
 * Submitted to CRAN
