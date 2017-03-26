@@ -38,8 +38,8 @@ if (!oFSO.FolderExists(sLogPath)) {
 }
 
 sLogFile = 'error.log';
-if (oConfig.logging.filename) {
-	sLogFile = oConfig.logging.filename;
+if (oConfig.logging.error_log) {
+	sLogFile = oConfig.logging.error_log;
 }
 
 //' Define the R interpreter
