@@ -27,6 +27,5 @@ Suggests:
     stringi,
     covr,
     testthat
-Remotes: talgalili/installr    
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
