@@ -23,7 +23,7 @@
 #'
 #' @param license_file File, in .txt or .rtf format, which is displayed before the \emph{Select Destination Page} of the wizard. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_licensefile}{[Setup]:LicenseFile} for details.
 #'
-#' @param inst_pw Installer password, string. If a password is supplied then the contents of the installer will be encrypted using a 160-bit key derived from the password string. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_password}{[Setup]:Password} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_encryption}{[Setup]:Encryption} for details.
+#' @param inst_pw Installer password, string. Visit the Inno Setup \href{http://www.jrsoftware.org/isdl.php}{Downloads} page and place \emph{ISCrypt.dll} in your Inno Setup directory. Afterwards, if a \code{inst_pw} is supplied, then the contents of the installer will be encrypted using a 160-bit key derived from the password string. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_password}{[Setup]:Password} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_encryption}{[Setup]:Encryption} for details.
 #'
 #' @param pub_url String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_apppublisherurl}{[Setup]:AppPublisherURL} for details.
 #'
@@ -71,6 +71,15 @@ setup <- function(iss, dir_out,
     encrypt <- NULL; inst_pw <- NULL
   } else {
     encrypt <- "yes"
+    # Find the Inno Setup folder
+    progs <- c(list.dirs("C:/Program Files", T, F),
+               list.dirs("C:/Program Files (x86)", T, F))
+    inno <- progs[grep("Inno Setup", progs)]
+
+    # Check for the encryption Module
+    if (!file.exists(file.path(inno, "ISCrypt.dll"))) {
+      stop("RInno could not find ISCrypt.dll in your Inno Setup directory. Make sure you have followed the installation instructions found on Inno Setup's downloads page (http://www.jrsoftware.org/isdl.php) to use this feature.")
+    }
   }
   if (license_file == "none") license_file <- NULL
   if (info_after == "none") info_after <- NULL

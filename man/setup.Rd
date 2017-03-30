@@ -34,7 +34,7 @@ setup(iss, dir_out, app_version = "{#MyAppVersion}", name = "{#MyAppName}",
 
 \item{setup_icon}{File name of the icon used for installer/uninstaller. The file must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_setupiconfile}{[Setup]:SetupIconFile} for details.}
 
-\item{inst_pw}{Installer password, string. If a password is supplied then the contents of the installer will be encrypted using a 160-bit key derived from the password string. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_password}{[Setup]:Password} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_encryption}{[Setup]:Encryption} for details.}
+\item{inst_pw}{Installer password, string. Visit the Inno Setup \href{http://www.jrsoftware.org/isdl.php}{Downloads} page and place \emph{ISCrypt.dll} in your Inno Setup directory. Afterwards, if a \code{inst_pw} is supplied, then the contents of the installer will be encrypted using a 160-bit key derived from the password string. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_password}{[Setup]:Password} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_encryption}{[Setup]:Encryption} for details.}
 
 \item{pub_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_apppublisherurl}{[Setup]:AppPublisherURL} for details.}
 
