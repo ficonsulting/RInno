@@ -13,12 +13,14 @@ Description: Installs shiny apps using Inno Setup, an open source software that 
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R (>= 3.3.2)
 Imports:
-    curl,
-    httr,
-    installr,
-    jsonlite,
-    stringr
+    curl (>= 2.4),
+    httr (>= 1.2.1),
+    installr (>= 0.19.0),
+    jsonlite (>= 1.2),
+    stringr (>= 1.2.0)
 Suggests:
     knitr,
     magrittr,
