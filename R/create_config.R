@@ -7,6 +7,7 @@
 #' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
 #' @param auth_user Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
 #' @param auth_pw Password to Bitbucket or Github.
+#' @param user_browser Character for the default browser. Options include "chrome", "firefox", and "ie."
 #'
 #' @author Jonathan M. Hill
 #'
@@ -16,7 +17,7 @@
 
 create_config <- function(app_name, R_version, app_dir, pkgs,
   remotes = "none", repo = "http://cran.rstudio.com",  error_log = "error.log",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none") {
+  app_repo_url = "none", auth_user = "none", auth_pw = "none", user_browser = "chrome") {
 
   # Reset defaults if empty
   for (formal in names(formals(create_config))) {
@@ -54,6 +55,7 @@ create_config <- function(app_name, R_version, app_dir, pkgs,
       app_repo = app_repo,
       auth_user = auth_user,
       auth_pw = auth_pw,
-      remotes = remotes),
+      remotes = remotes,
+      user_browser = tolower(user_browser)),
     file.path(app_dir, "utils/config.cfg"), pretty = T, auto_unbox = T)
 }

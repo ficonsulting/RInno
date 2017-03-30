@@ -1,7 +1,9 @@
 # app launching code
 config <- jsonlite::fromJSON("utils/config.cfg")
 
-find_browser <- function(app_name = config$appname) {
+find_browser <- function(
+  app_name = config$appname,
+  user_browser = config$user_browser) {
 
   progs  <- c(list.dirs("C:/Program Files", T, F),
            list.dirs("C:/Program Files (x86)", T, F))
@@ -15,16 +17,16 @@ find_browser <- function(app_name = config$appname) {
   ie     <- file.path(progs[grep("Internet Explorer", progs)][1],
                       "iexplore.exe")
 
-  if (file.exists(chrome)) {
+  if (file.exists(chrome) & user_browser == "chrome") {
     # First choice
     # Set the default browser option for shiny apps to chrome
     options(browser = chrome)
 
-  } else if (file.exists(ie)) {
+  } else if (file.exists(ff) & user_browser == "firefox") {
     # Second
     options(browser = ff)
 
-  } else if (file.exists(ie)) {
+  } else if (file.exists(ie) & user_browser == "ie") {
     # Not ideal
     options(browser = ie)
 

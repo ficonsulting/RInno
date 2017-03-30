@@ -6,7 +6,8 @@
 \usage{
 create_config(app_name, R_version, app_dir, pkgs, remotes = "none",
   repo = "http://cran.rstudio.com", error_log = "error.log",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none")
+  app_repo_url = "none", auth_user = "none", auth_pw = "none",
+  user_browser = "chrome")
 }
 \arguments{
 \item{app_name}{The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -28,6 +29,8 @@ create_config(app_name, R_version, app_dir, pkgs, remotes = "none",
 \item{auth_user}{Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.}
 
 \item{auth_pw}{Password to Bitbucket or Github.}
+
+\item{user_browser}{Character for the default browser. Options include "chrome", "firefox", and "ie."}
 }
 \value{
 A json file, \emph{config.cfg}, in \code{app_dir}/utils.
