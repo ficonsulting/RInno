@@ -1,3 +1,9 @@
+# RInno v0.0.3
+* Fixed icon bug
+* Added version information for package dependencies
+* Added the option to select default browser with `user_browser`
+    * Eventually, the user should be able to choose their favorite browser
+
 # RInno v0.0.2
 * Added support for GitHub package dependencies
     * Thanks Dean Attali for this feature request
