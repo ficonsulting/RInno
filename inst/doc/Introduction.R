@@ -35,7 +35,7 @@
 #    default_dir = "pf")   # Install app in to Program Files
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  # Copy installation scripts (JavaScript, icons, readme.txt, run.R, app.R)
+#  # Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, app.R)
 #  copy_installation(app_dir = "my/app/path")
 #  
 #  # If your users need R installed:

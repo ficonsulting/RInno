@@ -95,7 +95,7 @@ create_app(
 `create_app` passes its arguments to most of the other support functions in RInno, so you can specify most things there and they will get passed on, or you can provide detailed instructions directly to those functions like this:
 
 ```
-# Copy installation scripts (JavaScript, icons, readme.txt, run.R, app.R)
+# Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, app.R)
 copy_installation(app_dir = "my/app/path")
 
 # If your users need R installed:

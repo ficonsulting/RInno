@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-03-31" />
+<meta name="date" content="2017-04-08" />
 
 <title>Introduction</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-03-31</em></h4>
+<h4 class="date"><em>2017-04-08</em></h4>
 
 
 
@@ -128,7 +128,7 @@ RInno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
   <span class="dt">privilege   =</span> <span class="st">&quot;high&quot;</span>, <span class="co"># Admin only installation</span>
   <span class="dt">default_dir =</span> <span class="st">&quot;pf&quot;</span>)   <span class="co"># Install app in to Program Files</span></code></pre></div>
 <p><code>create_app</code> passes its arguments to most of the other support functions in RInno, so you can specify most things there and they will get passed on, or you can provide detailed instructions directly to those functions like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Copy installation scripts (JavaScript, icons, readme.txt, run.R, app.R)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, app.R)</span>
 <span class="kw">copy_installation</span>(<span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>)
 
 <span class="co"># If your users need R installed:</span>
