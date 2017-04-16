@@ -36,6 +36,11 @@ create_config <- function(app_name, R_version, app_dir, pkgs,
     # Set app_repo
     app_repo <- strsplit(app_repo_url, "org/|com/")[[1]][2]
 
+    if (!"httr" %in% pkgs) {
+      # Add httr for API calls
+      pkgs <- c(pkgs, "httr")
+    }
+
     # Set host
     if (grepl("bitbucket.org", app_repo_url)) host <- "bitbucket"
     else host <- "github"
