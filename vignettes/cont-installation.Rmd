@@ -13,8 +13,8 @@ RInno supports continuous installation of shiny apps through APIs to public/priv
 
 This feature requires:
 
-1. A URL to the app's repo, `app_repo_url` (for private repos, provide `auth_user` and `auth_pw`).
-2. A release tag on GitHub, or a version on BitBucket.
+1. A URL to the app's repo, `app_repo_url` (for private repos, provide `auth_user` and `auth_pw`). This should be the full URL like, https://github.com/Dripdrop12/RInnoApp.
+2. A release tag on GitHub, or a version on BitBucket. If you forget to create a release, your app will error when it calls `get_remote_version` and `parsed_response`'s subscript will be "out of bounds" because the list will be empty.
 3. An R package structure that can be installed via `devtools::install_github` or `devtools::install_bitbucket`.
 
 The release tag or version is compared with the package DESCRIPTION file, i.e. `0.0.0.9000`, to determine if the app should call `devtools::install_github` or `devtools::install_bitbucket` respectively. So update the app's version in both places (2 & 3 above) with each new version, otherwise the app will re-install every time its icon is clicked.

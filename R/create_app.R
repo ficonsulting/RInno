@@ -40,7 +40,7 @@
 #' @author Jonathan M. Hill
 #' @export
 create_app <- function(app_name,
-  app_dir    = getwd(),
+  app_dir   = getwd(),
   dir_out   = "RInno_installer",
   pkgs      = c("jsonlite", "shiny", "magrittr"),
   include_R = F,
