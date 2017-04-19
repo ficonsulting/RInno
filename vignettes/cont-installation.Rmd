@@ -16,6 +16,7 @@ This feature requires:
 1. A URL to the app's repo, `app_repo_url` (for private repos, provide `auth_user` and `auth_pw`). This should be the full URL like, https://github.com/Dripdrop12/RInnoApp.
 2. A release tag on GitHub, or a version on BitBucket. If you forget to create a release, your app will error when it calls `get_remote_version` and `parsed_response`'s subscript will be "out of bounds" because the list will be empty.
 3. An R package structure that can be installed via `devtools::install_github` or `devtools::install_bitbucket`.
+4. Add your app to the `pkgs` argument of `create_app`
 
 The release tag or version is compared with the package DESCRIPTION file, i.e. `0.0.0.9000`, to determine if the app should call `devtools::install_github` or `devtools::install_bitbucket` respectively. So update the app's version in both places (2 & 3 above) with each new version, otherwise the app will re-install every time its icon is clicked.
 
@@ -45,10 +46,11 @@ Then create an RInno installer:
 
 ```{r, eval=FALSE}
 create_app(
-  app_name     = 'myapp', 
-  app_repo_url = 'https://bitbucket.org/fi_consulting/myapp',
-  auth_user    = '<read_only_username>',
-  auth_pw      = '<password>')
+  app_name     = "myapp",
+  app_repo_url = "https://bitbucket.org/fi_consulting/myapp",
+  pkgs         = c("magrittr", "httr", "shiny", "myapp"),
+  auth_user    = "<read_only_username>",
+  auth_pw      = "<password>")
 
 compile_iss()
 ```
@@ -57,12 +59,13 @@ Or for custom installers, directly through `create_config`:
 
 ```{r, eval=FALSE}
 create_config(
-  app_name     = 'myapp', 
-  R_version    = '3.3.2', 
-  app_dir      = 'app', 
-  app_repo_url = 'https://bitbucket.org/fi_consulting/myapp',
-  auth_user    = '<read_only_username>', 
-  auth_pw      = '<password>')
+  app_name     = "myapp", 
+  R_version    = "3.3.2", 
+  app_dir      = "app",
+  pkgs         = c("magrittr", "httr", "shiny", "myapp"),
+  app_repo_url = "https://bitbucket.org/fi_consulting/myapp",
+  auth_user    = "<read_only_username>", 
+  auth_pw      = "<password>")
 
 # -------------------------------------------------- Many steps later
 compile_iss()
@@ -79,10 +82,11 @@ Then create an RInno installer:
 
 ```{r, eval=FALSE}
 create_app(
-  app_name     = 'myapp', 
-  app_repo_url = 'https://github.com/fi_consulting/myapp',
-  auth_user    = '<read_only_username>',
-  auth_pw      = '<password>')
+  app_name     = "myapp", 
+  app_repo_url = "https://github.com/fi_consulting/myapp",
+  pkgs         = c("magrittr", "httr", "shiny", "myapp"),
+  auth_user    = "<read_only_username>",
+  auth_pw      = "<password>")
 
 compile_iss()
 ```
@@ -91,12 +95,13 @@ Or for custom installers, directly through `create_config`:
 
 ```{r, eval=FALSE}
 create_config(
-  app_name     = 'myapp', 
-  R_version    = '3.3.2', 
-  app_dir      = 'app', 
-  app_repo_url = 'https://github.com/fi_consulting/myapp',
-  auth_user    = '<read_only_username>', 
-  auth_pw      = '<password>')
+  app_name     = "myapp", 
+  R_version    = "3.3.2", 
+  app_dir      = "app", 
+  app_repo_url = "https://github.com/fi_consulting/myapp",
+  pkgs         = c("magrittr", "httr", "shiny", "myapp"),
+  auth_user    = "<read_only_username>", 
+  auth_pw      = "<password>")
 
 # -------------------------------------------------- Many steps later
 compile_iss()
@@ -109,12 +114,12 @@ Shiny apps compiled/installed this way will call the GitHub API on start up, and
 A released version number consists of three numbers, `major.minor.patch`. [Semantic Versioning 2.0.0](http://semver.org/) is a good specification to follow because `numeric_version` will interpret it correctly:
 
 ```{r}
-numeric_version('0.1.0') == numeric_version('0.1')
+numeric_version("0.1.0") == numeric_version("0.1")
 ```
 
 ```{r}
 # First release!
-numeric_version('0.0.1') > numeric_version('0.0.0.9000')
+numeric_version("0.0.1") > numeric_version("0.0.0.9000")
 ```
 
 This is important because RInno determines the `local_version` of the app via `installed.packages()`. If R cannot parse the version correctly, the continuous installation will be... nonstop. Users will love you.
