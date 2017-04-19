@@ -53,7 +53,8 @@ find_browser <- function(
 find_browser()
 
 if (config$app_repo[[1]] != "none") {
-  shiny::runApp(sprintf("./library/%s/app", config$appname), launch.browser = T)
+  app_path <- file.path(system.file(package = config$appname), "app")
+  shiny::runApp(app_path, launch.browser = T)
 
 } else {
   shiny::runApp("./", launch.browser = T)
