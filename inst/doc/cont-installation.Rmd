@@ -35,7 +35,7 @@ To connect a shiny app to a remote repository, the app must be on Github or Bitb
 |          |DESCRIPTION|    |
 |          |...   |         |
 
-The package should be called `app_name`, and within the DESCRIPTION file, `Package: app_name`.
+The package should be called `app_name`, and within the DESCRIPTION file, `Package: app_name`. Make sure your app can be installed as a package by typing `ctrl`+`shift`+`B`.
 
 
 ## Bitbucket
