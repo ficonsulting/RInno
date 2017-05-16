@@ -16,7 +16,7 @@
 #'
 #' @export
 
-copy_deployment <- function(app_dir) {
+copy_deployment <- function(app_dir, flex_file = F) {
 
   # Set option for location of app
   options("RInno.app_dir"   = app_dir)
@@ -30,8 +30,27 @@ copy_deployment <- function(app_dir) {
   deploy_files <- list.files(system.file("deployment", package = "RInno"),
     full.names = T)
 
+  if(flex_file != F){
+    latin[3]="per ardua ad astra"
+    writeLines(latin,"junkout.txt")
+  }
+
   # Return files
   file.copy(deploy_files[!grepl("iss$|wsf$|js$", deploy_files)], app_dir)
+
+  # rewrite shiny launch code line 47 & 50 with flexdashboard launcher
+  if(flex_file != F){
+    app_launch_file <- readLines(file.path(app_dir, "app.R"))
+
+    app_launch_file[47] <-
+      paste0("rmarkdown::run(file.path('", normalizePath(flex_file, winslash = "/"),"'), shiny_args = list(host = '0.0.0.0'))")
+
+    app_launch_file[50] <-
+      paste0("rmarkdown::run(file.path('", normalizePath(flex_file, winslash = "/"),"'), shiny_args = list(host = '0.0.0.0'))")
+
+    writeLines(app_launch_file, file.path(app_dir, "app.R"))
+  }
+
   file.copy(deploy_files[grepl("wsf$", deploy_files)], file.path(wsf))
   file.copy(deploy_files[grepl("js$", deploy_files)], file.path(wsf_js))
 }

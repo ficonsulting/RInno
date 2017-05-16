@@ -80,6 +80,8 @@ create_app <- function(app_name,
       }
       pkgs <- c(pkgs, c("flexdashboard", "rmarkdown"))
     }
+  } else {
+    flex_file <- FALSE
   }
 
   # If dir_out is not a character, exit
@@ -94,7 +96,7 @@ create_app <- function(app_name,
     !grepl("[1-3]\\.[0-9]+\\.[0-9]+", R_version))) {stop("R_version is not valid.")}
 
   # Copy deployment scripts
-  copy_deployment(app_dir)
+  copy_deployment(app_dir, flex_file = flex_file)
 
   if (include_R) get_R(app_dir, R_version)
 
