@@ -75,8 +75,9 @@ create_app <- function(app_name,
         message("A flexdashboard format was found in ", names(flex_file), ", assuming a flexdashboard framework")
         flex_file <- names(flex_file)
       } else {
-        message ("More than one flexdashboard file have been found, please specify file to be used")
-        flex_file <- file.choose()
+        message ("More than one flexdashboard file has been found, please specify file to be used")
+        flex_file <- choose.files(
+          caption = "More than one flexdashboard file has been found, please specify file to be used")
       }
       pkgs <- c(pkgs, c("flexdashboard", "rmarkdown"))
     }

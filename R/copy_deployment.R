@@ -42,12 +42,11 @@ copy_deployment <- function(app_dir, flex_file = F) {
   if(flex_file != F){
     app_launch_file <- readLines(file.path(app_dir, "app.R"))
 
-    app_launch_file[47] <-
-      paste0("rmarkdown::run(file.path('", normalizePath(flex_file, winslash = "/"),"'), shiny_args = list(host = '0.0.0.0'))")
+    shiny_launch_code_line <- grep("shiny::runApp", app_launch_file)
 
-    app_launch_file[50] <-
-      paste0("rmarkdown::run(file.path('", normalizePath(flex_file, winslash = "/"),"'), shiny_args = list(host = '0.0.0.0'))")
-
+    for(i in shiny_launch_code_line){
+      app_launch_file[i] <- paste0("rmarkdown::run(file.path('", normalizePath(flex_file, winslash = "/"),"'), shiny_args = list(host = '0.0.0.0'))")
+    }
     writeLines(app_launch_file, file.path(app_dir, "app.R"))
   }
 
