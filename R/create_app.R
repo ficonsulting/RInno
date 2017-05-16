@@ -66,6 +66,22 @@ create_app <- function(app_name,
     }
   }
 
+  # Check format of app (server.R/ui.R or somemarkdown.Rmd)
+  check_files <- list.files(app_dir, pattern = "rmd", ignore.case = T)
+  if (length(check_files) != 0){
+    flex_file <- which(sapply(check_files,  flexdashboard_check))
+    if (length(flex_file) != 0){
+      if (length(flex_file) == 1){
+        message("A flexdashboard format was found in ", names(flex_file), ", assuming a flexdashboard framework")
+        flex_file <- names(flex_file)
+      } else {
+        message ("More than one flexdashboard file have been found, please specify file to be used")
+        flex_file <- file.choose()
+      }
+      pkgs <- c(pkgs, c("flexdashboard", "rmarkdown"))
+    }
+  }
+
   # If dir_out is not a character, exit
   if (class(dir_out) != "character") stop("dir_out must be a character.")
 
