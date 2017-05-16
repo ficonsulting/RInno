@@ -30,11 +30,6 @@ copy_deployment <- function(app_dir, flex_file = F) {
   deploy_files <- list.files(system.file("deployment", package = "RInno"),
     full.names = T)
 
-  if(flex_file != F){
-    latin[3]="per ardua ad astra"
-    writeLines(latin,"junkout.txt")
-  }
-
   # Return files
   file.copy(deploy_files[!grepl("iss$|wsf$|js$", deploy_files)], app_dir)
 
@@ -45,7 +40,7 @@ copy_deployment <- function(app_dir, flex_file = F) {
     shiny_launch_code_line <- grep("shiny::runApp", app_launch_file)
 
     for(i in shiny_launch_code_line){
-      app_launch_file[i] <- paste0("rmarkdown::run(file.path('", normalizePath(flex_file, winslash = "/"),"'), shiny_args = list(host = '0.0.0.0'))")
+      app_launch_file[i] <- paste0("rmarkdown::run(file.path('", normalizePath(flex_file, winslash = "/"),"'), shiny_args = list(host = '0.0.0.0', launch.browser = T))")
     }
     writeLines(app_launch_file, file.path(app_dir, "app.R"))
   }

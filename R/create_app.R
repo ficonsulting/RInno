@@ -67,7 +67,7 @@ create_app <- function(app_name,
   }
 
   # Check format of app (server.R/ui.R or somemarkdown.Rmd)
-  check_files <- list.files(app_dir, pattern = "rmd", ignore.case = T)
+  check_files <- list.files(app_dir, pattern = "rmd", ignore.case = T, full.names = T)
   if (length(check_files) != 0){
     flex_file <- which(sapply(check_files,  flexdashboard_check))
     if (length(flex_file) != 0){
