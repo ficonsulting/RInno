@@ -1,3 +1,6 @@
+# RInno v0.0.4.9000
+* Added support for flexdashboards. Thanks to HanjoStudy's pull request!
+
 # RInno v0.0.3
 * Fixed icon bug
 * Added version information for package dependencies
