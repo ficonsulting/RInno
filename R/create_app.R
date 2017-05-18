@@ -63,9 +63,9 @@ create_app <- function(app_name,
   if (!dir.exists(app_dir)) dir.create(app_dir)
 
   # If R_version is not valid, exit
-  if (any(
-    length(strsplit(R_version, "\\.")[[1]]) != 3,
-    !grepl("[1-3]\\.[0-9]+\\.[0-9]+", R_version))) {stop("R_version is not valid.")}
+  if (any(length(strsplit(R_version, "\\.")[[1]]) != 3, !grepl("[1-3]\\.[0-9]+\\.[0-9]+", R_version))) {
+    stop("R_version is not valid.")
+  }
 
   # Copy installation scripts
   copy_installation(app_dir)
@@ -76,9 +76,10 @@ create_app <- function(app_name,
   create_bat(app_name, app_dir)
 
   # Create app config file
-  create_config(app_name, R_version, app_dir, pkgs, remotes = dots$remotes,
-    repo = dots$repo, error_log = dots$error_log, app_repo_url = dots$app_repo_url,
-    auth_user = dots$auth_user, auth_pw = dots$auth_pw, user_browser = dots$user_browser)
+  create_config(app_name, R_version, app_dir, pkgs,
+    remotes = dots$remotes, repo = dots$repo, error_log = dots$error_log,
+    app_repo_url = dots$app_repo_url, auth_user = dots$auth_user,
+    auth_pw = dots$auth_pw, user_browser = dots$user_browser)
 
   # Build the iss script
   iss <- start_iss(app_name)
