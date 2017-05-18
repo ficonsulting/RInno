@@ -62,6 +62,8 @@ create_config <- function(app_name, R_version, app_dir, pkgs,
     } else {
       flex_file <- "none"
     }
+  } else {
+    flex_file <- "none"
   }
 
   jsonlite::write_json(
