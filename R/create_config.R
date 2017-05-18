@@ -50,6 +50,20 @@ create_config <- function(app_name, R_version, app_dir, pkgs,
     app_repo <- "none"
   }
 
+  # Check for a flexdashboard
+  check_files <- list.files(app_dir, "rmd", full.names = TRUE, ignore.case = TRUE)
+
+  if (length(check_files) != 0) {
+    flex_file <- flexdashboard_check(check_files)
+
+    if (length(flex_file) > 0) {
+      pkgs <- c(pkgs, c("flexdashboard", "rmarkdown"))
+      cat("This flexdashboard will be used:", flex_file, sep = "\n- ")
+    } else {
+      flex_file <- "none"
+    }
+  }
+
   jsonlite::write_json(
     list(
       appname = app_name,
@@ -61,6 +75,7 @@ create_config <- function(app_name, R_version, app_dir, pkgs,
       auth_user = auth_user,
       auth_pw = auth_pw,
       remotes = remotes,
-      user_browser = tolower(user_browser)),
+      user_browser = tolower(user_browser),
+      flex_file = flex_file),
     file.path(app_dir, "utils/config.cfg"), pretty = T, auto_unbox = T)
 }
