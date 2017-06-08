@@ -17,16 +17,16 @@ find_browser <- function(
   ie     <- file.path(progs[grep("Internet Explorer", progs)][1],
                       "iexplore.exe")
 
-  if (file.exists(chrome) & user_browser == "chrome") {
+  if (length(chrome) > 0 & user_browser == "chrome") {
     # First choice
     # Set the default browser option for shiny apps to chrome
     options(browser = chrome)
 
-  } else if (file.exists(ff) & user_browser == "firefox") {
+  } else if (length(ff) > 0 & user_browser == "firefox") {
     # Second
     options(browser = ff)
 
-  } else if (file.exists(ie) & user_browser == "ie") {
+  } else if (length(ie) > 0 & user_browser == "ie") {
     # Not ideal
     options(browser = ie)
 
