@@ -1,3 +1,10 @@
+#' Search for flexdashboard
+#'
+#' This function locates a flexdashboard within a file list.
+#'
+#' @param file_list Character vector. List of files within \code{app_dir}.
+#'
+#' @author Hanjo Odendaal.
 #' @export
 
 flexdashboard_check <- function(file_list) {
