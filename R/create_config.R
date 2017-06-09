@@ -15,7 +15,7 @@
 #' @seealso \code{\link{create_app}}.
 #' @export
 
-create_config <- function(app_name, R_version, app_dir, pkgs,
+create_config <- function(app_name, app_dir, pkgs,
   remotes = "none", repo = "http://cran.rstudio.com",  error_log = "error.log",
   app_repo_url = "none", auth_user = "none", auth_pw = "none", user_browser = "chrome") {
 
@@ -23,9 +23,6 @@ create_config <- function(app_name, R_version, app_dir, pkgs,
   for (formal in names(formals(create_config))) {
     if (length(get(formal)) == 0) assign(formal, formals(create_config)[formal])
   }
-
-  # Set R_HOME
-  r_home <- sprintf("C:\\Program Files\\R\\R-%s\\bin", R_version)
 
   if (app_repo_url != "none") {
     # Fail early
@@ -69,7 +66,6 @@ create_config <- function(app_name, R_version, app_dir, pkgs,
   jsonlite::write_json(
     list(
       appname = app_name,
-      r_bindir = r_home,
       pkgs = list(pkgs = pkgs, cran = repo),
       logging = error_log,
       host = host,

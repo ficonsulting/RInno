@@ -11,13 +11,23 @@
 var oFSO = WScript.CreateObject("Scripting.FileSystemObject");
 var oShell = WScript.CreateObject("WScript.Shell");
 
+// Load Configuration File
 var fConfig = oFSO.OpenTextFile('utils\\config.cfg', 1); // 1 = for reading
 var sConfig = (fConfig.AtEndOfStream) ? "" : fConfig.ReadAll();
-
 if (this.JSON) {
 	var oConfig = (sConfig !== "") ? JSON.parse(JSON.minify(sConfig)) : undefined;
 } else {
 	oShell.Popup('Error: JSON object not found, cannot process configuration');
+	WScript.Quit(1);
+}
+
+// Load Registry Paths
+var fRegPaths = oFSO.OpenTextFile('utils\\regpaths.json', 1); // 1 = for reading
+var sRegPaths = (fRegPaths.AtEndOfStream) ? "" : fRegPaths.ReadAll();
+if (this.JSON) {
+	var oRegPaths = (sRegPaths !== "") ? JSON.parse(JSON.minify(sRegPaths)) : undefined;
+} else {
+	oShell.Popup('Error: JSON object not found, cannot process registry paths');
 	WScript.Quit(1);
 }
 
@@ -43,13 +53,13 @@ if (oConfig.logging.error_log) {
 }
 
 //' Define the R interpreter
-var Rbindir        = "dist\\R-Portable\\App\\R-Portable\\bin";
-if (oConfig.r_bindir) {
-	var Rbindir = oConfig.r_bindir;
+var Rbindir = "";
+if (oRegPaths.r) {
+	var Rbindir = oRegPaths.r;
 }
 
 //' Rscript.exe is much more efficient than R.exe CMD BATCH
-var Rexe           = Rbindir + "\\Rscript.exe";
+var Rexe           = Rbindir + "\\bin\\Rscript.exe";
 var Ropts          = "--vanilla";
 
 //' --vanilla implies the following flags:

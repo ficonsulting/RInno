@@ -4,12 +4,14 @@
 \alias{example_app}
 \title{Example app}
 \usage{
-example_app(app_dir = "app", wd = getwd())
+example_app(app_dir = "app", wd = getwd(), type = "Shiny")
 }
 \arguments{
-\item{app_dir}{Shiny app's directory, defaults to "app".}
+\item{app_dir}{Shiny app's directory. Defaults to "app".}
 
 \item{wd}{Path to working directory. Defaults to \code{getwd()}.}
+
+\item{type}{"Shiny" or "flexdashboard". Defaults to "Shiny".}
 }
 \value{
 Shiny app example.
