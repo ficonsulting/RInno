@@ -2,8 +2,8 @@
 config <- jsonlite::fromJSON("utils/config.cfg")
 reg_paths <- jsonlite::fromJSON("utils/regpaths.json")
 
-# This function is used to apply the user browser option and registry information
-# on app start up. If a user does not have the user browser,
+# This function is used to apply the web browser configuration and registry
+# information on app start up. If a user does not have the user browser,
 # their defult browser will be used.
 find_browser <- function(
   app_name = config$appname,
