@@ -1,3 +1,8 @@
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}\library";
+Type: filesandordirs; Name: "{app}\utils";
+Type: filesandordirs; Name: "{app}\log";
+
 [Code]
 const
   RRegKey = 'Software\R-Core\R\{#RVersion}';
@@ -30,7 +35,6 @@ begin
   Result := Value;
   StringChangeEx(Result, '\', '\\', True);
 end;
-
 
 // Save installation paths
 procedure CurStepChanged(CurStep: TSetupStep);
