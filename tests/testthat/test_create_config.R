@@ -3,7 +3,7 @@ test_that("create_config builds a valid json file.", {
   if (!dir.exists(temp_dir)) dir.create(temp_dir)
   file.create(file.path(temp_dir, "config.cfg"))
 
-  create_config("myapp", "3.3.2", dirname(temp_dir),
+  create_config("myapp", dirname(temp_dir),
                 pkgs = c("jsonlite", "shiny", "magrittr"))
   config <- fromJSON(file.path(tempdir(), 'utils/config.cfg'))
 
