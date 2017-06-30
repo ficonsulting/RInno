@@ -36,19 +36,46 @@ begin
   StringChangeEx(Result, '\', '\\', True);
 end;
 
+// Pandoc is stored in the System PATH
+function PandocDetected(): Boolean;
+var
+  PandocDir, Path: String;
+begin
+  Log('Checking for Pandoc in %PATH%');
+  if RegQueryStringValue(HKEY_CURRENT_USER, 'Environment', 'Path', Path) then
+  begin // Successfully read the value
+    Log('HKCU\Environment\PATH = ' + Path);
+    PandocDir := ExpandConstant('{localappdata}\Pandoc\pandoc.exe');
+    Log('Looking for Pandoc in %PATH%: ' + PandocDir + ' in ' + Path);
+    if Pos(LowerCase(PandocDir), Lowercase(Path)) = 0 then
+		begin
+			Log('Did not find Pandoc in %PATH%');
+			Result := False;
+		end
+    else
+		begin
+			Log('Found Pandoc in %PATH%');
+			Result := True;
+		end
+  end
+  else // The key probably doesn't exist
+  begin
+    Log('Could not access HKCU\Environment\PATH.');
+    Result := False;
+  end;
+end;
+
 // Save installation paths
 procedure CurStepChanged(CurStep: TSetupStep);
 var
-  RPath: string;
-  ChromePath: string;
-  IEPath: string;
-  FFPath: string;
+  RPath, ChromePath, IEPath, FFPath, PandocPath: string;
 begin
 if CurStep = ssPostInstall then begin
     RPath := '';
     ChromePath := '';
     IEPath := '';
     FFPath := '';
+		PandocPath := ExpandConstant('{localappdata}\Pandoc\pandoc.exe');
     RegPathsFile := ExpandConstant('{app}\utils\regpaths.json');
     // Create registry paths file
     SaveStringToFile(RegPathsFile, '{' + #13#10, True);
@@ -72,11 +99,17 @@ if CurStep = ssPostInstall then begin
       SaveStringToFile(RegPathsFile, '"ie": "none",' + #13#10, True);
 
     // Firefox RegPath
-    // ** Last Line in json file (no trailing comma) **
     if RegQueryStringValue(HKLM, FFRegKey, 'Path', FFPath) then
-      SaveStringToFile(RegPathsFile, '"ff": "' + AddBackSlash(FFPath) + '"' + #13#10, True)
+      SaveStringToFile(RegPathsFile, '"ff": "' + AddBackSlash(FFPath) + '",' + #13#10, True)
     else
-      SaveStringToFile(RegPathsFile, '"ff": "none"' + #13#10, True);
+      SaveStringToFile(RegPathsFile, '"ff": "none",' + #13#10, True);
+
+		// Pandoc RegPath
+		// ** Last Line in json file (no trailing comma) **
+		if PandocDetected() then
+			SaveStringToFile(RegPathsFile, '"pandoc": "' + AddBackSlash(PandocPath) + '"' + #13#10, True)
+		else
+			SaveStringToFile(RegPathsFile, '"pandoc": "none"' + #13#10, True);
 
     SaveStringToFile(RegPathsFile, '}', True);
   end;
