@@ -32,7 +32,33 @@ message("working path:\n", paste("...", appwd))
 library("jsonlite", character.only = TRUE)
 library("devtools", character.only = TRUE)
 library("httr", character.only = TRUE)
+
 config <- jsonlite::fromJSON(file.path(appwd, "utils/config.cfg"))
+reg_paths <- jsonlite::fromJSON("utils/regpaths.json")
+
+# Copy pandoc files to app directory
+
+if(config$flex_file != "none"){
+
+  if(reg_paths$pandoc == "none"){
+    pandoc_path <- ifelse(Sys.getenv("RSTUDIO_PANDOC") == "", "none", Sys.getenv("RSTUDIO_PANDOC"))
+  } else {
+    pandoc_path <- reg_paths$pandoc
+  }
+
+  if(pandoc_path != "none"){
+    copy_status <- file.copy(reg_paths$pandoc, .libPaths(), recursive = T)
+    if(copy_status == T)
+    {
+      message("Pandoc paths:\n", paste0("... ", .libPaths(), collapse = "\n"))
+    } else {
+      stop("The necessary Pandoc files, which is a dependency of Flexdashboards could not be copied into the designated app library folder\n")
+    }
+  } else(
+    stop("The necessary Pandoc files, which is a dependency of Flexdashboards could not found. Please run the `install_pandoc()` function before trying to compile to install the necessary files that are required to run a Flexdashboard shiny app\n")
+  )
+}
+
 
 # Package dependency list
 pkgs <- config$pkgs$pkgs; remotes <- config$remotes
