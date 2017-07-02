@@ -81,6 +81,9 @@ create_app <- function(app_name,
     app_repo_url = dots$app_repo_url, auth_user = dots$auth_user,
     auth_pw = dots$auth_pw, user_browser = dots$user_browser)
 
+  # Account for pandoc
+  pandoc_file_copy(app_dir)
+
   # Build the iss script
   iss <- start_iss(app_name)
 
