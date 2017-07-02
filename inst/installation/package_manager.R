@@ -40,12 +40,6 @@ reg_paths <- jsonlite::fromJSON("utils/regpaths.json")
 
 if(config$flex_file != "none"){
 
-  if(reg_paths$pandoc == "none"){
-    pandoc_path <- ifelse(Sys.getenv("RSTUDIO_PANDOC") == "", "none", Sys.getenv("RSTUDIO_PANDOC"))
-  } else {
-    pandoc_path <- reg_paths$pandoc
-  }
-
   if(pandoc_path != "none"){
     copy_status <- file.copy(reg_paths$pandoc, .libPaths(), recursive = T)
     if(copy_status == T)
