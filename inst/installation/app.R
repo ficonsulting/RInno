@@ -40,6 +40,8 @@ if (config$app_repo[[1]] != "none") {
 
   # flexdashboard
   if (config$flex_file != "none") {
+
+    Sys.setenv(RSTUDIO_PANDOC = file.path(app_path,"/utils/pandoc/"))
     rmarkdown::run(file.path(app_path, config$flex_file),
                    shiny_args = list(host = '0.0.0.0', launch.browser = T))
   # Shiny
@@ -50,6 +52,7 @@ if (config$app_repo[[1]] != "none") {
 } else {
   # flexdashboard
   if (config$flex_file != "none") {
+    Sys.setenv(RSTUDIO_PANDOC = file.path(app_path,"/utils/pandoc/"))
     rmarkdown::run(paste0("./", config$flex_file),
                    shiny_args = list(host = '0.0.0.0', launch.browser = T))
   # Shiny
