@@ -3,9 +3,6 @@
 appwd <- getwd()
 applibpath <- file.path(appwd, "library")
 
-config <- jsonlite::fromJSON(file.path(appwd, "utils/config.cfg"))
-reg_paths <- jsonlite::fromJSON("utils/regpaths.json")
-
 # Create app/library if it doesn't exist (e.g. first run)
 # Initialize RInno
 if (!dir.exists(applibpath)) {
@@ -35,6 +32,7 @@ message("working path:\n", paste("...", appwd))
 library("jsonlite", character.only = TRUE)
 library("devtools", character.only = TRUE)
 library("httr", character.only = TRUE)
+config <- jsonlite::fromJSON(file.path(appwd, "utils/config.cfg"))
 
 # Package dependency list
 pkgs <- config$pkgs$pkgs; remotes <- config$remotes
@@ -75,8 +73,6 @@ appexit_msg <- tryCatch({
   setWinProgressBar(pb, 1.00, label = "Starting application")
   close(pb)
 
-  # App is launched in the system default browser (if FF or Chrome, should work
-  # fine, IE needs to be >= 10)
   source(file.path(appwd, "utils/app.R"))
 
   "application terminated normally"
