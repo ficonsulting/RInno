@@ -5,8 +5,9 @@
 \title{Creates installation files and Inno Setup Script (ISS), "app_name.iss"}
 \usage{
 create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
-  pkgs = c("jsonlite", "shiny", "magrittr"), include_R = F,
-  R_version = paste0(R.version$major, ".", R.version$minor), ...)
+  pkgs = c("jsonlite", "shiny", "magrittr"), include_R = FALSE,
+  include_Pandoc = FALSE, R_version = paste0(R.version$major, ".",
+  R.version$minor), Pandoc_version = rmarkdown::pandoc_version(), ...)
 }
 \arguments{
 \item{app_name}{The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -17,9 +18,13 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{pkgs}{String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.}
 
-\item{include_R}{To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if that check returns FALSE.}
+\item{include_R}{To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if necessary.}
+
+\item{include_Pandoc}{To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. Similar to including R, the installer will check the user's registry for the version of pandoc returned by \code{\link[rmarkdown]{pandoc_version}} and only install it if necessary.}
 
 \item{R_version}{R version to use, defaults to: \code{paste0(R.version$major, '.', R.version$minor)}.}
+
+\item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.}
 
 \item{...}{Arguments passed on to \code{setup}
 \describe{
@@ -74,5 +79,5 @@ create_app(
 \code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{create_pkgs}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
 }
 \author{
-Jonathan M. Hill
+Jonathan M. Hill and Hanjo Odendaal
 }
