@@ -17,8 +17,10 @@
 #' @param app_dir Shiny app's directory, defaults to \code{getwd()}.
 #' @param dir_out Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.
 #' @param pkgs String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.
-#' @param include_R To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if that check returns FALSE.
+#' @param include_R To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if necessary.
+#' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. Similar to including R, the installer will check the user's registry for the version of pandoc returned by \code{\link[rmarkdown]{pandoc_version}} and only install it if necessary.
 #' @param R_version R version to use, defaults to: \code{paste0(R.version$major, '.', R.version$minor)}.
+#' @param Pandoc_version Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.
 #' @inheritDotParams setup -iss -dir_out
 #'
 #' @examples
@@ -37,14 +39,16 @@
 #'   default_dir = 'pf') # Program Files
 #' }
 #' @inherit setup seealso
-#' @author Jonathan M. Hill
+#' @author Jonathan M. Hill and Hanjo Odendaal
 #' @export
 create_app <- function(app_name,
   app_dir   = getwd(),
   dir_out   = "RInno_installer",
   pkgs      = c("jsonlite", "shiny", "magrittr"),
-  include_R = F,
+  include_R = FALSE,
+  include_Pandoc = FALSE,
   R_version = paste0(R.version$major, ".", R.version$minor),
+  Pandoc_version = rmarkdown::pandoc_version(),
   ...) {
 
   # To capture arguments for other function calls
@@ -70,7 +74,9 @@ create_app <- function(app_name,
   # Copy installation scripts
   copy_installation(app_dir)
 
+  # Include separate installers for R and Pandoc, if necessary
   if (include_R) get_R(app_dir, R_version)
+  if (include_Pandoc) get_Pandoc(app_dir, Pandoc_version)
 
   # Create batch file
   create_bat(app_name, app_dir)
@@ -80,9 +86,6 @@ create_app <- function(app_name,
     remotes = dots$remotes, repo = dots$repo, error_log = dots$error_log,
     app_repo_url = dots$app_repo_url, auth_user = dots$auth_user,
     auth_pw = dots$auth_pw, user_browser = dots$user_browser)
-
-  # Account for pandoc
-  pandoc_file_copy(app_dir)
 
   # Build the iss script
   iss <- start_iss(app_name)
