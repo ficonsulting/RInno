@@ -5,7 +5,7 @@ test_that("create_config builds a valid json file.", {
 
   create_config("myapp", dirname(temp_dir),
                 pkgs = c("jsonlite", "shiny", "magrittr"))
-  config <- fromJSON(file.path(tempdir(), 'utils/config.cfg'))
+  config <- jsonlite::fromJSON(file.path(tempdir(), 'utils/config.cfg'))
 
   expect_is(config, 'list')
 })
