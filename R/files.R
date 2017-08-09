@@ -33,6 +33,10 @@ files <- function(iss, app_dir, file_list = character()) {
   '    Source: "R-{#RVersion}-win.exe"; DestDir: "{tmp}"; Check: RNeeded',
   '#endif',
 
+  '#if IncludePandoc',
+  '    Source: "pandoc-{#PandocVersion}-windows.msi"; DestDir: "{tmp}"; Check: PandocNeeded',
+  '#endif',
+
   sprintf('Source: "%s"; DestDir: "{app}"; Flags: ignoreversion;',
           all_files[blank_dirs]),
 
