@@ -65,6 +65,12 @@ begin
   end;
 end;
 
+// If Pandoc is not detected, it is needed
+function PandocNeeded(): Boolean;
+begin
+  Result := (PandocDetected = false);
+end;
+
 // Save installation paths
 procedure CurStepChanged(CurStep: TSetupStep);
 var
