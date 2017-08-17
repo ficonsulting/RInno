@@ -29,8 +29,9 @@
 #' @author Jonathan M. Hill
 #' @export
 
-directives <- function(app_name, include_R, R_version,
-  include_Pandoc, Pandoc_version,
+directives <- function(app_name, include_R = FALSE,
+  R_version = paste0(R.version$major, ".", R.version$minor),
+  include_Pandoc = FALSE, Pandoc_version = rmarkdown::pandoc_version(),
   app_version = "0.0.0", publisher = "", main_url = "",
   custom_vars = "", custom_values = "") {
 
