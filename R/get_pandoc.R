@@ -20,7 +20,7 @@ get_Pandoc <- function(app_dir, Pandoc_version = rmarkdown::pandoc_version()) {
   filename <- file.path(app_dir, sprintf("pandoc-%s-windows.msi", Pandoc_version))
 
   if (file.exists(filename)) {
-    cat("Using the copy of Pandoc already included:\n", filename)
+    cat("Using the copy of Pandoc already included:\n - ", filename, "\n")
   } else {
     cat(sprintf("Downloading Pandoc-%s ...\n", Pandoc_version))
 
