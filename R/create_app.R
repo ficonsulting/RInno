@@ -91,8 +91,9 @@ create_app <- function(app_name,
   iss <- start_iss(app_name)
 
   # C-like directives
-  iss <- directives(iss, include_R, R_version, app_version = dots$app_version,
-    publisher = dots$publisher, main_url = dots$main_url)
+  iss <- directives(iss, include_R, R_version, include_Pandoc, Pandoc_version,
+    app_version = dots$app_version, publisher = dots$publisher,
+    main_url = dots$main_url)
 
   # Setup Section
   iss <- setup(iss, dir_out, app_version = dots$app_version,
