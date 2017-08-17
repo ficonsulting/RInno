@@ -41,4 +41,10 @@ renderPlot({
   dens <- density(faithful$eruptions, adjust = input$bw_adjust)
   lines(dens, col = "blue")
 })
+
+# Close the app when the session completes
+session$onSessionEnded(function() {
+  stopApp()
+  q("no")
+})
 ```
