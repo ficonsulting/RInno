@@ -45,7 +45,7 @@ begin
   if RegQueryStringValue(HKEY_CURRENT_USER, 'Environment', 'Path', Path) then
   begin // Successfully read the value
     Log('HKCU\Environment\PATH = ' + Path);
-    PandocDir := ExpandConstant('{localappdata}\Pandoc\pandoc.exe');
+    PandocDir := ExpandConstant('{localappdata}\Pandoc\');
     Log('Looking for Pandoc in %PATH%: ' + PandocDir + ' in ' + Path);
     if Pos(LowerCase(PandocDir), Lowercase(Path)) = 0 then
 		begin
@@ -81,7 +81,7 @@ if CurStep = ssPostInstall then begin
     ChromePath := '';
     IEPath := '';
     FFPath := '';
-		PandocPath := ExpandConstant('{localappdata}\Pandoc\pandoc.exe');
+		PandocPath := ExpandConstant('{localappdata}\Pandoc\');
     RegPathsFile := ExpandConstant('{app}\utils\regpaths.json');
     // Create registry paths file
     SaveStringToFile(RegPathsFile, '{' + #13#10, True);
