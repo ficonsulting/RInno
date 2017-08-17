@@ -8,7 +8,8 @@
 
 run <- function(iss) {
  iss <- c(iss, "\n[Run]",
-    paste0('#if IncludeR\n\tFilename: "{tmp}\\R-{#RVersion}-win.exe"; Parameters: "/SILENT"; WorkingDir: {tmp}; Flags: skipifdoesntexist; StatusMsg: "Installing R if needed"\n#endif\n#if IncludePandoc\n\tFilename: "{tmp}\\pandoc-{#PandocVersion}-windows.msi"; Parameters: "/SILENT"; WorkingDir: {tmp}; Flags: skipifdoesntexist; StatusMsg: "Installing Pandoc if needed"\n#endif\nFilename: "{app}\\{#MyAppExeName}"; Description: "', "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&'", ')}}"; Flags: shellexec postinstall skipifsilent\n\n'))
+    paste0('#if IncludeR\n\tFilename: "{tmp}\\R-{#RVersion}-win.exe"; Parameters: "/SILENT"; WorkingDir: {tmp}; Flags: skipifdoesntexist; StatusMsg: "Installing R if needed"\n#endif\n#if IncludePandoc\n\tFilename: "msiexec.exe"; Parameters: "/i ""{tmp}\\pandoc-{#PandocVersion}-windows.msi"" /q"; WorkingDir: {tmp}; Flags: skipifdoesntexist; StatusMsg: "Installing Pandoc if needed"\n#endif\nFilename: "{app}\\{#MyAppExeName}"; Description: "', "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&'", ')}}"; Flags: shellexec postinstall skipifsilent\n\n'))
 
  iss
 }
+
