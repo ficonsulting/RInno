@@ -4,9 +4,10 @@
 \alias{directives}
 \title{Inno Setup Preprocessor (ISPP) Directives}
 \usage{
-directives(app_name, include_R, R_version, include_Pandoc, Pandoc_version,
-  app_version = "0.0.0", publisher = "", main_url = "",
-  custom_vars = "", custom_values = "")
+directives(app_name, include_R = FALSE, R_version = paste0(R.version$major,
+  ".", R.version$minor), include_Pandoc = FALSE,
+  Pandoc_version = rmarkdown::pandoc_version(), app_version = "0.0.0",
+  publisher = "", main_url = "", custom_vars = "", custom_values = "")
 }
 \arguments{
 \item{app_name}{The name of the app being installed. It will be displayed throughout the installer and uninstaller in window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -54,7 +55,7 @@ start_iss('myapp') \%>\%
 
 }
 \seealso{
-\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{create_pkgs}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
 }
 \author{
 Jonathan M. Hill

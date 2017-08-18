@@ -18,7 +18,7 @@ Chainable character vector, which can be used as the \code{text} argument of \co
 Defines all of the user-customizable tasks during installation. These tasks appear as check boxes and radio buttons on the \emph{Select Additional Tasks} installer page. See \href{http://www.jrsoftware.org/ishelp/topic_taskssection.htm}{[Tasks] section} for details.
 }
 \seealso{
-\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{create_pkgs}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
 }
 \author{
 Jonathan M. Hill
