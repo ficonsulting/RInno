@@ -31,12 +31,12 @@ ensure_remotes <- function(remote) {
 cran_pkg_version <- function(pkg,
   cran_url = "http://cran.r-project.org/web/packages/") {
 
-  cran_pkg_loc = paste0(cran_url,pkg)
+  cran_pkg_loc = paste0(cran_url, pkg)
 
   # Try to establish a connection
   suppressWarnings(conn <- try(url(cran_pkg_loc), silent = TRUE))
 
-  # If connection, try to parse values, otherwise return NULL
+  # Parse values, otherwise return NULL
   if (all(class(conn) != "try-error")) {
     suppressWarnings(cran_pkg_page <- try(readLines(conn), silent = TRUE))
     close(conn)
