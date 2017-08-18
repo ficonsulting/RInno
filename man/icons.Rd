@@ -8,7 +8,7 @@ icons(iss, app_desc = "", app_icon = "default.ico", prog_menu_icon = TRUE,
   desktop_icon = TRUE)
 }
 \arguments{
-\item{iss}{Character vector which cummulatively becomes an Inno Setup Script (ISS).}
+\item{iss}{Character vector which cumulatively becomes an Inno Setup Script (ISS).}
 
 \item{app_desc}{Description of Shiny app, appears on mouse-over of icons.}
 

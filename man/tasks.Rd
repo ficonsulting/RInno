@@ -7,7 +7,7 @@
 tasks(iss, desktop_icon = TRUE)
 }
 \arguments{
-\item{iss}{Character vector which cummulatively becomes an Inno Setup Script (ISS).}
+\item{iss}{Character vector which cumulatively becomes an Inno Setup Script (ISS).}
 
 \item{desktop_icon}{Logical. If TRUE, create a desktop shortcut.}
 }

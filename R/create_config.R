@@ -6,7 +6,7 @@
 #' @param error_log Name of error logging file. Contains start up errors from \emph{run.R}.
 #' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
 #' @param auth_user Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
-#' @param auth_pw Password to Bitbucket or Github.
+#' @param auth_pw Password to Bitbucket or GitHub.
 #' @param user_browser Character for the default browser. Options include "chrome", "firefox", and "ie."
 #'
 #' @author Jonathan M. Hill

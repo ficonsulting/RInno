@@ -12,7 +12,7 @@ setup(iss, dir_out, app_version = "{#MyAppVersion}", name = "{#MyAppName}",
   upd_url = "{#MyAppURL}", compression = "lzma2/ultra64")
 }
 \arguments{
-\item{iss}{Character vector which cummulatively becomes an Inno Setup Script (ISS).}
+\item{iss}{Character vector which cumulatively becomes an Inno Setup Script (ISS).}
 
 \item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.}
 

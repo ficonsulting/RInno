@@ -3,7 +3,7 @@
 #' This section contains global settings used by the installer and uninstaller. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setupsection}{[Setup]} for details.
 #'
 #' @inheritParams create_app
-#' @param iss Character vector which cummulatively becomes an Inno Setup Script (ISS).
+#' @param iss Character vector which cumulatively becomes an Inno Setup Script (ISS).
 #'
 #' @param app_version Version number of the app being installed, defaults to \code{'0.0.0'}. It is displayed in the Version field of the app's \emph{Add/Remove Programs} entry. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appversion}{[Setup]:AppVersion} for details.
 #'

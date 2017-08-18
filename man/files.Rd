@@ -7,7 +7,7 @@
 files(iss, app_dir, file_list = character())
 }
 \arguments{
-\item{iss}{Character vector which cummulatively becomes an Inno Setup Script (ISS).}
+\item{iss}{Character vector which cumulatively becomes an Inno Setup Script (ISS).}
 
 \item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
 
