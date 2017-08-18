@@ -1,5 +1,10 @@
-# RInno v0.0.4.9000
-* Added support for flexdashboards. Thanks to HanjoStudy's pull request!
+# RInno v0.1.0
+* Major improvements to registry checks and app start up sequence
+    * RInno installers now query the registry during installation so that local Shiny apps can use registry information during their startup sequence. The registry is queried for R, Pandoc, Chrome, Firefox, and Internet Explorer. If you would like any other software added to the regpaths.json output, give us a holler!
+    * This should make Shiny apps installed with RInno reliable for large numbers of users because strange installation bugs are often caused by unique desktop setups. RInno v0.1.0 should reduce the maintenance cost of local installations and make them scalable for medium-sized organizations and teams.
+* Hanjo Odendall added support for [flexdashboards](http://rmarkdown.rstudio.com/flexdashboard/). Thanks Hanjo!
+    * Similar to the way that RInno installers can include copies of R, they can now include a copy of Pandoc to support the installation of flexdashboards. Because the registry query (detailed above) is performed post-install, these installation paths are captured by the registry query and can be used in the app startup sequence.
+* Our next release in September - October should include support for OAuth2 for RInno apps using continuous installation.
 
 # RInno v0.0.3
 * Fixed icon bug

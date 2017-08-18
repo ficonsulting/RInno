@@ -16,9 +16,9 @@ files <- function(iss, app_dir, file_list = character()) {
 
   # If a file list is not provided than list only files in app_dir
   if (length(file_list) == 0) {
-    all_files <- all_files[!grepl("iss$|info.*txt$$", all_files)]
+    all_files <- all_files[!grepl("iss$|info.*txt$|exe$|msi$", all_files)]
   } else {
-    all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$$", all_files)])
+    all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$|exe$|msi$", all_files)])
   }
 
   file_dirs     <- gsub("\\.", "", dirname(all_files))
@@ -31,6 +31,10 @@ files <- function(iss, app_dir, file_list = character()) {
 
   '#if IncludeR',
   '    Source: "R-{#RVersion}-win.exe"; DestDir: "{tmp}"; Check: RNeeded',
+  '#endif',
+
+  '#if IncludePandoc',
+  '    Source: "pandoc-{#PandocVersion}-windows.msi"; DestDir: "{tmp}"; Check: PandocNeeded',
   '#endif',
 
   sprintf('Source: "%s"; DestDir: "{app}"; Flags: ignoreversion;',

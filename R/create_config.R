@@ -55,7 +55,7 @@ create_config <- function(app_name, app_dir, pkgs,
 
     if (length(flex_file) > 0) {
       pkgs <- c(pkgs, c("flexdashboard", "rmarkdown"))
-      cat("This flexdashboard will be used:", flex_file, sep = "\n- ")
+      cat("This flexdashboard will be used:\n - ", flex_file, "\n")
     } else {
       flex_file <- "none"
     }

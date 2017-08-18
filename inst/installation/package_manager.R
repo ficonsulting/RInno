@@ -73,8 +73,6 @@ appexit_msg <- tryCatch({
   setWinProgressBar(pb, 1.00, label = "Starting application")
   close(pb)
 
-  # App is launched in the system default browser (if FF or Chrome, should work
-  # fine, IE needs to be >= 10)
   source(file.path(appwd, "utils/app.R"))
 
   "application terminated normally"

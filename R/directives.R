@@ -29,7 +29,9 @@
 #' @author Jonathan M. Hill
 #' @export
 
-directives <- function(app_name, include_R, R_version,
+directives <- function(app_name, include_R = FALSE,
+  R_version = paste0(R.version$major, ".", R.version$minor),
+  include_Pandoc = FALSE, Pandoc_version = rmarkdown::pandoc_version(),
   app_version = "0.0.0", publisher = "", main_url = "",
   custom_vars = "", custom_values = "") {
 
@@ -48,10 +50,11 @@ directives <- function(app_name, include_R, R_version,
     # Required
     sprintf('#define MyAppName "%s"', app_name),
     sprintf('#define MyAppVersion "%s"', app_version),
-
     sprintf('#define MyAppExeName "%s"', paste0(app_name, '.bat')),
     sprintf('#define RVersion "%s"', R_version),
     sprintf('#define IncludeR %s', tolower(include_R)),
+    sprintf('#define PandocVersion "%s"', Pandoc_version),
+    sprintf('#define IncludePandoc %s', tolower(include_Pandoc)),
 
     # Optional
     sprintf('#define MyAppPublisher "%s"', publisher),

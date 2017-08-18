@@ -40,8 +40,12 @@ if (config$app_repo[[1]] != "none") {
 
   # flexdashboard
   if (config$flex_file != "none") {
+    if (Sys.getenv("RSTUDIO_PANDOC") == "") {
+      Sys.setenv(RSTUDIO_PANDOC = gsub("\\\\", "/", reg_paths$pandoc))
+    }
     rmarkdown::run(file.path(app_path, config$flex_file),
                    shiny_args = list(host = '0.0.0.0', launch.browser = T))
+
   # Shiny
   } else {
     shiny::runApp(app_path, launch.browser = T)
@@ -50,8 +54,12 @@ if (config$app_repo[[1]] != "none") {
 } else {
   # flexdashboard
   if (config$flex_file != "none") {
+    if (Sys.getenv("RSTUDIO_PANDOC") == "") {
+      Sys.setenv(RSTUDIO_PANDOC = gsub("\\\\", "/", reg_paths$pandoc))
+    }
     rmarkdown::run(paste0("./", config$flex_file),
                    shiny_args = list(host = '0.0.0.0', launch.browser = T))
+
   # Shiny
   } else {
     shiny::runApp("./", launch.browser = T)
