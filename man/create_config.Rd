@@ -7,7 +7,7 @@
 create_config(app_name, app_dir, pkgs, remotes = "none",
   repo = "http://cran.rstudio.com", error_log = "error.log",
   app_repo_url = "none", auth_user = "none", auth_pw = "none",
-  user_browser = "chrome")
+  auth_token = Sys.getenv("GITHUB_PAT"), user_browser = "chrome")
 }
 \arguments{
 \item{app_name}{The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -24,9 +24,11 @@ create_config(app_name, app_dir, pkgs, remotes = "none",
 
 \item{app_repo_url}{Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.}
 
-\item{auth_user}{Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.}
+\item{auth_user}{Bitbucket username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.}
 
-\item{auth_pw}{Password to Bitbucket or GitHub.}
+\item{auth_pw}{Password to Bitbucket}
+
+\item{auth_token}{To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others. Defaults to the GITHUB_PAT environment variable.}
 
 \item{user_browser}{Character for the default browser. Options include "chrome", "firefox", and "ie."}
 }

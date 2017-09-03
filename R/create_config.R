@@ -5,8 +5,9 @@
 #' @param repo Default repository to install package dependencies from. This defaults to \code{repo = "http://cran.rstudio.com"}.
 #' @param error_log Name of error logging file. Contains start up errors from \emph{run.R}.
 #' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
-#' @param auth_user Authorized username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
-#' @param auth_pw Password to Bitbucket or GitHub.
+#' @param auth_user Bitbucket username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
+#' @param auth_pw Bitbucket password matching the above username.
+#' @param auth_token To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others. Defaults to the GITHUB_PAT environment variable.
 #' @param user_browser Character for the default browser. Options include "chrome", "firefox", and "ie."
 #'
 #' @author Jonathan M. Hill
@@ -17,7 +18,7 @@
 
 create_config <- function(app_name, app_dir, pkgs,
   remotes = "none", repo = "http://cran.rstudio.com",  error_log = "error.log",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none", user_browser = "chrome") {
+  app_repo_url = "none", auth_user = "none", auth_pw = "none", auth_token = Sys.getenv("GITHUB_PAT"), user_browser = "chrome") {
 
   # Reset defaults if empty
   for (formal in names(formals(create_config))) {
@@ -72,6 +73,7 @@ create_config <- function(app_name, app_dir, pkgs,
       app_repo = app_repo,
       auth_user = auth_user,
       auth_pw = auth_pw,
+      auth_token = auth_token,
       remotes = remotes,
       user_browser = tolower(user_browser),
       flex_file = flex_file),
