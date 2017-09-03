@@ -96,7 +96,7 @@ create_app <- function(app_name,
     main_url = dots$main_url)
 
   # Setup Section
-  iss <- setup(iss, dir_out, app_version = dots$app_version,
+  iss <- setup(iss, app_dir, dir_out, app_version = dots$app_version,
     default_dir = dots$default_dir, privilege = dots$privilege,
     info_before = dots$info_before, info_after = dots$info_after,
     setup_icon = dots$setup_icon, inst_pw = dots$inst_pw,
@@ -109,12 +109,12 @@ create_app <- function(app_name,
   # Tasks Section
   iss <- tasks(iss, desktop_icon = dots$desktop_icon)
 
+  # Icons Section
+  iss <- icons(iss, app_dir, app_desc = dots$app_desc, app_icon = dots$app_icon,
+    prog_menu_icon = dots$prog_menu_icon, desktop_icon = dots$desktop_icon)
+
   # Files Section
   iss <- files(iss, app_dir, file_list = dots$file_list)
-
-  # Icons Section
-  iss <- icons(iss, app_desc = dots$app_desc, app_icon = dots$app_icon,
-        prog_menu_icon = dots$prog_menu_icon, desktop_icon = dots$desktop_icon)
 
   # Execution & Pascal code to check registry during installation
   iss <- run(iss); iss <- code(iss)
