@@ -45,14 +45,14 @@
 #' @author Jonathan M. Hill
 #' @export
 
-setup <- function(iss, dir_out,
+setup <- function(iss, app_dir, dir_out,
   app_version = "{#MyAppVersion}",
   name        = "{#MyAppName}",
   publisher   = "{#MyAppPublisher}",
   default_dir = "userdocs",
   privilege   = "lowest",
   info_before = "infobefore.txt",
-  info_after  = "none",
+  info_after  = "infoafter.txt",
   license_file= "none",
   setup_icon  = "setup.ico",
   inst_pw     = "none",
@@ -66,11 +66,53 @@ setup <- function(iss, dir_out,
     if (length(get(formal)) == 0) assign(formal, formals(setup)[formal])
   }
 
-  # Encrypt the installer if a pw is provided
-  if (inst_pw == "none") {
-    encrypt <- NULL; inst_pw <- NULL
+  # If infobefore or infoafter are not the default, remove the old file
+  if (info_before != formals(setup)$info_before) {
+    suppressWarnings(file.remove(file.path(app_dir, formals(setup)$info_before)))
+  }
+  if (!file.exists(file.path(app_dir, info_before))) {
+    warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
+                    info_before, app_dir), call. = FALSE)
+  }
+  if (info_after != formals(setup)$info_after) {
+    suppressWarnings(file.remove(file.path(app_dir, formals(setup)$info_after)))
+  }
+  if (!file.exists(file.path(app_dir, info_after))) {
+    warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
+                    info_after, app_dir), call. = FALSE)
+  }
+  # If setup_icon is not the default, remove the default file
+  if (setup_icon != formals(setup)$setup_icon) {
+    suppressWarnings(file.remove(file.path(app_dir, formals(setup)$setup_icon)))
+  }
+  if (!file.exists(file.path(app_dir, setup_icon))) {
+    warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
+                    setup_icon, app_dir), call. = FALSE)
+  }
+
+  # Copy RInno's license into app_dir
+  file.copy(system.file("LICENSE", package = "RInno"),
+            file.path(app_dir, "LICENSE"))
+
+  # If a second license file is not provided, the standard license is NULL
+  if (license_file == formals(setup)$license_file) {
+    license_file <- NULL
   } else {
+    if (!file.exists(file.path(app_dir, license_file))) {
+      warning(sprintf("Make sure %s is in %s before you call compile_iss()",
+                      license_file, app_dir))
+    }
+  }
+
+  if (inst_pw == formals(setup)$inst_pw) {
+    encrypt <- NULL
+    inst_pw <- NULL
+
+  } else {
+
+    # Encrypt the installer if a pw is provided
     encrypt <- "yes"
+
     # Find the Inno Setup folder
     progs <- c(list.dirs("C:/Program Files", T, F),
                list.dirs("C:/Program Files (x86)", T, F))
@@ -81,8 +123,6 @@ setup <- function(iss, dir_out,
       stop("RInno could not find ISCrypt.dll in your Inno Setup directory. Make sure you have followed the installation instructions found on Inno Setup's downloads page (http://www.jrsoftware.org/isdl.php) to use this feature.")
     }
   }
-  if (license_file == "none") license_file <- NULL
-  if (info_after == "none") info_after <- NULL
 
   # Inno Setup AppId must be a 32-bit random string that follows this pattern
   iss <- c(iss, "\n[Setup]",

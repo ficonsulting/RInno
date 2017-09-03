@@ -1,6 +1,6 @@
 #' Icons Section of ISS
 #'
-#' Shortcuts Inno Setup is to create in the Start Menu and/or other locations,
+#' Shortcuts Inno Setup creates in the Start Menu and/or other locations,
 #' such as the desktop. For more information, see \href{http://www.jrsoftware.org/ishelp/topic_iconssection.htm}{[Icons] section}, or call \code{inno_doc()}.
 #'
 #' @param app_desc Description of Shiny app, appears on mouse-over of icons.
@@ -17,13 +17,23 @@
 #' @author Jonathan M. Hill
 #' @export
 
-icons <- function(iss,
+icons <- function(iss, app_dir,
   app_desc = "", app_icon = "default.ico",
   prog_menu_icon = TRUE, desktop_icon = TRUE) {
 
   # Reset defaults if empty
   for (formal in names(formals(icons))) {
     if (length(get(formal)) == 0) assign(formal, formals(icons)[formal])
+  }
+
+  # If a custom icon is provided, delete default.ico
+  if (app_icon != formals(icons)$app_icon) {
+    suppressWarnings(file.remove(file.path(app_dir, formals(icons)$app_icon)))
+  }
+  # If app icon does not exist, fail
+  if (!file.exists(file.path(app_dir, app_icon))) {
+    warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
+                    app_icon, app_dir), call. = FALSE)
   }
 
   if (app_desc == "") {
