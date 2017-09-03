@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-04-18" />
+<meta name="date" content="2017-09-01" />
 
 <title>Continuous Installation</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Continuous Installation</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-04-18</em></h4>
+<h4 class="date"><em>2017-09-01</em></h4>
 
 
 
@@ -80,7 +80,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>A URL to the app’s repo, <code>app_repo_url</code> (for private repos, provide <code>auth_user</code> and <code>auth_pw</code>). This should be the full URL like, <a href="https://github.com/Dripdrop12/RInnoApp" class="uri">https://github.com/Dripdrop12/RInnoApp</a>.</li>
 <li>A release tag on GitHub, or a version on BitBucket. If you forget to create a release, your app will error when it calls <code>get_remote_version</code> and <code>parsed_response</code>’s subscript will be “out of bounds” because the list will be empty.</li>
 <li>An R package structure that can be installed via <code>devtools::install_github</code> or <code>devtools::install_bitbucket</code>.</li>
-<li>Add your app to the <code>pkgs</code> argument of <code>create_app</code></li>
 </ol>
 <p>The release tag or version is compared with the package DESCRIPTION file, i.e. <code>0.0.0.9000</code>, to determine if the app should call <code>devtools::install_github</code> or <code>devtools::install_bitbucket</code> respectively. So update the app’s version in both places (2 &amp; 3 above) with each new version, otherwise the app will re-install every time its icon is clicked.</p>
 <div id="r-package-structure" class="section level2">
@@ -204,7 +203,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
