@@ -7,7 +7,7 @@
 #' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
 #' @param auth_user Bitbucket username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
 #' @param auth_pw Bitbucket password matching the above username.
-#' @param auth_token To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others. Defaults to the GITHUB_PAT environment variable.
+#' @param auth_token To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others.
 #' @param user_browser Character for the default browser. Options include "chrome", "firefox", and "ie."
 #'
 #' @author Jonathan M. Hill
@@ -18,7 +18,7 @@
 
 create_config <- function(app_name, app_dir, pkgs,
   remotes = "none", repo = "http://cran.rstudio.com",  error_log = "error.log",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none", auth_token = Sys.getenv("GITHUB_PAT"), user_browser = "chrome") {
+  app_repo_url = "none", auth_user = "none", auth_pw = "none", auth_token = "none", user_browser = "chrome") {
 
   # Reset defaults if empty
   for (formal in names(formals(create_config))) {

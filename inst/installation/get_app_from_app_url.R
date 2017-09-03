@@ -86,7 +86,7 @@ if (api_response != "none") {
           auth_user = config$auth_user, password = config$auth_pw)
       }
     } else if (config$host == "github") {
-      if (config$auth_user == "none") {
+      if (config$auth_token == "none") {
         devtools::install_github(config$app_repo)
       } else {
         devtools::install_github(config$app_repo, auth_token = config$auth_token)
@@ -107,7 +107,7 @@ if (api_response != "none") {
             auth_user = config$auth_user, password = config$auth_pw)
         }
       } else if (config$host == "github") {
-        if (config$auth_user == "none") {
+        if (config$auth_token == "none") {
           devtools::install_github(config$app_repo)
         } else {
           devtools::install_github(config$app_repo, auth_token = config$auth_token)
