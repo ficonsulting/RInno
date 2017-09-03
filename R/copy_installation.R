@@ -32,7 +32,7 @@ copy_installation <- function(app_dir) {
   install_files <- list.files(system.file("installation", package = "RInno"), full.names = T)
 
   # Files for each dir
-  base_files   <- grep("iss$|wsf$|js$|R$", install_files, value = TRUE, invert = TRUE)
+  base_files   <- grep("ico$|txt$", install_files, value = TRUE)
   wsf_files    <- grep("wsf$", install_files, value = TRUE)
   wsf_js_files <- grep("js$", install_files, value = TRUE)
   utils_files  <- grep(".R$", install_files, value = TRUE)
