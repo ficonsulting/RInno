@@ -27,6 +27,9 @@ files <- function(iss, app_dir, file_list = character()) {
 
   iss <- c(iss, gsub("/", "\\\\", c(
   '\n[Files]',
+
+  'Source: "LICENSE"; Flags: dontcopy',
+
   'Source: "{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion',
 
   '#if IncludeR',
