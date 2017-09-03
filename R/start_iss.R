@@ -11,7 +11,7 @@
 #'   directives(include_R = FALSE, R_version = '3.3.2')
 #' }
 #'
-#' @return \code{app_name} and set \code{options('Rinno.app_name' = app_name)}
+#' @return \code{app_name} and set \code{options('RInno.app_name' = app_name)}
 #'
 #' @seealso \code{\link{directives}}.
 #' @author Jonathan M. Hill

@@ -4,11 +4,13 @@
 \alias{icons}
 \title{Icons Section of ISS}
 \usage{
-icons(iss, app_desc = "", app_icon = "default.ico", prog_menu_icon = TRUE,
-  desktop_icon = TRUE)
+icons(iss, app_dir, app_desc = "", app_icon = "default.ico",
+  prog_menu_icon = TRUE, desktop_icon = TRUE)
 }
 \arguments{
 \item{iss}{Character vector which cumulatively becomes an Inno Setup Script (ISS).}
+
+\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
 
 \item{app_desc}{Description of Shiny app, appears on mouse-over of icons.}
 
@@ -22,7 +24,7 @@ icons(iss, app_desc = "", app_icon = "default.ico", prog_menu_icon = TRUE,
 Chainable character vector, which can be used as the \code{text} argument of \code{\link{writeLines}} to generate an ISS.
 }
 \description{
-Shortcuts Inno Setup is to create in the Start Menu and/or other locations,
+Shortcuts Inno Setup creates in the Start Menu and/or other locations,
 such as the desktop. For more information, see \href{http://www.jrsoftware.org/ishelp/topic_iconssection.htm}{[Icons] section}, or call \code{inno_doc()}.
 }
 \examples{

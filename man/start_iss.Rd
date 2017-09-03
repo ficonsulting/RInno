@@ -10,7 +10,7 @@ start_iss(app_name)
 \item{app_name}{The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 }
 \value{
-\code{app_name} and set \code{options('Rinno.app_name' = app_name)}
+\code{app_name} and set \code{options('RInno.app_name' = app_name)}
 }
 \description{
 Chain \code{\link{directives}} against this function to start building custom

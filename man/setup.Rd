@@ -4,15 +4,18 @@
 \alias{setup}
 \title{Setup Section of ISS}
 \usage{
-setup(iss, dir_out, app_version = "{#MyAppVersion}", name = "{#MyAppName}",
-  publisher = "{#MyAppPublisher}", default_dir = "userdocs",
-  privilege = "lowest", info_before = "infobefore.txt",
-  info_after = "none", license_file = "none", setup_icon = "setup.ico",
-  inst_pw = "none", pub_url = "{#MyAppURL}", sup_url = "{#MyAppURL}",
+setup(iss, app_dir, dir_out, app_version = "{#MyAppVersion}",
+  name = "{#MyAppName}", publisher = "{#MyAppPublisher}",
+  default_dir = "userdocs", privilege = "lowest",
+  info_before = "infobefore.txt", info_after = "infoafter.txt",
+  license_file = "none", setup_icon = "setup.ico", inst_pw = "none",
+  pub_url = "{#MyAppURL}", sup_url = "{#MyAppURL}",
   upd_url = "{#MyAppURL}", compression = "lzma2/ultra64")
 }
 \arguments{
 \item{iss}{Character vector which cumulatively becomes an Inno Setup Script (ISS).}
+
+\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
 
 \item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.}
 

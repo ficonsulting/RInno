@@ -58,7 +58,7 @@ appexit_msg <- tryCatch({
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
   ._ <- lapply(pkgs, ensure, repo = config$pkgs$cran)
   if (remotes[1] != "none") {
-    setWinProgressBar(pb, 0, label = "Ensuring GitHub package dependencies ...")
+    setWinProgressBar(pb, 0, label = "Ensuring Remote package dependencies ...")
     ._ <- lapply(remotes, ensure_remotes)
   }
 
