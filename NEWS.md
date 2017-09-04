@@ -1,8 +1,12 @@
+# RInno v0.1.1
+* Patched the way that RInno handles icons and text files. The defaults are removed if they have been changed so they will no longer cause Inno Setup compilation errors. Thanks [@sollano](https://github.com/sollano) for uncovering this bug!
+* Fixed the private repo process for continuous installations from Github. Added a new argument `auth_token`, which uses a [Github token](https://github.com/settings/tokens) to authenticate with private repos. [@sollano](https://github.com/sollano) again provided amazingly detailed information that helped us resolve this issue.
+
 # RInno v0.1.0
 * Major improvements to registry checks and app start up sequence
     * RInno installers now query the registry during installation so that local Shiny apps can use registry information during their startup sequence. The registry is queried for R, Pandoc, Chrome, Firefox, and Internet Explorer. If you would like any other software added to the regpaths.json output, give us a holler!
     * This should make Shiny apps installed with RInno reliable for large numbers of users because strange installation bugs are often caused by unique desktop setups. RInno v0.1.0 should reduce the maintenance cost of local installations and make them scalable for medium-sized organizations and teams.
-* Hanjo Odendall added support for [flexdashboards](http://rmarkdown.rstudio.com/flexdashboard/). Thanks Hanjo!
+* Hanjo Odendall ([@HanjoStudy](https://github.com/HanjoStudy)) added support for [flexdashboards](http://rmarkdown.rstudio.com/flexdashboard/). Thanks Hanjo!
     * Similar to the way that RInno installers can include copies of R, they can now include a copy of Pandoc to support the installation of flexdashboards. Because the registry query (detailed above) is performed post-install, these installation paths are captured by the registry query and can be used in the app startup sequence.
 * Our next release in September - October should include support for OAuth2 for RInno apps using continuous installation.
 
