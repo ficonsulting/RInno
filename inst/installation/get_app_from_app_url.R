@@ -20,7 +20,7 @@ get_remote_version <- function(
   }
 
   # Private Repos
-  if (auth_pw != "none") {
+  if (auth_pw != "none" | auth_token != "none") {
     if (host == "bitbucket") {
       base_url <-
         sprintf("https://api.bitbucket.org/2.0/repositories/%s/versions",
@@ -79,7 +79,7 @@ if (api_response != "none") {
                       label = sprintf("Installing %s", config$appname[[1]]))
 
     if (config$host == "bitbucket") {
-      if (config$auth_user == "none") {
+      if (config$auth_pw == "none") {
         devtools::install_bitbucket(config$app_repo)
       } else {
         devtools::install_bitbucket(config$app_repo,
@@ -100,7 +100,7 @@ if (api_response != "none") {
                                         config$appname[[1]], api_response))
 
       if (config$host == "bitbucket") {
-        if (config$auth_user == "none") {
+        if (config$auth_pw == "none") {
           devtools::install_bitbucket(config$app_repo)
         } else {
           devtools::install_bitbucket(config$app_repo,
