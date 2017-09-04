@@ -18,7 +18,7 @@
 
 # RInno v0.0.2
 * Added support for GitHub package dependencies
-    * Thanks Dean Attali for this feature request
+    * Thanks Dean Attali ([@daattali](https://github.com/daattali/)) for this feature request
 * Fixed `error_log` so that its name can be customized properly
 * Cleaned up installation paths
 * Added Firefox to the browser search path in `app.R`:
