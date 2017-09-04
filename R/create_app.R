@@ -85,7 +85,8 @@ create_app <- function(app_name,
   create_config(app_name, app_dir, pkgs,
     remotes = dots$remotes, repo = dots$repo, error_log = dots$error_log,
     app_repo_url = dots$app_repo_url, auth_user = dots$auth_user,
-    auth_pw = dots$auth_pw, user_browser = dots$user_browser)
+    auth_pw = dots$auth_pw, auth_token = dots$auth_token,
+    user_browser = dots$user_browser)
 
   # Build the iss script
   iss <- start_iss(app_name)
