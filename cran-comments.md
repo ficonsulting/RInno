@@ -1,6 +1,6 @@
 ## This update
-* adds support for flexdashboards
-* improves the stability of shiny app start up sequence
+* fixes bugs in the GitHub continuous installation methodology
+* improves the way RInno handles icons and txt files used to build installation packages
 
 ## Test environments
 * local OS Windows 7 x64, R 3.4.1
