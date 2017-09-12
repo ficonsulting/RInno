@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-09-01" />
+<meta name="date" content="2017-09-11" />
 
 <title>Continuous Installation</title>
 
@@ -70,21 +70,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Continuous Installation</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-09-01</em></h4>
+<h4 class="date"><em>2017-09-11</em></h4>
 
 
 
-<p>RInno supports continuous installation of shiny apps through APIs to public/private BitBucket and GitHub repos. On start up, RInno apps call your repository. If there have been any hotfixes or releases since installation, the app automatically updates, letting its user know through a windows progress bar, and then opens normally.</p>
+<p>RInno supports continuous installation of shiny apps through APIs to public/private BitBucket and GitHub repos. If you follow the directions in this vignette, RInno apps will call your repository each time a user clicks their icon. If there have been any hotfixes or releases since installation, the app automatically updates, letting its user know through a windows progress bar, and then opens normally.</p>
 <p>This feature requires:</p>
 <ol style="list-style-type: decimal">
-<li>A URL to the app’s repo, <code>app_repo_url</code> (for private repos, provide <code>auth_user</code> and <code>auth_pw</code>). This should be the full URL like, <a href="https://github.com/Dripdrop12/RInnoApp" class="uri">https://github.com/Dripdrop12/RInnoApp</a>.</li>
-<li>A release tag on GitHub, or a version on BitBucket. If you forget to create a release, your app will error when it calls <code>get_remote_version</code> and <code>parsed_response</code>’s subscript will be “out of bounds” because the list will be empty.</li>
-<li>An R package structure that can be installed via <code>devtools::install_github</code> or <code>devtools::install_bitbucket</code>.</li>
+<li>A URL to the app’s repo, <code>app_repo_url</code>. This should be the full URL like, <a href="https://github.com/Dripdrop12/RInnoApp" class="uri">https://github.com/Dripdrop12/RInnoApp</a>.</li>
+<li>A release tag on GitHub, or a version on BitBucket. If you forget to create a release, your app will error when it calls <code>get_remote_version</code> and <code>parsed_response</code>’s subscript will be “out of bounds.”</li>
+<li>An R package structure that can be installed via <code>devtools::install_github</code> or <code>devtools::install_bitbucket</code>. I recommend testing this before compiling your RInno .exe.</li>
 </ol>
 <p>The release tag or version is compared with the package DESCRIPTION file, i.e. <code>0.0.0.9000</code>, to determine if the app should call <code>devtools::install_github</code> or <code>devtools::install_bitbucket</code> respectively. So update the app’s version in both places (2 &amp; 3 above) with each new version, otherwise the app will re-install every time its icon is clicked.</p>
 <div id="r-package-structure" class="section level2">
 <h2>R Package Structure</h2>
-<p>To connect a shiny app to a remote repository, the app must be on Github or Bitbucket, and it must be in the <code>inst/app</code> directory of an R package. The easiest way to do this is by creating a new project in RStudio and selecting R Package. See Dean Attali’s <a href="http://deanattali.com/2015/04/21/r-package-shiny-app/">Blog</a> for a detailed tutorial on including shiny apps in your R package.</p>
+<p>To connect a shiny app to a remote repository, the app must be on Github or Bitbucket, and it must be in the <code>inst/app</code> directory of an R package. The easiest way to do this is by creating a new project in RStudio and selecting R Package. See Dean Attali’s <a href="http://deanattali.com/2015/04/21/r-package-shiny-app/">Blog</a> for a detailed tutorial on including shiny apps in an R package.</p>
 <table>
 <thead>
 <tr class="header">
@@ -157,18 +157,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="co"># -------------------------------------------------- Many steps later</span>
 <span class="kw">compile_iss</span>()</code></pre></div>
-<p>Shiny apps compiled/installed this way will call the BitBucket API on start up, and re-install every time there is an update to the BitBucket repo’s version.</p>
+<p>Shiny apps compiled/installed this way will call the BitBucket API on start up, and re-install every time there is an update to the BitBucket repo’s version. For public repos, you do not need to provide <code>auth_user</code> and <code>auth_pw</code>.</p>
 </div>
 <div id="github" class="section level2">
 <h2>GitHub</h2>
-<p>On GitHub, create a release for the app. The release(s) tab is located on the repo’s homepage next to branch(es) just before contributor(s). Add <code>0.0.0.9000</code> to the release tag and within the package’s DESCRIPTION file, <code>Version: 0.0.0.9000</code>. This will make the release tag accessible via GitHub’s API.</p>
+<p>On GitHub, create a release for the app. The release(s) tab is located on the repo’s homepage next to branch(es) just before contributor(s). Add <code>0.0.0.9000</code> to the release tag and within the package’s DESCRIPTION file, <code>Version: 0.0.0.9000</code>. This will make the release tag accessible via GitHub’s API. For private repos, you will need to create an app <a href="https://github.com/settings/tokens">token</a>.</p>
 <p>Then create an RInno installer:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">create_app</span>(
   <span class="dt">app_name     =</span> <span class="st">&quot;myapp&quot;</span>, 
   <span class="dt">app_repo_url =</span> <span class="st">&quot;https://github.com/fi_consulting/myapp&quot;</span>,
   <span class="dt">pkgs         =</span> <span class="kw">c</span>(<span class="st">&quot;magrittr&quot;</span>, <span class="st">&quot;httr&quot;</span>, <span class="st">&quot;shiny&quot;</span>, <span class="st">&quot;myapp&quot;</span>),
-  <span class="dt">auth_user    =</span> <span class="st">&quot;&lt;read_only_username&gt;&quot;</span>,
-  <span class="dt">auth_pw      =</span> <span class="st">&quot;&lt;password&gt;&quot;</span>)
+  <span class="dt">auth_token   =</span> <span class="st">&quot;&lt;app_token&gt;&quot;</span>)
 
 <span class="kw">compile_iss</span>()</code></pre></div>
 <p>Or for custom installers, directly through <code>create_config</code>:</p>
@@ -178,12 +177,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <span class="dt">app_dir      =</span> <span class="st">&quot;app&quot;</span>, 
   <span class="dt">app_repo_url =</span> <span class="st">&quot;https://github.com/fi_consulting/myapp&quot;</span>,
   <span class="dt">pkgs         =</span> <span class="kw">c</span>(<span class="st">&quot;magrittr&quot;</span>, <span class="st">&quot;httr&quot;</span>, <span class="st">&quot;shiny&quot;</span>, <span class="st">&quot;myapp&quot;</span>),
-  <span class="dt">auth_user    =</span> <span class="st">&quot;&lt;read_only_username&gt;&quot;</span>, 
-  <span class="dt">auth_pw      =</span> <span class="st">&quot;&lt;password&gt;&quot;</span>)
+  <span class="dt">auth_token   =</span> <span class="st">&quot;&lt;app_token&gt;&quot;</span>)
 
 <span class="co"># -------------------------------------------------- Many steps later</span>
 <span class="kw">compile_iss</span>()</code></pre></div>
-<p>Shiny apps compiled/installed this way will call the GitHub API on start up, and re-install every time there is an update to the GitHub repo’s most recent release tag.</p>
+<p>Shiny apps compiled/installed this way will call the GitHub API on start up, and re-install every time there is an update to the GitHub repo’s most recent release tag. For public repos, you do not need to provide <code>auth_token</code>.</p>
 <div id="a-note-on-versions" class="section level3">
 <h3>A Note on Versions</h3>
 <p>A released version number consists of three numbers, <code>major.minor.patch</code>. <a href="http://semver.org/">Semantic Versioning 2.0.0</a> is a good specification to follow because <code>numeric_version</code> will interpret it correctly:</p>

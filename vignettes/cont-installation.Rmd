@@ -9,20 +9,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-RInno supports continuous installation of shiny apps through APIs to public/private BitBucket and GitHub repos. On start up, RInno apps call your repository. If there have been any hotfixes or releases since installation, the app automatically updates, letting its user know through a windows progress bar, and then opens normally. 
+RInno supports continuous installation of shiny apps through APIs to public/private BitBucket and GitHub repos. If you follow the directions in this vignette, RInno apps will call your repository each time a user clicks their icon. If there have been any hotfixes or releases since installation, the app automatically updates, letting its user know through a windows progress bar, and then opens normally. 
 
 This feature requires:
 
-1. A URL to the app's repo, `app_repo_url` (for private repos, provide `auth_user` and `auth_pw`). This should be the full URL like, https://github.com/Dripdrop12/RInnoApp.
-2. A release tag on GitHub, or a version on BitBucket. If you forget to create a release, your app will error when it calls `get_remote_version` and `parsed_response`'s subscript will be "out of bounds" because the list will be empty.
-3. An R package structure that can be installed via `devtools::install_github` or `devtools::install_bitbucket`.
+1. A URL to the app's repo, `app_repo_url`. This should be the full URL like, https://github.com/Dripdrop12/RInnoApp.
+2. A release tag on GitHub, or a version on BitBucket. If you forget to create a release, your app will error when it calls `get_remote_version` and `parsed_response`'s subscript will be "out of bounds."
+3. An R package structure that can be installed via `devtools::install_github` or `devtools::install_bitbucket`. I recommend testing this before compiling your RInno .exe.
 
 The release tag or version is compared with the package DESCRIPTION file, i.e. `0.0.0.9000`, to determine if the app should call `devtools::install_github` or `devtools::install_bitbucket` respectively. So update the app's version in both places (2 & 3 above) with each new version, otherwise the app will re-install every time its icon is clicked.
 
 
 ## R Package Structure
 
-To connect a shiny app to a remote repository, the app must be on Github or Bitbucket, and it must be in the `inst/app` directory of an R package. The easiest way to do this is by creating a new project in RStudio and selecting R Package.  See Dean Attali's [Blog](http://deanattali.com/2015/04/21/r-package-shiny-app/) for a detailed tutorial on including shiny apps in your R package.
+To connect a shiny app to a remote repository, the app must be on Github or Bitbucket, and it must be in the `inst/app` directory of an R package. The easiest way to do this is by creating a new project in RStudio and selecting R Package.  See Dean Attali's [Blog](http://deanattali.com/2015/04/21/r-package-shiny-app/) for a detailed tutorial on including shiny apps in an R package.
 
 | package/ |      |         |
 |------:   |:-----|:--------|
@@ -70,12 +70,12 @@ create_config(
 compile_iss()
 ```
 
-Shiny apps compiled/installed this way will call the BitBucket API on start up, and re-install every time there is an update to the BitBucket repo's version.
+Shiny apps compiled/installed this way will call the BitBucket API on start up, and re-install every time there is an update to the BitBucket repo's version. For public repos, you do not need to provide `auth_user` and `auth_pw`.
 
 
 ## GitHub
 
-On GitHub, create a release for the app. The release(s) tab is located on the repo's homepage next to branch(es) just before contributor(s). Add `0.0.0.9000` to the release tag and within the package's DESCRIPTION file, `Version: 0.0.0.9000`. This will make the release tag accessible via GitHub's API. 
+On GitHub, create a release for the app. The release(s) tab is located on the repo's homepage next to branch(es) just before contributor(s). Add `0.0.0.9000` to the release tag and within the package's DESCRIPTION file, `Version: 0.0.0.9000`. This will make the release tag accessible via GitHub's API. For private repos, you will need to create an app [token](https://github.com/settings/tokens). 
 
 Then create an RInno installer:
 
@@ -84,8 +84,7 @@ create_app(
   app_name     = "myapp", 
   app_repo_url = "https://github.com/fi_consulting/myapp",
   pkgs         = c("magrittr", "httr", "shiny", "myapp"),
-  auth_user    = "<read_only_username>",
-  auth_pw      = "<password>")
+  auth_token   = "<app_token>")
 
 compile_iss()
 ```
@@ -99,14 +98,13 @@ create_config(
   app_dir      = "app", 
   app_repo_url = "https://github.com/fi_consulting/myapp",
   pkgs         = c("magrittr", "httr", "shiny", "myapp"),
-  auth_user    = "<read_only_username>", 
-  auth_pw      = "<password>")
+  auth_token   = "<app_token>")
 
 # -------------------------------------------------- Many steps later
 compile_iss()
 ```
 
-Shiny apps compiled/installed this way will call the GitHub API on start up, and re-install every time there is an update to the GitHub repo's most recent release tag.
+Shiny apps compiled/installed this way will call the GitHub API on start up, and re-install every time there is an update to the GitHub repo's most recent release tag. For public repos, you do not need to provide `auth_token`.
 
 
 ### A Note on Versions

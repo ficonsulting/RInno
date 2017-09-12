@@ -26,8 +26,7 @@
 #    app_name     = "myapp",
 #    app_repo_url = "https://github.com/fi_consulting/myapp",
 #    pkgs         = c("magrittr", "httr", "shiny", "myapp"),
-#    auth_user    = "<read_only_username>",
-#    auth_pw      = "<password>")
+#    auth_token   = "<app_token>")
 #  
 #  compile_iss()
 
@@ -38,8 +37,7 @@
 #    app_dir      = "app",
 #    app_repo_url = "https://github.com/fi_consulting/myapp",
 #    pkgs         = c("magrittr", "httr", "shiny", "myapp"),
-#    auth_user    = "<read_only_username>",
-#    auth_pw      = "<password>")
+#    auth_token   = "<app_token>")
 #  
 #  # -------------------------------------------------- Many steps later
 #  compile_iss()
