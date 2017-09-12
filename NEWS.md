@@ -1,5 +1,5 @@
 # RInno v0.1.1
-* Patched the way that RInno handles icons and text files. The defaults are removed if they have been changed so they will no longer cause Inno Setup compilation errors. Thanks [@sollano](https://github.com/sollano) for uncovering this bug!
+* Patched the way that RInno handles icons and text files. The defaults no longer cause Inno Setup compilation errors when custom icons or messaging is provided. Thanks [@sollano](https://github.com/sollano) for uncovering this bug!
 * Fixed the private repo process for continuous installations from Github. Added a new argument `auth_token`, which uses a [Github token](https://github.com/settings/tokens) to authenticate with private repos. [@sollano](https://github.com/sollano) again provided amazingly detailed information that helped us resolve this issue.
 
 # RInno v0.1.0
