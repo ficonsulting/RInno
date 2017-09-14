@@ -3,24 +3,36 @@
 appwd <- getwd()
 applibpath <- file.path(appwd, "library")
 
+# Load functions to ensure software dependencies and check the internet
+source("utils/ensure.R")
+
 # Create app/library if it doesn't exist (e.g. first run)
 # Initialize RInno
 if (!dir.exists(applibpath)) {
-  dir.create(applibpath)
-  chooseCRANmirror(graphics = F, ind = 28)
 
   pb <- winProgressBar(
     title = "Starting RInno Deployment ...",
     label = "Initializing ...")
 
-  init_pkgs <- c("jsonlite", "devtools", "httr")
+  # Check the internet connection
+  if (ping_site("www.google.com")) {
+    dir.create(applibpath)
+    chooseCRANmirror(graphics = F, ind = 28)
 
-  for (i in seq_along(init_pkgs)) {
-    setWinProgressBar(pb, value = i / (length(init_pkgs) + 1),
-      label = sprintf("Loading package - %s", init_pkgs[i]))
-    install.packages(init_pkgs[i], applibpath, "http://cran.rstudio.com")
+    init_pkgs <- c("jsonlite", "devtools", "httr")
+
+    for (i in seq_along(init_pkgs)) {
+      setWinProgressBar(pb, value = i / (length(init_pkgs) + 1),
+        label = sprintf("Loading package - %s", init_pkgs[i]))
+      install.packages(init_pkgs[i], applibpath, "http://cran.rstudio.com")
+    }
+    close(pb)
+  } else {
+    setWinProgressBar(pb, 1, "No Internet Connection", "Please connect to the internet and try again.")
+    Sys.sleep(5)
+    close(pb)
+    quit("no", 1)
   }
-  close(pb)
 }
 
 .libPaths(c(applibpath, .libPaths()))
@@ -47,19 +59,18 @@ if (config$app_repo[[1]] != "none") {
   source("utils/get_app_from_app_url.R")
 }
 
-# Load functions to ensure software dependencies
-source("utils/ensure.R")
-
 # Use tryCatch to display error messages in config$logging$filename
 appexit_msg <- tryCatch({
 
   # ensure all package dependencies are installed
   message("ensuring packages: ", paste(pkgs, collapse = ", "))
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
-  ._ <- lapply(pkgs, ensure, repo = config$pkgs$cran)
-  if (remotes[1] != "none") {
-    setWinProgressBar(pb, 0, label = "Ensuring Remote package dependencies ...")
-    ._ <- lapply(remotes, ensure_remotes)
+  if (ping_site("www.google.com")) {
+    ._ <- lapply(pkgs, ensure, repo = config$pkgs$cran)
+    if (remotes[1] != "none") {
+      setWinProgressBar(pb, 0, label = "Ensuring Remote package dependencies ...")
+      ._ <- lapply(remotes, ensure_remotes)
+    }
   }
 
   for (i in seq_along(pkgs)) {

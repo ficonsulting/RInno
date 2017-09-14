@@ -23,3 +23,8 @@ ensure_remotes <- function(remote) {
   }
   library(pkg, character.only = TRUE)
 }
+
+# Internet connection test
+ping_site <- function(site_url) {
+  !as.logical(system(paste("ping -n 1", site_url)))
+}

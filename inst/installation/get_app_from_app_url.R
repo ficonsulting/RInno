@@ -4,6 +4,7 @@ get_remote_version <- function(
 
   # Fail early
   if (app_repo == "none") return("none")
+  if (!ping_site("www.google.com")) return("none")
 
   # Method to provide more specific feedback
   warn_user <- function(response) {
