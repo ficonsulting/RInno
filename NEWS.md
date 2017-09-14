@@ -1,6 +1,9 @@
+# RInno v0.1.2
+* Improved handling of internet connection status. If the app has never started before, it will stop and tell users to check their internet connection and try again. Otherwise, the app will start normally, but the app's log will have information about the fact that it pinged www.google.com and did not get a response. Thank you [@zhengle-advantaseeds](https://github.com/zhengle-advantaseeds) for reporting this user experience issue! [#22](https://github.com/ficonsulting/RInno/issues/22)
+
 # RInno v0.1.1
 * Patched the way that RInno handles icons and text files. The defaults no longer cause Inno Setup compilation errors when custom icons or messaging is provided. Thanks [@sollano](https://github.com/sollano) for uncovering this bug!
-* Fixed the private repo process for continuous installations from Github. Added a new argument `auth_token`, which uses a [Github token](https://github.com/settings/tokens) to authenticate with private repos. [@sollano](https://github.com/sollano) again provided amazingly detailed information that helped us resolve this issue.
+* Fixed the private repo process for continuous installations from Github. Added a new argument `auth_token`, which uses a [Github token](https://github.com/settings/tokens) to authenticate with private repos. [@sollano](https://github.com/sollano) again provided amazingly detailed information that helped us resolve this issue. [#19](https://github.com/ficonsulting/RInno/issues/19)
 
 # RInno v0.1.0
 * Major improvements to registry checks and app start up sequence
