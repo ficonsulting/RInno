@@ -37,7 +37,7 @@ Once you have developed a shiny app, you can build an installer with `create_app
 
 `create_app` creates an installation framework in your app's directory, `app_dir`. Feel free to customize it before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message, *infobefore.txt*. Just remember, the default values for those files have not changed. The Inno Setup Script (ISS), *app\_name.iss*, will look for *default.ico* and try to use it until you update the script or call `create_app` with the new icon's file name (i.e. `create_app(app_icon = "new.ico")`)
 
-Chrome is the default browser used by RInno because of its app mode feature (I've also found that IE/Edge brings risks posed by IT policies that prevent icons and third party JavaScript libraries from loading). The default `user_browser` setting will open Chrome in app mode, which looks more like a stand-alone app than when it opens in another tab of your default browser.
+Chrome is the default browser used by RInno because of its app mode feature (I've also found that IE/Edge can be buggy because IT policies can prevent icons and third party JavaScript libraries from loading). The default `user_browser` setting will open Chrome in app mode, which looks more like a stand-alone app than when it opens in another tab of your default browser.
 
 In order to get your app's icon to replace Chrome's logo, just add something like this to the top of your ui.R file:
 
