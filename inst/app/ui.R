@@ -5,6 +5,13 @@ library(datasets)
 # Use a fluid Bootstrap layout
 fluidPage(
 
+  tags$head(
+    tags$link(
+      rel = "icon",
+      type = "image/x-icon",
+      href = "http://localhost:1984/default.ico")
+  ),
+
   # Give the page a title
   titlePanel("Telephones by region"),
 

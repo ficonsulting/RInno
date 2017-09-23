@@ -1,4 +1,3 @@
-
 <img src="inst/app/www/RInno.png" width="101" />
 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ficonsulting/RInno?branch=master&svg=true)](https://ci.appveyor.com/project/ficonsulting/RInno) [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/RInno)](https://cran.r-project.org/package=RInno) [![Downloads](http://cranlogs.r-pkg.org/badges/RInno)](http://cran.rstudio.com/package=RInno) [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/RInno)](http://cran.rstudio.com/package=RInno) [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
@@ -36,7 +35,18 @@ Once you have developed a shiny app, you can build an installer with `create_app
     create_app(app_name = "Your appname", app_dir = "app")
     compile_iss()
 
-`create_app` creates an installation framework in your app's directory, `app_dir`. Feel free to customize it before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message, *infobefore.txt*. Just remember, the default values for those files have not changed. The Inno Setup Script (ISS), *app\_name.iss*, will look for *default.ico* and use it as your app's icon. You must replace *default.ico*, or rename *default.ico* in the ISS to use a different one.
+`create_app` creates an installation framework in your app's directory, `app_dir`. Feel free to customize it before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-install message, *infobefore.txt*. Just remember, the default values for those files have not changed. The Inno Setup Script (ISS), *app\_name.iss*, will look for *default.ico* and try to use it until you update the script or call `create_app` with the new icon's file name (i.e. `create_app(app_icon = "new.ico")`)
+
+Chrome is the default browser used by RInno because of its app mode feature (I've also found that IE/Edge brings risks posed by IT policies that prevent icons and third party JavaScript libraries from loading). The default `user_browser` setting will open Chrome in app mode, which looks more like a stand-alone app than when it opens in another tab of your default browser.
+
+In order to get your app's icon to replace Chrome's logo, just add something like this to the top of your ui.R file:
+
+    tags$head(
+        tags$link(
+          rel = "icon", 
+          type = "image/x-icon", 
+          href = "http://localhost:1984/default.ico")
+      ),
 
 For custom installations, see below.
 

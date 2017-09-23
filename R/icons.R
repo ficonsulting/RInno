@@ -30,10 +30,14 @@ icons <- function(iss, app_dir,
   if (app_icon != formals(icons)$app_icon) {
     suppressWarnings(file.remove(file.path(app_dir, formals(icons)$app_icon)))
   }
-  # If app icon does not exist, fail
+  # If app icon does not exist, warn developer
   if (!file.exists(file.path(app_dir, app_icon))) {
     warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
                     app_icon, app_dir), call. = FALSE)
+  } else {
+    www_dir <- file.path(app_dir, "www")
+    if (!dir.exists(www_dir)) dir.create(www_dir)
+    file.copy(file.path(app_dir, app_icon), www_dir)
   }
 
   if (app_desc == "") {

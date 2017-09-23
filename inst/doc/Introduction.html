@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-09-11" />
+<meta name="date" content="2017-09-22" />
 
 <title>Introduction</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-09-11</em></h4>
+<h4 class="date"><em>2017-09-22</em></h4>
 
 
 
@@ -95,7 +95,15 @@ RInno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
 <span class="co"># Build an installer</span>
 <span class="kw">create_app</span>(<span class="dt">app_name =</span> <span class="st">&quot;Your appname&quot;</span>, <span class="dt">app_dir =</span> <span class="st">&quot;app&quot;</span>)
 <span class="kw">compile_iss</span>()</code></pre></div>
-<p><code>create_app</code> creates an installation framework in your app’s directory, <code>app_dir</code>. Feel free to customize it before you call <code>compile_iss</code>. For example, you can replace the default/setup icon at <a href="http://www.flaticon.com/">Flaticon.com</a>, or you can customize the pre-install message, <em>infobefore.txt</em>. Just remember, the default values for those files have not changed. The Inno Setup Script (ISS), <em>app_name.iss</em>, will look for <em>default.ico</em> and use it as your app’s icon. You must replace <em>default.ico</em>, or rename <em>default.ico</em> in the ISS to use a different one.</p>
+<p><code>create_app</code> creates an installation framework in your app’s directory, <code>app_dir</code>. Feel free to customize it <strong>before</strong> you call <code>compile_iss</code>. For example, you can replace the default/setup icon at <a href="http://www.flaticon.com/">Flaticon.com</a>, or you can customize the pre-install message, <em>infobefore.txt</em>. Just remember, the default values for those files have not changed. The Inno Setup Script (ISS), <em>app_name.iss</em>, will look for <em>default.ico</em> and try to use it until you update the script or call <code>create_app</code> with the new icon’s file name (i.e. <code>create_app(app_icon = &quot;new.ico&quot;)</code>)</p>
+<p>Chrome is the default browser used by RInno because of its app mode feature (I’ve also found that IE/Edge brings risks posed by IT policies that prevent icons and third party JavaScript libraries from loading). The default <code>user_browser</code> setting will open Chrome in app mode, which looks more like a stand-alone app than when it opens in another tab of your default browser.</p>
+<p>In order to get your app’s icon to replace Chrome’s logo, just add something like this to the top of your ui.R file:</p>
+<pre><code>tags$head(
+    tags$link(
+      rel = &quot;icon&quot;, 
+      type = &quot;image/x-icon&quot;, 
+      href = &quot;http://localhost:1984/default.ico&quot;)
+  ),</code></pre>
 <p>For custom installations, see below.</p>
 </div>
 <div id="server.r-requirements" class="section level2">
@@ -132,7 +140,7 @@ RInno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
 <span class="kw">copy_installation</span>(<span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>)
 
 <span class="co"># If your users need R installed:</span>
-<span class="kw">get_R_exe</span>(<span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>, <span class="dt">R_version =</span> <span class="fl">2.2</span>.<span class="dv">1</span>)
+<span class="kw">get_R</span>(<span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>, <span class="dt">R_version =</span> <span class="fl">2.2</span>.<span class="dv">1</span>)
 
 <span class="co"># Create batch file</span>
 <span class="kw">create_bat</span>(<span class="dt">app_name =</span> <span class="st">&quot;My AppName&quot;</span>, <span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>)

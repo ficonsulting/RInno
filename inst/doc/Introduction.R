@@ -39,7 +39,7 @@
 #  copy_installation(app_dir = "my/app/path")
 #  
 #  # If your users need R installed:
-#  get_R_exe(app_dir = "my/app/path", R_version = 2.2.1)
+#  get_R(app_dir = "my/app/path", R_version = 2.2.1)
 #  
 #  # Create batch file
 #  create_bat(app_name = "My AppName", app_dir = "my/app/path")
