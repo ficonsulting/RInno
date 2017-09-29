@@ -18,7 +18,8 @@
 
 create_config <- function(app_name, app_dir, pkgs,
   remotes = "none", repo = "http://cran.rstudio.com",  error_log = "error.log",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none", auth_token = "none", user_browser = "chrome") {
+  app_repo_url = "none", auth_user = "none", auth_pw = "none", auth_token = "none",
+  user_browser = "chrome") {
 
   # Reset defaults if empty
   for (formal in names(formals(create_config))) {
