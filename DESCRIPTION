@@ -24,7 +24,8 @@ Imports:
     jsonlite (>= 1.5),
     rmarkdown (>= 1.6),
     shiny (>= 1.0.4),
-    stringr (>= 1.2.0)
+    stringr (>= 1.2.0),
+    glue (>= 1.1.1)
 Suggests:
     knitr,
     magrittr,

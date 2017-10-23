@@ -118,7 +118,7 @@ create_app <- function(app_name,
   iss <- files(iss, app_dir, file_list = dots$file_list)
 
   # Execution & Pascal code to check registry during installation
-  iss <- run(iss); iss <- code(iss)
+  iss <- run(iss, dots$R_flags); iss <- code(iss)
 
   # Write the Inno Setup script
   writeLines(iss, file.path(app_dir, paste0(app_name, ".iss")))
