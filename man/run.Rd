@@ -9,13 +9,24 @@ run(iss, R_flags = "/SILENT")
 \arguments{
 \item{iss}{Character vector which cumulatively becomes an Inno Setup Script (ISS).}
 
-\item{R_flags}{String of flags to customize R's installation. Defaults to "/SILENT". For other options, visit \href{https://cran.r-project.org/bin/windows/base/rw-FAQ.html#Can-I-customize-the-installation_003f}{Section 2.4} of the R FAQ. If useing the "/DIR='C:\\myapp'" flag, remember to escape the backslash.}
+\item{R_flags}{String of flags to customize R's installation. Defaults to "/SILENT". For other options, visit \href{https://cran.r-project.org/bin/windows/base/rw-FAQ.html#Can-I-customize-the-installation_003f}{Section 2.4} of the R FAQ. If using the '/DIR=""C:\\myapp""' flag, use double backslashes and double quotes. For more information on valid Inno Setup constants, see the \href{http://www.jrsoftware.org/ishelp/index.php?topic=consts}{Constants} section.}
 }
 \value{
 Chainable character vector, which can be used as the \code{text} argument of \code{\link{writeLines}} to generate an ISS.
 }
 \description{
 Specifies any number of programs to execute after the program has been successfully installed, but before the installer displays the final dialog. See \href{http://www.jrsoftware.org/ishelp/topic_runsection.htm}{[Run]} for details.
+}
+\examples{
+\dontrun{
+# You can combine custom R installation flags with Inno Setup constants
+create_app("myapp", "app", R_flags = '/SILENT /DIR=""{userdocs}""')
+
+run(iss, R_flags = '/SILENT /DIR=""{userdocs}""')
+
+}
+
+
 }
 \seealso{
 \code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.

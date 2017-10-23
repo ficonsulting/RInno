@@ -24,11 +24,11 @@ directives(app_name, include_R = FALSE, R_version = paste0(R.version$major,
 
 \item{publisher}{String displayed on the "Support" dialogue of the \emph{Add/Remove Programs} Control Panel applet, defaults to " ". See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_apppublisher}{[Setup]:AppPublisher} for details.}
 
-\item{main_url}{String. Defaults to " ".}
+\item{main_url}{String. Defaults to "".}
 
-\item{custom_vars}{String vector. Defaults to " ", and must be the same length as \code{custom_values}.}
+\item{custom_vars}{String vector. Defaults to "", and must be the same length as \code{custom_values}.}
 
-\item{custom_values}{String vector of values for \code{custom_vars}. Defaults to " ", and must be the same length as \code{custom_vars}.}
+\item{custom_values}{String vector of values for \code{custom_vars}. Defaults to "", and must be the same length as \code{custom_vars}.}
 }
 \value{
 Chainable character vector, which can be used as the \code{text} argument of \code{\link{writeLines}} to generate an ISS.
