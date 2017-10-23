@@ -21,30 +21,31 @@ files <- function(iss, app_dir, file_list = character()) {
     all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$|exe$|msi$", all_files)])
   }
 
-  file_dirs     <- gsub("\\.", "", dirname(all_files))
+  file_dirs     <- gsub("/", "\\\\", gsub("\\.", "", dirname(all_files)))
   blank_dirs    <- file_dirs == ""
   nonblank_dirs <- !blank_dirs
 
-  iss <- c(iss, gsub("/", "\\\\", c(
-  '\n[Files]',
+  # Files without a directory
+  blank_dir_files <- glue::glue('
+    Source: "{all_files[blank_dirs]}"; DestDir: "{{app}}"; Flags: ignoreversion;')
 
-  'Source: "LICENSE"; Flags: dontcopy',
+  # Files with a directory
+  dir_files <- glue::glue('
+    Source: "{all_files[nonblank_dirs]}"; DestDir: "{{app}}\\{file_dirs[nonblank_dirs]}"; Flags: ignoreversion;')
 
-  'Source: "{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion',
+glue::glue('
+          {iss}
 
-  '#if IncludeR',
-  '    Source: "R-{#RVersion}-win.exe"; DestDir: "{tmp}"; Check: RNeeded',
-  '#endif',
-
-  '#if IncludePandoc',
-  '    Source: "pandoc-{#PandocVersion}-windows.msi"; DestDir: "{tmp}"; Check: PandocNeeded',
-  '#endif',
-
-  sprintf('Source: "%s"; DestDir: "{app}"; Flags: ignoreversion;',
-          all_files[blank_dirs]),
-
-  sprintf('Source: "%s"; DestDir: "{app}\\%s"; Flags: ignoreversion;',
-          all_files[nonblank_dirs], file_dirs[nonblank_dirs]))))
-
-  iss
+          [Files]
+          Source: "LICENSE"; Flags: dontcopy
+          Source: "{{#MyAppExeName}}"; DestDir: "{{app}}"; Flags: ignoreversion
+          #if IncludeR
+              Source: "R-{{#RVersion}}-win.exe"; DestDir: "{{tmp}}"; Check: RNeeded
+          #endif
+          #if IncludePandoc
+              Source: "pandoc-{{#PandocVersion}}-windows.msi"; DestDir: "{{tmp}}"; Check: PandocNeeded
+          #endif
+          {collapse(blank_dir_files, "\n")}
+          {collapse(dir_files, "\n")}
+          ')
 }

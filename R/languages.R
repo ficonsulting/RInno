@@ -41,7 +41,7 @@ languages <- function(iss, language = "english") {
   unsupported_language <- language[!language %in% supported_languages]
 
   if (!all(language %in% supported_languages)) {
-    stop(sprintf("%s is not supported.", unsupported_language))
+    stop(glue::glue("{unsupported_language} is not supported."))
   }
 
   opts <- c('Name: "english"; MessagesFile: "compiler:Default.isl"',
@@ -73,6 +73,9 @@ languages <- function(iss, language = "english") {
 
   selected_opts <- opts[supported_languages %in% language]
 
-  iss <- c(iss, "\n[Languages]", selected_opts)
-  iss
+  glue::glue("
+    {iss}
+
+    [Languages]
+    {selected_opts}")
 }

@@ -32,8 +32,7 @@ icons <- function(iss, app_dir,
   }
   # If app icon does not exist, warn developer
   if (!file.exists(file.path(app_dir, app_icon))) {
-    warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
-                    app_icon, app_dir), call. = FALSE)
+    warning(glue::glue("Make sure {app_icon} is in {app_dir}/ before you call compile_iss()"), call. = FALSE)
   } else {
     www_dir <- file.path(app_dir, "www")
     if (!dir.exists(www_dir)) dir.create(www_dir)
@@ -41,26 +40,37 @@ icons <- function(iss, app_dir,
   }
 
   if (app_desc == "") {
-    icon_string <- sprintf('IconFilename: "{app}\\%s"', app_icon)
+    icon_string <- glue::glue('IconFilename: "{{app}}\\{app_icon}"')
 
   } else {
-    icon_string <-
-      sprintf('Comment: "%s"; IconFilename: "{app}\\%s"', app_desc, app_icon)
+    icon_string <- glue::glue(
+      'Comment: "{app_desc}"; IconFilename: "{{app}}\\{app_icon}"')
   }
 
-  iss <- c(iss, "\n[Icons]",
-    paste('Name: "{group}\\{#MyAppName}"; Filename: "{app}\\{#MyAppExeName}";',
-          icon_string),
-    'Name: "{group}\\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"')
+  iss <- glue::glue('
+                    {iss}
+
+                    [Icons]
+                    Name: "{{group}}\\{{#MyAppName}}"; Filename: \\
+                    "{{app}}\\{{#MyAppExeName}}"; {icon_string}
+                    Name: "{{group}}\\{{cm:UninstallProgram,{{#MyAppName}}}}"; \\
+                    Filename: "{{uninstallexe}}"
+                    ')
 
   if (as.logical(prog_menu_icon)) {
-    iss <- c(iss, paste('Name: "{commonprograms}\\{#MyAppName}"; Filename: "{app}\\{#MyAppExeName}";', icon_string))
+    iss <- glue::glue('
+                      {iss}
+                      Name: "{{commonprograms}}\\{{#MyAppName}}"; Filename: \\
+                      "{{app}}\\{{#MyAppExeName}}"; {icon_string}
+                      ')
   }
 
   if (as.logical(desktop_icon)) {
-    iss <- c(iss,
-              paste('Name: "{commondesktop}\\{#MyAppName}"; Filename: "{app}\\{#MyAppExeName}"; Tasks: desktopicon;', icon_string)
-    )
+    iss <- glue::glue('
+                      {iss}
+                      Name: "{{commondesktop}}\\{{#MyAppName}}"; Filename: \\
+                      "{{app}}\\{{#MyAppExeName}}"; Tasks: desktopicon; {icon_string}
+                      ')
   }
 
   iss

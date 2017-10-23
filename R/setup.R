@@ -71,23 +71,20 @@ setup <- function(iss, app_dir, dir_out,
     suppressWarnings(file.remove(file.path(app_dir, formals(setup)$info_before)))
   }
   if (!file.exists(file.path(app_dir, info_before))) {
-    warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
-                    info_before, app_dir), call. = FALSE)
+    warning(glue::glue("Make sure {info_before} is in {app_dir}/ before you call compile_iss()"), call. = FALSE)
   }
   if (info_after != formals(setup)$info_after) {
     suppressWarnings(file.remove(file.path(app_dir, formals(setup)$info_after)))
   }
   if (!file.exists(file.path(app_dir, info_after))) {
-    warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
-                    info_after, app_dir), call. = FALSE)
+    warning(glue::glue("Make sure {info_after} is in {app_dir}/ before you call compile_iss()"), call. = FALSE)
   }
   # If setup_icon is not the default, remove the default file
   if (setup_icon != formals(setup)$setup_icon) {
     suppressWarnings(file.remove(file.path(app_dir, formals(setup)$setup_icon)))
   }
   if (!file.exists(file.path(app_dir, setup_icon))) {
-    warning(sprintf("Make sure %s is in %s/ before you call compile_iss()",
-                    setup_icon, app_dir), call. = FALSE)
+    warning(glue::glue("Make sure {setup_icon} is in {app_dir}/ before you call compile_iss()"), call. = FALSE)
   }
 
   # Copy RInno's license into app_dir
@@ -99,8 +96,7 @@ setup <- function(iss, app_dir, dir_out,
     license_file <- NULL
   } else {
     if (!file.exists(file.path(app_dir, license_file))) {
-      warning(sprintf("Make sure %s is in %s before you call compile_iss()",
-                      license_file, app_dir))
+      warning(glue::glue("Make sure {license_file} is in {app_dir} before you call compile_iss()"), call. = FALSE)
     }
   }
 
@@ -125,35 +121,45 @@ setup <- function(iss, app_dir, dir_out,
   }
 
   # Inno Setup AppId must be a 32-bit random string that follows this pattern
-  iss <- c(iss, "\n[Setup]",
-    paste0("AppId = {{", paste0(lapply(lapply(c(8, 4, 4, 4, 12),
-      stringi::stri_rand_strings, length = 1, pattern = "[A-Z0-9]"),
-      paste0, collapse = ""), collapse = "-"), "}"),
+  app_id <- paste0("AppId = {{", paste0(lapply(lapply(c(8, 4, 4, 4, 12), stringi::stri_rand_strings, length = 1, pattern = "[A-Z0-9]"), paste0, collapse = ""), collapse = "-"), "}")
 
-  # Required options
-  sprintf("AppName = %s", name),
-  sprintf("DefaultDirName = {%s}\\%s", default_dir, name),
-  "DefaultGroupName = {#MyAppName}",
-  sprintf("OutputDir = %s", dir_out),
-  sprintf("OutputBaseFilename = setup_%s", name),
-  sprintf("SetupIconFile = %s", setup_icon),
+  # glue with << and >> so that brackets can be preserved
+  iss <- glue::glue('
+    <<iss>>
+    [Setup]
+    AppName = <<name>>
+    <<app_id>>
+    DefaultDirName = {<<default_dir>>}\\<<name>>
+    DefaultGroupName = <<name>>
+    OutputDir = <<dir_out>>
+    OutputBaseFilename = setup_<<name>>
+    SetupIconFile = <<setup_icon>>
+    AppVersion = <<app_version>>
+    AppPublisher = <<publisher>>
+    AppPublisherURL = <<pub_url>>
+    AppSupportURL = <<sup_url>>
+    AppUpdatesURL = <<upd_url>>
+    PrivilegesRequired = <<privilege>>
+    InfoBeforeFile = <<info_before>>
+    InfoAfterFile = <<info_after>>
+    Compression = <<compression>>
+    SolidCompression = yes', .open = "<<", .close = ">>")
 
-  # Optional options
-  sprintf("AppVersion = %s", app_version),
-  sprintf("AppPublisher = %s", publisher),
-  sprintf("AppPublisherURL = %s", pub_url),
-  sprintf("AppSupportURL = %s", sup_url),
-  sprintf("AppUpdatesURL = %s", upd_url),
-  sprintf("PrivilegesRequired = %s", privilege),
-  sprintf("InfoBeforeFile = %s", info_before),
-  sprintf("InfoAfterFile = %s", info_after),
-  sprintf("Compression = %s", compression),
-  sprintf("Password = %s", inst_pw),
-  sprintf("Encryption = %s", encrypt),
-  sprintf("LicenseFile = %s", license_file),
+  if (length(license_file) > 0) {
+    iss <- glue::glue("
+      {iss}
+      LicenseFile = {license_file}")
+  }
+  if (length(encrypt) > 0) {
+    iss <- glue::glue("
+      {iss}
+      Encryption = {encrypt}")
+  }
+  if (length(inst_pw) > 0) {
+    iss <- glue::glue("
+      {iss}
+      Password = {inst_pw}")
+  }
 
-  # Hardcoded option
-  "SolidCompression = yes")
-
-  iss
+  return(iss)
 }
