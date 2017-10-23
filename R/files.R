@@ -45,7 +45,7 @@ glue::glue('
           #if IncludePandoc
               Source: "pandoc-{{#PandocVersion}}-windows.msi"; DestDir: "{{tmp}}"; Check: PandocNeeded
           #endif
-          {collapse(blank_dir_files, "\n")}
-          {collapse(dir_files, "\n")}
+          {glue::collapse(blank_dir_files, "\n")}
+          {glue::collapse(dir_files, "\n")}
           ')
 }
