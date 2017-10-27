@@ -1,6 +1,7 @@
 # RInno v0.1.2
 * Swapped out many `sprintf` calls with RStudio's new `glue` function for interpolating strings. This should make RInno more flexible and easier to maintain and debug moving forward.
 * Added support for app mode when `user_browser = "chrome"`. RInno also automatically places `app_icon` in a "www/" directory and utilizes port 1984. This makes it easy to display the app's icon instead of Chrome's (see README for details). Big shout out to [@trybik](https://github.com/trybik) for this great suggestion.
+* Created an option to include an installation of Chrome with the app's installer w/ `include_Chrome = TRUE`.
 * Improved handling of internet connection status. If the app has never started before, it will stop and tell users to check their internet connection and try again. Otherwise, the app will start normally, but the app's log will have information about the fact that it pinged www.google.com and did not get a response. Thank you [@zhengle-advantaseeds](https://github.com/zhengle-advantaseeds) for reporting this issue! [#22](https://github.com/ficonsulting/RInno/issues/22)
 * Exposed R installation flags w/ `R_flags` argument. For more information, read `?run`. Thanks [@renejuan](https://github.com/renejuan) for requesting this feature!
 
