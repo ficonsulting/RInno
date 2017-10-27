@@ -26,9 +26,19 @@ get_Pandoc <- function(app_dir, Pandoc_version = rmarkdown::pandoc_version()) {
 
     tryCatch(curl::curl_download(Pandoc_url, filename),
              error = function(e) {
-               cat(sprintf("\n%s is not a valid URL. \nThis is likely to have happened because there was a change in the URL of Pandoc installer. \n\nThis might have already been fixed in the latest version of RInno. Install the latest version using devtools::install_github('ficonsulting/RInno') and try again.\n\nIf this doesn't help please submit an issue, and let us know this function needs updating/fixing (please include the output of sessionInfo() ) - thanks!\n", Pandoc_url))
+               cat(glue::glue("
+                              {Pandoc_url} is not a valid URL.
+
+                              This is likely to have happened because there was a change in the URL.
+
+                              This might have already been fixed in the latest version of RInno. Install it with devtools::install_github('ficonsulting/RInno').
+
+                              If this doesn't help please submit an issue: {packageDescription('RInno', fields = 'BugReports')}
+
+                              - Thanks!
+                              "))
              })
 
-    if (!file.exists(filename)) stop(sprintf("%s failed to download.", filename))
+    if (!file.exists(filename)) stop(glue::glue("{filename} failed to download."))
   }
 }

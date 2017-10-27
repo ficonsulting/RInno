@@ -19,6 +19,7 @@
 #' @param pkgs String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.
 #' @param include_R To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if necessary.
 #' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. Similar to including R, the installer will check the user's registry for the version of Pandoc returned by \code{\link[rmarkdown]{pandoc_version}} and only install it if necessary.
+#' @param include_Chrome To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, this option includes a copy of Chrome for users that do not have it installed yet.
 #' @param R_version R version to use, defaults to: \code{paste0(R.version$major, '.', R.version$minor)}.
 #' @param Pandoc_version Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.
 #' @inheritDotParams setup -iss -dir_out
@@ -47,6 +48,7 @@ create_app <- function(app_name,
   pkgs      = c("jsonlite", "shiny", "magrittr"),
   include_R = FALSE,
   include_Pandoc = FALSE,
+  include_Chrome = FALSE,
   R_version = paste0(R.version$major, ".", R.version$minor),
   Pandoc_version = rmarkdown::pandoc_version(),
   ...) {
@@ -60,8 +62,16 @@ create_app <- function(app_name,
   # If dir_out is not a character, exit
   if (class(dir_out) != "character") stop("dir_out must be a character.")
 
-  # If include_R is not TRUE/FALSE, exit
-  if (class(include_R) != "logical") stop("include_R must be TRUE/FALSE.")
+  # If not TRUE/FALSE, exit
+  include_logicals <- c(
+    "include_Chrome" = class(include_Chrome),
+    "include_Pandoc" = class(include_Pandoc),
+    "include_R" = class(include_R))
+  failed_logical <- !include_logicals %in% "logical"
+
+  if (any(failed_logical)) {
+    stop(glue::glue("{names(include_logicals[which(failed_logical)])} must be TRUE/FALSE."))
+  }
 
   # If app_dir does not exist create it
   if (!dir.exists(app_dir)) dir.create(app_dir)
@@ -74,9 +84,10 @@ create_app <- function(app_name,
   # Copy installation scripts
   copy_installation(app_dir)
 
-  # Include separate installers for R and Pandoc, if necessary
+  # Include separate installers for R, Pandoc, and Chrome if necessary
   if (include_R) get_R(app_dir, R_version)
   if (include_Pandoc) get_Pandoc(app_dir, Pandoc_version)
+  if (include_Chrome) get_Chrome(app_dir)
 
   # Create batch file
   create_bat(app_name, app_dir)
@@ -93,7 +104,7 @@ create_app <- function(app_name,
 
   # C-like directives
   iss <- directives(iss, include_R, R_version, include_Pandoc, Pandoc_version,
-    app_version = dots$app_version, publisher = dots$publisher,
+    include_Chrome, app_version = dots$app_version, publisher = dots$publisher,
     main_url = dots$main_url)
 
   # Setup Section

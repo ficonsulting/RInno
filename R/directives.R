@@ -13,7 +13,6 @@
 #' @param custom_vars String vector. Defaults to "", and must be the same length as \code{custom_values}.
 #' @param custom_values String vector of values for \code{custom_vars}. Defaults to "", and must be the same length as \code{custom_vars}.
 #'
-
 #' @inheritParams create_app
 #' @inherit setup return seealso params
 #'
@@ -32,7 +31,7 @@
 directives <- function(app_name, include_R = FALSE,
   R_version = paste0(R.version$major, ".", R.version$minor),
   include_Pandoc = FALSE, Pandoc_version = rmarkdown::pandoc_version(),
-  app_version = "0.0.0", publisher = "", main_url = "",
+  include_Chrome = FALSE, app_version = "0.0.0", publisher = "", main_url = "",
   custom_vars = "", custom_values = "") {
 
   # Reset defaults if empty
@@ -53,6 +52,7 @@ directives <- function(app_name, include_R = FALSE,
     #define IncludeR {tolower(include_R)}
     #define PandocVersion "{Pandoc_version}"
     #define IncludePandoc {tolower(include_Pandoc)}
+    #define IncludeChrome {tolower(include_Chrome)}
     #define MyAppPublisher "{publisher}"
     #define MyAppURL "{main_url}"
     {custom_ispp}')
