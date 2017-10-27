@@ -15,6 +15,7 @@ var
   License2AcceptedRadio: TRadioButton;
   License2NotAcceptedRadio: TRadioButton;
 
+
 // Is R installed?
 function RDetected(): boolean;
 var
@@ -32,12 +33,32 @@ begin
   Result := (RDetected = false);
 end;
 
+
+// Is Chrome installed?
+function ChromeDetected(): boolean;
+var
+    success: boolean;
+begin
+  success := RegKeyExists(HKLM, ChromeRegKey);
+  begin
+    Result := success;
+  end;
+end;
+
+// If Chrome is not detected, it is needed
+function ChromeNeeded(): Boolean;
+begin
+  Result := (ChromeDetected = false);
+end;
+
+
 // Registry path update function (adds an extra backslash for json)
 function AddBackSlash(Value: string): string;
 begin
   Result := Value;
   StringChangeEx(Result, '\', '\\', True);
 end;
+
 
 // Pandoc is stored in the System PATH
 function PandocDetected(): Boolean;
