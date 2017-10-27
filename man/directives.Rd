@@ -6,8 +6,9 @@
 \usage{
 directives(app_name, include_R = FALSE, R_version = paste0(R.version$major,
   ".", R.version$minor), include_Pandoc = FALSE,
-  Pandoc_version = rmarkdown::pandoc_version(), app_version = "0.0.0",
-  publisher = "", main_url = "", custom_vars = "", custom_values = "")
+  Pandoc_version = rmarkdown::pandoc_version(), include_Chrome = FALSE,
+  app_version = "0.0.0", publisher = "", main_url = "",
+  custom_vars = "", custom_values = "")
 }
 \arguments{
 \item{app_name}{The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -19,6 +20,8 @@ directives(app_name, include_R = FALSE, R_version = paste0(R.version$major,
 \item{include_Pandoc}{To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. Similar to including R, the installer will check the user's registry for the version of Pandoc returned by \code{\link[rmarkdown]{pandoc_version}} and only install it if necessary.}
 
 \item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.}
+
+\item{include_Chrome}{To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, this option includes a copy of Chrome for users that do not have it installed yet.}
 
 \item{app_version}{Version number of the app being installed, defaults to \code{'0.0.0'}. It is displayed in the Version field of the app's \emph{Add/Remove Programs} entry. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appversion}{[Setup]:AppVersion} for details.}
 

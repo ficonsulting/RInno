@@ -45,6 +45,9 @@ glue::glue('
           #if IncludePandoc
               Source: "pandoc-{{#PandocVersion}}-windows.msi"; DestDir: "{{tmp}}"; Check: PandocNeeded
           #endif
+          #if IncludeChrome
+              Source: "chrome_installer.exe"; DestDir: "{{tmp}}"; Check: ChromeNeeded
+          #endif
           {glue::collapse(blank_dir_files, "\n")}
           {glue::collapse(dir_files, "\n")}
           ')
