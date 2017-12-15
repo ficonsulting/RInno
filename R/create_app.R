@@ -16,7 +16,8 @@
 #' @param app_name The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.
 #' @param app_dir Shiny app's directory, defaults to \code{getwd()}.
 #' @param dir_out Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.
-#' @param pkgs String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.
+#' @param pkgs String vector of the shiny app's default repo package dependencies. Also supports package version numbers. See \code{\link{create_config}} for how to change the default repo.
+#' @param local_pkgs String vector of the shiny app's local package dependencies.  Also supports package version numbers.  See \code{\link{create_config}} for how to change the local package location.
 #' @param include_R To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if necessary.
 #' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. Similar to including R, the installer will check the user's registry for the version of Pandoc returned by \code{\link[rmarkdown]{pandoc_version}} and only install it if necessary.
 #' @param include_Chrome To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, this option includes a copy of Chrome for users that do not have it installed yet.
@@ -33,7 +34,8 @@
 #'   app_name  = 'My AppName',
 #'   app_dir    = 'My/app/path',
 #'   dir_out   = 'wizard',
-#'   pkgs      = c('jsonlite', 'shiny', 'magrittr', 'xkcd'),
+#'   pkgs      = c('jsonlite', shiny = '1.0.5', magrittr = '1.5', 'xkcd'),
+#'   local_pkgs = c('my_pkg'),
 #'   include_R = TRUE,   # Download R and install it with the app
 #'   R_version = 2.2.1,  # Old version of R
 #'   privilege = 'high', # Admin only installation
@@ -46,6 +48,7 @@ create_app <- function(app_name,
   app_dir   = getwd(),
   dir_out   = "RInno_installer",
   pkgs      = c("jsonlite", "shiny", "magrittr"),
+  local_pkgs = c(),
   include_R = FALSE,
   include_Pandoc = FALSE,
   include_Chrome = FALSE,
@@ -93,7 +96,7 @@ create_app <- function(app_name,
   create_bat(app_name, app_dir)
 
   # Create app config file
-  create_config(app_name, app_dir, pkgs,
+  create_config(app_name, app_dir, pkgs, local_pkgs,
     remotes = dots$remotes, repo = dots$repo, error_log = dots$error_log,
     app_repo_url = dots$app_repo_url, auth_user = dots$auth_user,
     auth_pw = dots$auth_pw, auth_token = dots$auth_token,
