@@ -6,18 +6,18 @@ pkgVersionCRAN = function(pkg_name, cran_url="http://cran.r-project.org/package=
   cran_pkg_loc = paste0(cran_url,pkg_name)
 
   # Establish connection
-  suppressWarnings(conn <- try(url(cran_pkg_loc), silent=TRUE))
+  suppressWarnings(conn <- try(url(cran_pkg_loc), silent = TRUE))
 
   # If connection, read in webpage
   if (all(class(conn) != "try-error") ) {
-    suppressWarnings(cran_pkg_page <- try(readLines(conn), silent=TRUE))
+    suppressWarnings(cran_pkg_page <- try(readLines(conn), silent = TRUE))
     close(conn)
   } else {
     return(NULL)
   }
 
   # Use regex to find version info
-  version_line = cran_pkg_page[grep("Version:",cran_pkg_page)+1]
+  version_line = cran_pkg_page[grep("Version:", cran_pkg_page) + 1]
   gsub("<(td|\\/td)>","",version_line)
 
 }
@@ -40,7 +40,7 @@ ensure <- function(pkg, pkg_name, repo = config$pkgs$cran, load = TRUE) {
 
   # Check if version matches
   if (packageVersion(pkg_name) != pkg) {
-    if(curr_vrsn == pkg) {
+    if (curr_vrsn == pkg) {
       install.packages(pkg_name, repos = repo)
     } else {
       devtools::install_version(pkg_name, version = pkg, repos = repo)
@@ -65,16 +65,18 @@ ensure_remotes <- function(remote) {
   library(pkg, character.only = TRUE)
 }
 
-ensure_local <- function(pkg, pkg_name, lib.path, load = TRUE) {
+# Ensures local packages are installed
+ensure_local <- function(pkg, pkg_name, lib.path) {
   setWinProgressBar(pb,
-                    value = grep(paste0("\\b", pkg, "\\b"), local_pkgs) / (length(local_pkgs) + 1),
-                    label = sprintf("Loading - %s...", pkg_name))
-  if (!(pkg_name %in% row.names(installed.packages())) || (packageVersion(pkg_name) < pkg)) {
-    inst = devtools::install(file.path(lib.path, pkg_name))
+    value = grep(paste0("\\b", pkg, "\\b"), locals) / (length(locals) + 1),
+    label = sprintf("Loading - %s...", pkg_name))
+  if (!(pkg_name %in% row.names(installed.packages())) || (utils::packageVersion(pkg_name) < pkg)) {
+    install.packages(
+      list.files(lib.path, pattern = pkg_name, full.names = TRUE),
+      repos = NULL,
+      type = "source")
   }
-  if (load) {
-    library(pkg_name, character.only = TRUE)
-  }
+  library(pkg_name, character.only = TRUE)
 }
 
 # Internet connection test

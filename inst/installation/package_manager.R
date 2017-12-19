@@ -47,8 +47,7 @@ library("httr", character.only = TRUE)
 config <- jsonlite::fromJSON(file.path(appwd, "utils/config.cfg"))
 
 # Package dependency list
-pkgs <- config$pkgs$pkgs; remotes <- config$remotes; local_pkgs <- config$local_pkgs$pkgs
-local_path <- file.path(appwd, config$local_pkgs$local)
+pkgs <- config$pkgs$pkgs; remotes <- config$remotes; locals <- config$locals$pkgs
 
 # Provide some initialization status updates
 pb <- winProgressBar(
@@ -73,9 +72,9 @@ appexit_msg <- tryCatch({
       ._ <- lapply(remotes, ensure_remotes)
     }
   }
-
-  if (length(local_pkgs) > 0) {
-    ._ <- mapply(ensure_local, local_pkgs, names(local_pkgs), lib.path = local_path)
+  if (locals[1] != "none") {
+    ._ <- mapply(ensure_local, locals, names(locals),
+                 lib.path = file.path(appwd, config$locals$local))
   }
 
   for (i in seq_along(pkgs)) {
