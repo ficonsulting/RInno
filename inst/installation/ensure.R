@@ -1,15 +1,56 @@
-# Ensure that a package is installed
-ensure <- function(pkg, repo = config$pkgs$cran, load = TRUE) {
-  setWinProgressBar(pb,
-    value = grep(paste0("\\b", pkg, "\\b"), pkgs) / (length(pkgs) + 1),
-    label = sprintf("Loading - %s...", pkg))
+# Check CRAN if package version is current
 
-  if (!(pkg %in% row.names(installed.packages()))) {
-    install.packages(pkg, repo = repo, lib = applibpath)
+pkgVersionCRAN = function(pkg_name, cran_url="http://cran.r-project.org/package=") {
+
+  # Create URL
+  cran_pkg_loc = paste0(cran_url,pkg_name)
+
+  # Establish connection
+  suppressWarnings(conn <- try(url(cran_pkg_loc), silent=TRUE))
+
+  # If connection, read in webpage
+  if (all(class(conn) != "try-error") ) {
+    suppressWarnings(cran_pkg_page <- try(readLines(conn), silent=TRUE))
+    close(conn)
+  } else {
+    return(NULL)
   }
+
+  # Use regex to find version info
+  version_line = cran_pkg_page[grep("Version:",cran_pkg_page)+1]
+  gsub("<(td|\\/td)>","",version_line)
+
+}
+
+# Ensure that a package is installed
+
+ensure <- function(pkg, pkg_name, repo = config$pkgs$cran, load = TRUE) {
+
+  # Check if package is the most recent version
+  curr_vrsn <- pkgVersionCRAN(pkg_name)
+
+  # Check if package is in installed.packages
+  if (!pkg_name %in% row.names(installed.packages())) {
+    if (curr_vrsn == pkg) {
+      install.packages(pkg_name, repos = repo)
+    } else {
+      devtools::install_version(pkg_name, version = pkg, repos = repo)
+    }
+  }
+
+  # Check if version matches
+  if (packageVersion(pkg_name) != pkg) {
+    if(curr_vrsn == pkg) {
+      install.packages(pkg_name, repos = repo)
+    } else {
+      devtools::install_version(pkg_name, version = pkg, repos = repo)
+    }
+  }
+
   if (load) {
-    library(pkg, character.only = TRUE)
+    library(pkg_name, character.only = TRUE)
   }
+
 }
 
 # Ensure that remotes are installed
@@ -22,6 +63,18 @@ ensure_remotes <- function(remote) {
     devtools::install_github(remote)
   }
   library(pkg, character.only = TRUE)
+}
+
+ensure_local <- function(pkg, pkg_name, lib.path, load = TRUE) {
+  setWinProgressBar(pb,
+                    value = grep(paste0("\\b", pkg, "\\b"), local_pkgs) / (length(local_pkgs) + 1),
+                    label = sprintf("Loading - %s...", pkg_name))
+  if (!(pkg_name %in% row.names(installed.packages())) || (packageVersion(pkg_name) < pkg)) {
+    inst = devtools::install(file.path(lib.path, pkg_name))
+  }
+  if (load) {
+    library(pkg_name, character.only = TRUE)
+  }
 }
 
 # Internet connection test
