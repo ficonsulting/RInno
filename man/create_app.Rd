@@ -17,7 +17,7 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.}
 
-\item{pkgs}{String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.}
+\item{pkgs}{Character vector of the shiny app's default repo package dependencies. To use something other than the installed package dependency's version (i.e. \code{utils::packageVersion(pkgs[1])}), provide a named character vector.}
 
 \item{include_R}{To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if necessary.}
 
@@ -47,6 +47,8 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
   \item{compression}{Defaults to \code{'lzma2/ultra64'}, which has the best compression ratio available. Other valid options include: \code{'zip'}, \code{'bzip'}, \code{'lzma'}, and \code{'none'}.  See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_compression}{[Setup]:Compression} for details.}
   \item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
 }}
+
+\item{locals}{Character vector of the shiny app's local package dependencies.  Also supports package version numbers.  See \code{\link{create_config}} for how to change the local package location.}
 }
 \description{
 This function manages installation and app start up. To accept all defaults, just provide \code{app_name}. After calling \code{create_app}, call \code{\link{compile_iss}} to create an installer in \code{dir_out}.
@@ -72,7 +74,8 @@ create_app(
   app_name  = 'My AppName',
   app_dir    = 'My/app/path',
   dir_out   = 'wizard',
-  pkgs      = c('jsonlite', 'shiny', 'magrittr', 'xkcd'),
+  pkgs      = c('jsonlite', shiny = '1.0.5', magrittr = '1.5', 'xkcd'),
+  locals = c('my_pkg'),
   include_R = TRUE,   # Download R and install it with the app
   R_version = 2.2.1,  # Old version of R
   privilege = 'high', # Admin only installation
