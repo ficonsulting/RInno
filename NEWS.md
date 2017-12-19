@@ -1,3 +1,6 @@
+# RInno v0.1.3
+* [@willbradley](https://github.com/willbradley) added support for package version control and local package installations. This is achieved by providing specific versions and/or local binaries of R packages to your RInno installer, which will reduce potential software dependency bugs caused by updates to CRAN.
+
 # RInno v0.1.2
 * Swapped out many `sprintf` calls with RStudio's new `glue` function for interpolating strings. This should make RInno more flexible and easier to maintain and debug moving forward.
 * Added support for app mode when `user_browser = "chrome"`. RInno also automatically places `app_icon` in a "www/" directory and utilizes port 1984. This makes it easy to display the app's icon instead of Chrome's (see README for details). Big shout out to [@trybik](https://github.com/trybik) for this great suggestion.
