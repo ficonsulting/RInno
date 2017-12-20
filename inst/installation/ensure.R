@@ -70,7 +70,7 @@ ensure_local <- function(pkg, pkg_name, lib.path) {
   setWinProgressBar(pb,
     value = grep(paste0("\\b", pkg, "\\b"), locals) / (length(locals) + 1),
     label = sprintf("Loading - %s...", pkg_name))
-  if (!(pkg_name %in% row.names(installed.packages())) || (utils::packageVersion(pkg_name) < pkg)) {
+  if (!(pkg_name %in% row.names(installed.packages())) || (utils::packageVersion(pkg_name) != pkg)) {
     install.packages(
       list.files(lib.path, pattern = pkg_name, full.names = TRUE),
       repos = NULL,
