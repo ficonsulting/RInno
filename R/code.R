@@ -14,7 +14,6 @@
 #' @inherit setup return seealso
 #'
 #' @author Jonathan M. Hill
-#' @export
 
 code <- function(iss) {
   iss <- c(iss,

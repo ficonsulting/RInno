@@ -47,7 +47,7 @@ library("httr", character.only = TRUE)
 config <- jsonlite::fromJSON(file.path(appwd, "utils/config.cfg"))
 
 # Package dependency list
-pkgs <- config$pkgs$pkgs; remotes <- config$remotes
+pkgs <- config$pkgs$pkgs; remotes <- config$remotes; locals <- config$locals$pkgs
 
 # Provide some initialization status updates
 pb <- winProgressBar(
@@ -66,11 +66,15 @@ appexit_msg <- tryCatch({
   message("ensuring packages: ", paste(pkgs, collapse = ", "))
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
   if (ping_site("www.google.com")) {
-    ._ <- lapply(pkgs, ensure, repo = config$pkgs$cran)
+    ._ <- mapply(ensure, pkgs, names(pkgs))
     if (remotes[1] != "none") {
       setWinProgressBar(pb, 0, label = "Ensuring Remote package dependencies ...")
       ._ <- lapply(remotes, ensure_remotes)
     }
+  }
+  if (locals[1] != "none") {
+    ._ <- mapply(ensure_local, locals, names(locals),
+                 lib.path = file.path(appwd, config$locals$local))
   }
 
   for (i in seq_along(pkgs)) {
@@ -78,7 +82,7 @@ appexit_msg <- tryCatch({
       value = i / (length(pkgs) + 1),
       label = sprintf("Loading package - %s", pkgs[i]))
 
-    library(pkgs[i], character.only = TRUE)
+    library(names(pkgs)[i], character.only = TRUE)
   }
 
   setWinProgressBar(pb, 1.00, label = "Starting application")

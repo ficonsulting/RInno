@@ -2,23 +2,27 @@
 % Please edit documentation in R/create_config.R
 \name{create_config}
 \alias{create_config}
-\title{Creates an app config file, "config.cfg"}
+\title{Creates an app config file, "utils/config.cfg"}
 \usage{
-create_config(app_name, app_dir, pkgs, remotes = "none",
-  repo = "http://cran.rstudio.com", error_log = "error.log",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none",
-  auth_token = "none", user_browser = "chrome")
+create_config(app_name, app_dir, pkgs, locals = "none", remotes = "none",
+  repo = "http://cran.rstudio.com", local_path = "local",
+  error_log = "error.log", app_repo_url = "none", auth_user = "none",
+  auth_pw = "none", auth_token = "none", user_browser = "chrome")
 }
 \arguments{
 \item{app_name}{The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 
 \item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
 
-\item{pkgs}{String vector of the shiny app's default repo package dependencies. See \code{\link{create_config}} for how to change the default repo.}
+\item{pkgs}{Character vector of the shiny app's default repo package dependencies. To use something other than the installed package dependency's version (i.e. \code{utils::packageVersion(pkgs[1])}), provide a named character vector.}
+
+\item{locals}{Character vector of local package binary dependencies.}
 
 \item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
 
 \item{repo}{Default repository to install package dependencies from. This defaults to \code{repo = "http://cran.rstudio.com"}.}
+
+\item{local_path}{Default location inside the app working directory to install local package dependencies from. This defaults to \code{local_path = "local"}}
 
 \item{error_log}{Name of error logging file. Contains start up errors from \emph{run.R}.}
 
@@ -36,7 +40,7 @@ create_config(app_name, app_dir, pkgs, remotes = "none",
 A json file, \emph{config.cfg}, in \code{app_dir}/utils.
 }
 \description{
-Creates an app config file, "config.cfg"
+Creates an app config file, "utils/config.cfg"
 }
 \seealso{
 \code{\link{create_app}}.
