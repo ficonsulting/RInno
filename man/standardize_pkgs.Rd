@@ -7,11 +7,14 @@
 standardize_pkgs(pkgs)
 }
 \arguments{
-\item{pkgs}{Processes \code{pkgs}, \code{remotes} and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.}
+\item{pkgs}{Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.}
+}
+\value{
+Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.
 }
 \description{
 Standardizes (named or not) character vectors of package dependencies. This creates a standard format for package dependency information stored in config.cfg
 }
 \author{
-William Bradley
+William Bradley and Jonathan Hill
 }
