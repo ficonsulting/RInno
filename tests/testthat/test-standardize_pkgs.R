@@ -6,9 +6,9 @@ test_that("Uninstalled packages through errors", {
 
 test_that("Packages are standardized for config.cfg", {
 
-  pkgs1 <- standardize_pkgs(c("shiny", "RInno", "dplyr"))
+  pkgs1 <- standardize_pkgs(c("shiny", "rmarkdown", "jsonlite"))
   pkgs2 <- standardize_pkgs(c(shiny = paste0(">=", packageVersion("shiny")),
-                              RInno = paste0(">=", packageVersion("RInno")),
-                              dplyr = paste0(">=", packageVersion("dplyr"))))
+                              rmarkdown = paste0(">=", packageVersion("rmarkdown")),
+                              jsonlite = paste0(">=", packageVersion("jsonlite"))))
   expect_identical(pkgs1, pkgs2)
 })
