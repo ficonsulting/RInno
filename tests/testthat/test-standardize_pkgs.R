@@ -5,10 +5,10 @@ test_that("Uninstalled packages through errors", {
 })
 
 test_that("Packages are standardized for config.cfg", {
-  expect_equal(
-    standardize_pkgs(c("shiny", "RInno", "dplyr")),
-    standardize_pkgs(c(shiny = paste0(">=", packageVersion("shiny")),
-                       RInno = paste0(">=", packageVersion("RInno")),
-                       dplyr = paste0(">=", packageVersion("dplyr"))))
-  )
+
+  pkgs1 <- standardize_pkgs(c("shiny", "RInno", "dplyr"))
+  pkgs2 <- standardize_pkgs(c(shiny = paste0(">=", packageVersion("shiny")),
+                              RInno = paste0(">=", packageVersion("RInno")),
+                              dplyr = paste0(">=", packageVersion("dplyr"))))
+  expect_identical(pkgs1, pkgs2)
 })
