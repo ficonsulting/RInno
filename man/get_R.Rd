@@ -4,12 +4,13 @@
 \alias{get_R}
 \title{Downloads R}
 \usage{
-get_R(app_dir, R_version)
+get_R(app_dir, R_version = paste0(">=", R.version$major, ".",
+  R.version$minor))
 }
 \arguments{
-\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
+\item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{R_version}{R version to use, defaults to: \code{paste0(R.version$major, '.', R.version$minor)}.}
+\item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 }
 \value{
 \code{sprintf('R-\%s-win.exe', R_version)} in \code{app_dir}.
@@ -21,7 +22,7 @@ Downloads R in \code{app_dir}. If it has already been downloaded, \code{get_R} w
 If \code{\link{create_app}(include_R = TRUE)}, then \code{get_R}.
 }
 \seealso{
-\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives_section}}, \code{\link{setup_section}}, \code{\link{languages_section}}, \code{\link{tasks_section}}, \code{\link{files_section}}, \code{\link{icons_section}}, \code{\link{run_section}}, and \code{\link{code_section}}.
 }
 \author{
 Jonathan M. Hill

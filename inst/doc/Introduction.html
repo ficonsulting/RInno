@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2017-10-26" />
+<meta name="date" content="2017-12-22" />
 
 <title>Introduction</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2017-10-26</em></h4>
+<h4 class="date"><em>2017-12-22</em></h4>
 
 
 
@@ -84,7 +84,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="co"># Use RInno to get Inno Setup</span>
 RInno<span class="op">::</span><span class="kw">install_inno</span>()</code></pre></div>
-<p>If you don’t use <a href="https://github.com/talgalili/installr">installr</a> to update your R version, you should. The next release of installr will include <code>install.inno</code> along with a lot of other cool stuff. After that release, <code>install_inno</code> will no longer be supported here.</p>
 </div>
 <div id="minimal-example" class="section level2">
 <h2>Minimal example</h2>
@@ -96,7 +95,7 @@ RInno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
 <span class="kw">create_app</span>(<span class="dt">app_name =</span> <span class="st">&quot;Your appname&quot;</span>, <span class="dt">app_dir =</span> <span class="st">&quot;app&quot;</span>)
 <span class="kw">compile_iss</span>()</code></pre></div>
 <p><code>create_app</code> creates an installation framework in your app’s directory, <code>app_dir</code>. You can perform minor customizations before you call <code>compile_iss</code>. For example, you can replace the default/setup icon at <a href="http://www.flaticon.com/">Flaticon.com</a>, or you can customize the pre-/post- install messages, <em>infobefore.txt</em> and <em>infoafter.txt</em>. Just remember, the default values (i.e. <code>create_app(info_after = &quot;infobefore.txt&quot;)</code>) for those files have not changed. The Inno Setup Script (ISS), <em>app_name.iss</em>, will look for <em>default.ico</em> and try to use it until you update the script or call <code>create_app</code> with the new icon’s file name (i.e. <code>create_app(app_icon = &quot;new.ico&quot;)</code>).</p>
-<p>Chrome is the default browser used by RInno because of its app mode feature. I’ve also found that IE/Edge often prevents icons and third party JavaScript libraries from loading because of various IT policies. The default <code>user_browser</code> setting will open Chrome in app mode, which looks more like a stand-alone app than when it opens in another tab of your default browser. Regardless, RInno’s startup sequence will fall back on the user’s default browser if Chrome is not installed.</p>
+<p>Chrome is the default browser used by RInno because of its app mode feature and development-minded focus. IE/Edge often prevents icons and third party JavaScript libraries from loading because of various IT policies, which can result in strange bugs in your app. The default <code>user_browser</code> setting will open Chrome in app mode, which looks more like a stand-alone app than when it opens in another tab of your default browser. Regardless of which browser you specify, RInno’s startup sequence will fall back on the user’s default browser if it is not installed.</p>
 </div>
 <div id="ui.r-requirements" class="section level2">
 <h2>ui.R Requirements</h2>
@@ -125,6 +124,16 @@ RInno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
   })
 }</code></pre></div>
 <p>If you forget to do this, users will complain that their icons are broken and rightly blame you for it (an R session will be running in the background hosting the app, but they will need to press ctrl + alt + delete and use their task manager to close it). <strong>Not cool</strong>.</p>
+</div>
+<div id="package-dependency-management" class="section level2">
+<h2>Package Dependency Management</h2>
+<p>Provide a list of packages to <code>create_app</code>, and RInno will install them with your shiny app. If the list does not have a version #, the default will use <code>utils::packageVersion</code> to determine which version is installed in the development environment. Whereas if a specific package version is specified, i.e. <code>pkgs = c(shiny = &quot;==1.0.5&quot;, &quot;jsonlite&quot;, &quot;httr&quot;)</code>, RInno will respect that specification and use <code>utils::packageVersion</code> for the rest.</p>
+<pre><code>create_app(
+  app_name = &quot;myapp&quot;, 
+  app_dir = &quot;app&quot;,
+  pkgs = c(&quot;shiny&quot;, &quot;jsonlite&quot;, &quot;httr&quot;)
+)</code></pre>
+<p>RInno will default to <code>shiny = paste0(&quot;&gt;=&quot;, utils::packageVersion(&quot;shiny&quot;))</code>, etc. because versions are not included. This provides a similar management strategy as developers use in the DESCRIPTION file’s <code>Imports:</code> section of an R package. For more information, please see <a href="http://r-pkgs.had.co.nz/description.html">R Packages - Package Metadata</a> by Hadley Wickham.</p>
 </div>
 <div id="custom-installations" class="section level2">
 <h2>Custom Installations</h2>

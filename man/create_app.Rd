@@ -5,50 +5,50 @@
 \title{Creates installation files and Inno Setup Script (ISS), "app_name.iss"}
 \usage{
 create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
-  pkgs = c("jsonlite", "shiny", "magrittr"), include_R = FALSE,
-  include_Pandoc = FALSE, include_Chrome = FALSE,
-  R_version = paste0(R.version$major, ".", R.version$minor),
+  pkgs = c("jsonlite", "shiny", "magrittr"),
+  repo = "http://cran.rstudio.com", locals = "none", remotes = "none",
+  app_repo_url = "none", auth_user = "none", auth_pw = "none",
+  auth_token = "none", user_browser = "chrome", include_R = FALSE,
+  include_Pandoc = FALSE, include_Chrome = FALSE, R_version = paste0(">=",
+  R.version$major, ".", R.version$minor),
   Pandoc_version = rmarkdown::pandoc_version(), ...)
 }
 \arguments{
-\item{app_name}{The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
+\item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 
-\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
+\item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.}
+\item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not exist. Defaults to 'RInno_installer'.}
 
-\item{pkgs}{Character vector of the shiny app's default repo package dependencies. To use something other than the installed package dependency's version (i.e. \code{utils::packageVersion(pkgs[1])}), provide a named character vector.}
+\item{pkgs}{Character vector of package dependencies. To provide version limits, a named character vector with an inequality in front of the version number, \code{pkgs = c(httr = ">=1.3")}, is supported. Local .tar.gz packages and remote development versions are also supported via \code{locals} and \code{remotes}.}
 
-\item{include_R}{To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if necessary.}
+\item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.}
 
-\item{include_Pandoc}{To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. Similar to including R, the installer will check the user's registry for the version of Pandoc returned by \code{\link[rmarkdown]{pandoc_version}} and only install it if necessary.}
+\item{locals}{Character vector of local package dependencies. Supports package versions like \code{pkgs}.}
+
+\item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
+
+\item{app_repo_url}{Repository address for continuous installations in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.}
+
+\item{auth_user}{Bitbucket username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.}
+
+\item{auth_pw}{Bitbucket password matching the above username.}
+
+\item{auth_token}{To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others.}
+
+\item{user_browser}{Character for the default browser. Options include "chrome", "firefox", and "ie."}
+
+\item{include_R}{To include R in the installer, \code{include_R = TRUE}. The version of R specified by \code{R_version} is used. The installer will check each user's registry and only install R if necessary.}
+
+\item{include_Pandoc}{To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.}
 
 \item{include_Chrome}{To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, this option includes a copy of Chrome for users that do not have it installed yet.}
 
-\item{R_version}{R version to use, defaults to: \code{paste0(R.version$major, '.', R.version$minor)}.}
+\item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 
 \item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.}
 
-\item{...}{Arguments passed on to \code{setup}
-\describe{
-  \item{app_version}{Version number of the app being installed, defaults to \code{'0.0.0'}. It is displayed in the Version field of the app's \emph{Add/Remove Programs} entry. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appversion}{[Setup]:AppVersion} for details.}
-  \item{name}{Defaults to ISPP directive, \code{'{#MyAppName}'} set by \code{directives(app_name)}.}
-  \item{publisher}{String displayed on the "Support" dialogue of the \emph{Add/Remove Programs} Control Panel applet, defaults to " ". See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_apppublisher}{[Setup]:AppPublisher} for details.}
-  \item{default_dir}{The default directory name used by the \emph{Select Destination Page} of the installer. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_defaultdirname}{[Setup]:DefaultDirName} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=consts}{Constants} for details.}
-  \item{privilege}{Valid options: \code{'poweruser', 'admin', 'lowest'}. Defaults to \code{'lowest'}. This directive affects whether elevated rights are requested when an installation is started. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_privilegesrequired}{[Setup]:PrivilegesRequired} for details.}
-  \item{info_before}{File, in .txt or .rtf format, which is displayed on the first page of the installer. It must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_infobeforefile}{[Setup]:InfoBeforeFile} for details.}
-  \item{info_after}{File, in .txt or .rtf format, which is displayed on the last page of the installer. It must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_infoafterfile}{[Setup]:InfoAfterFile} for details.}
-  \item{setup_icon}{File name of the icon used for installer/uninstaller. The file must be located in \code{app_dir}. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_setupiconfile}{[Setup]:SetupIconFile} for details.}
-  \item{license_file}{File, in .txt or .rtf format, which is displayed before the \emph{Select Destination Page} of the wizard. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_licensefile}{[Setup]:LicenseFile} for details.}
-  \item{inst_pw}{Installer password, string. Visit the Inno Setup \href{http://www.jrsoftware.org/isdl.php}{Downloads} page and place \emph{ISCrypt.dll} in your Inno Setup directory. Afterwards, if a \code{inst_pw} is supplied, then the contents of the installer will be encrypted using a 160-bit key derived from the password string. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_password}{[Setup]:Password} and \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_encryption}{[Setup]:Encryption} for details.}
-  \item{pub_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_apppublisherurl}{[Setup]:AppPublisherURL} for details.}
-  \item{sup_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appsupporturl}{[Setup]:AppSupportURL} for details.}
-  \item{upd_url}{String. Defaults to \code{'{#MyAppURL}'}, which is the ISPP directive for \code{main_url}. Therefore, \code{main_url} will be used, unless otherwise specified. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_appupdatesurl}{[Setup]:AppUpdatesURL} for details.}
-  \item{compression}{Defaults to \code{'lzma2/ultra64'}, which has the best compression ratio available. Other valid options include: \code{'zip'}, \code{'bzip'}, \code{'lzma'}, and \code{'none'}.  See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setup_compression}{[Setup]:Compression} for details.}
-  \item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
-}}
-
-\item{locals}{Character vector of the shiny app's local package dependencies.  Also supports package version numbers.  See \code{\link{create_config}} for how to change the local package location.}
+\item{...}{Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.}
 }
 \description{
 This function manages installation and app start up. To accept all defaults, just provide \code{app_name}. After calling \code{create_app}, call \code{\link{compile_iss}} to create an installer in \code{dir_out}.
@@ -57,7 +57,7 @@ This function manages installation and app start up. To accept all defaults, jus
 Creates the following files in \code{app_dir}:
 \itemize{
   \item Icons for installer and app, \emph{setup.ico} and \emph{default.ico} respectively.
-  \item Files that manage app start up, \emph{utils/package_manager.R} and \emph{utils/app.R}.
+  \item Files that manage app start up, \emph{utils/package_manager.R}, \emph{utils/ensure.R}, and \emph{utils/app.R}.
   \item First/last page of the installer, \emph{infobefore.txt} and \emph{infoafter.txt}.
   \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, \emph{utils/wsf/js/JSON.minify.js}.
   \item A configuration file, \emph{config.cfg}. See \code{\link{create_config}} for details.
@@ -77,13 +77,13 @@ create_app(
   pkgs      = c('jsonlite', shiny = '1.0.5', magrittr = '1.5', 'xkcd'),
   locals = c('my_pkg'),
   include_R = TRUE,   # Download R and install it with the app
-  R_version = 2.2.1,  # Old version of R
+  R_version = "2.2.1",  # Old version of R
   privilege = 'high', # Admin only installation
   default_dir = 'pf') # Program Files
 }
 }
 \seealso{
-\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives_section}}, \code{\link{setup_section}}, \code{\link{languages_section}}, \code{\link{tasks_section}}, \code{\link{files_section}}, \code{\link{icons_section}}, \code{\link{run_section}}, and \code{\link{code_section}}.
 }
 \author{
 Jonathan M. Hill and Hanjo Odendaal

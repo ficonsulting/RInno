@@ -21,7 +21,13 @@ Creates a basic app to test in \code{wd/app_dir}.
 }
 \examples{
 \dontrun{
-example_app(getwd())
+# Shiny example
+example_app()
+create_app("myapp", "app")
+
+# Flexdashboard example
+example_app(type = "flexdashboard")
+create_app("myapp", "app")
 }
 
 }

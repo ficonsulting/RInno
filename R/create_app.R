@@ -5,7 +5,7 @@
 #' Creates the following files in \code{app_dir}:
 #' \itemize{
 #'   \item Icons for installer and app, \emph{setup.ico} and \emph{default.ico} respectively.
-#'   \item Files that manage app start up, \emph{utils/package_manager.R} and \emph{utils/app.R}.
+#'   \item Files that manage app start up, \emph{utils/package_manager.R}, \emph{utils/ensure.R}, and \emph{utils/app.R}.
 #'   \item First/last page of the installer, \emph{infobefore.txt} and \emph{infoafter.txt}.
 #'   \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, \emph{utils/wsf/js/JSON.minify.js}.
 #'   \item A configuration file, \emph{config.cfg}. See \code{\link{create_config}} for details.
@@ -13,18 +13,17 @@
 #'   \item An Inno Setup Script, \emph{app_name.iss}.
 #' }
 #'
-#' @param app_name The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.
-#' @param app_dir Shiny app's directory, defaults to \code{getwd()}.
-#' @param dir_out Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not already exist. Defaults to 'RInno_installer'.
-#' @param pkgs Character vector of the shiny app's default repo package dependencies. To use something other than the installed package dependency's version (i.e. \code{utils::packageVersion(pkgs[1])}), provide a named character vector.
-#' @param locals Character vector of the shiny app's local package dependencies.  Also supports package version numbers.  See \code{\link{create_config}} for how to change the local package location.
-#' @param include_R To include R in the installer, \code{include_R = TRUE}. This will include the version of R specified by \code{R_version} in your installer. The installer will check each user's registry for that version of R, and only install it if necessary.
-#' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. Similar to including R, the installer will check the user's registry for the version of Pandoc returned by \code{\link[rmarkdown]{pandoc_version}} and only install it if necessary.
-#' @param include_Chrome To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, this option includes a copy of Chrome for users that do not have it installed yet.
-#' @param R_version R version to use, defaults to: \code{paste0(R.version$major, '.', R.version$minor)}.
+#' @param app_name The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.
+#' @param app_dir Development app's directory, defaults to \code{getwd()}.
+#' @param dir_out Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not exist. Defaults to 'RInno_installer'.
+#' @param pkgs Character vector of package dependencies. To provide version limits, a named character vector with an inequality in front of the version number, \code{pkgs = c(httr = ">=1.3")}, is supported. Local .tar.gz packages and remote development versions are also supported via \code{locals} and \code{remotes}.
+#' @param include_R To include R in the installer, \code{include_R = TRUE}. The version of R specified by \code{R_version} is used. The installer will check each user's registry and only install R if necessary.
+#' @param R_version R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.
+#' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.
 #' @param Pandoc_version Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.
-#' @inheritDotParams setup -iss -dir_out
-#'
+#' @param include_Chrome To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, this option includes a copy of Chrome for users that do not have it installed yet.
+#' @param ... Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.
+#' @inheritParams create_config
 #' @examples
 #' \dontrun{
 #'
@@ -37,21 +36,29 @@
 #'   pkgs      = c('jsonlite', shiny = '1.0.5', magrittr = '1.5', 'xkcd'),
 #'   locals = c('my_pkg'),
 #'   include_R = TRUE,   # Download R and install it with the app
-#'   R_version = 2.2.1,  # Old version of R
+#'   R_version = "2.2.1",  # Old version of R
 #'   privilege = 'high', # Admin only installation
 #'   default_dir = 'pf') # Program Files
 #' }
-#' @inherit setup seealso
+#' @inherit setup_section seealso
 #' @author Jonathan M. Hill and Hanjo Odendaal
 #' @export
 create_app <- function(app_name,
-  app_dir   = getwd(),
-  dir_out   = "RInno_installer",
-  pkgs      = c("jsonlite", "shiny", "magrittr"),
-  include_R = FALSE,
+  app_dir      = getwd(),
+  dir_out      = "RInno_installer",
+  pkgs         = c("jsonlite", "shiny", "magrittr"),
+  repo         = "http://cran.rstudio.com",
+  locals       = "none",
+  remotes      = "none",
+  app_repo_url = "none",
+  auth_user    = "none",
+  auth_pw      = "none",
+  auth_token   = "none",
+  user_browser = "chrome",
+  include_R    = FALSE,
   include_Pandoc = FALSE,
   include_Chrome = FALSE,
-  R_version = paste0(R.version$major, ".", R.version$minor),
+  R_version = paste0(">=", R.version$major, ".", R.version$minor),
   Pandoc_version = rmarkdown::pandoc_version(),
   ...) {
 

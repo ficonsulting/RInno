@@ -7,7 +7,7 @@
 get_Chrome(app_dir)
 }
 \arguments{
-\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
+\item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 }
 \value{
 chrome_installer.exe in \code{app_dir}.
@@ -19,7 +19,7 @@ Downloads Chrome in \code{app_dir}. If Chrome has already been downloaded, \code
 If \code{\link{create_app}(include_Chrome = TRUE)}, then \code{get_Chrome}.
 }
 \seealso{
-\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives_section}}, \code{\link{setup_section}}, \code{\link{languages_section}}, \code{\link{tasks_section}}, \code{\link{files_section}}, \code{\link{icons_section}}, \code{\link{run_section}}, and \code{\link{code_section}}.
 }
 \author{
 Jonathan M. Hill

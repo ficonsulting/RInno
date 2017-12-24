@@ -7,24 +7,25 @@
 start_iss(app_name)
 }
 \arguments{
-\item{app_name}{The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
+\item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 }
 \value{
 \code{app_name} and set \code{options('RInno.app_name' = app_name)}
 }
 \description{
-Chain \code{\link{directives}} against this function to start building custom
+Chain \code{\link{directives_section}} against this function to start building custom
 installers.
 }
 \examples{
 \dontrun{
 start_iss('myapp') \%>\%
-  directives(include_R = FALSE, R_version = '3.3.2')
+  directives_section(
+    include_R = FALSE, R_version = '3.3.2')
 }
 
 }
 \seealso{
-\code{\link{directives}}.
+\code{\link{directives_section}}.
 }
 \author{
 Jonathan M. Hill

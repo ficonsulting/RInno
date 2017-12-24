@@ -4,29 +4,30 @@
 \alias{create_config}
 \title{Creates an app config file, "utils/config.cfg"}
 \usage{
-create_config(app_name, app_dir, pkgs, locals = "none", remotes = "none",
+create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite", "shiny",
+  "magrittr"), locals = "none", remotes = "none",
   repo = "http://cran.rstudio.com", local_path = "local",
   error_log = "error.log", app_repo_url = "none", auth_user = "none",
   auth_pw = "none", auth_token = "none", user_browser = "chrome")
 }
 \arguments{
-\item{app_name}{The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
+\item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 
-\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
+\item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{pkgs}{Character vector of the shiny app's default repo package dependencies. To use something other than the installed package dependency's version (i.e. \code{utils::packageVersion(pkgs[1])}), provide a named character vector.}
+\item{pkgs}{Character vector of package dependencies. To provide version limits, a named character vector with an inequality in front of the version number, \code{pkgs = c(httr = ">=1.3")}, is supported. Local .tar.gz packages and remote development versions are also supported via \code{locals} and \code{remotes}.}
 
-\item{locals}{Character vector of local package binary dependencies.}
+\item{locals}{Character vector of local package dependencies. Supports package versions like \code{pkgs}.}
 
 \item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
 
-\item{repo}{Default repository to install package dependencies from. This defaults to \code{repo = "http://cran.rstudio.com"}.}
+\item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.}
 
 \item{local_path}{Default location inside the app working directory to install local package dependencies from. This defaults to \code{local_path = "local"}}
 
 \item{error_log}{Name of error logging file. Contains start up errors from \emph{run.R}.}
 
-\item{app_repo_url}{Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.}
+\item{app_repo_url}{Repository address for continuous installations in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.}
 
 \item{auth_user}{Bitbucket username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.}
 
