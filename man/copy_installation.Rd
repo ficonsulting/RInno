@@ -7,7 +7,7 @@
 copy_installation(app_dir)
 }
 \arguments{
-\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
+\item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 }
 \description{
 This function moves files stored in \code{system.file('installation', package = 'RInno')} to \code{app_dir}:

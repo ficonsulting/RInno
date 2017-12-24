@@ -9,20 +9,21 @@
 #' # You can combine custom R installation flags with Inno Setup constants
 #' create_app("myapp", "app", R_flags = '/SILENT /DIR=""{userdocs}""')
 #'
-#' run(iss, R_flags = '/SILENT /DIR=""{userdocs}""')
+#' # Or directly
+#' run_section(iss, R_flags = '/SILENT /DIR=""{userdocs}""')
 #'
 #' }
 #'
 #'
-#' @inherit setup return seealso params
+#' @inherit setup_section return seealso params
 #' @author Jonathan M. Hill
 #' @export
 
-run <- function(iss, R_flags = "/SILENT") {
+run_section <- function(iss, R_flags = "/SILENT") {
 
   # Reset defaults if empty
-  for (formal in names(formals(run))) {
-    if (length(get(formal)) == 0) assign(formal, formals(run)[formal])
+  for (formal in names(formals(run_section))) {
+    if (length(get(formal)) == 0) assign(formal, formals(run_section)[formal])
   }
 
   glue::glue('
@@ -30,13 +31,13 @@ run <- function(iss, R_flags = "/SILENT") {
 
     [Run]
     #if IncludeR
-        Filename: "{{tmp}}\\R-{{#RVersion}}-win.exe"; Parameters: "{R_flags}"; WorkingDir: {{tmp}}; Flags: skipifdoesntexist; StatusMsg: "Installing R if needed"
+        Filename: "{{tmp}}\\R-{{#RVersion}}-win.exe"; Parameters: "{R_flags}"; WorkingDir: {{tmp}}; Check: RNeeded; Flags: skipifdoesntexist; StatusMsg: "Installing R if needed"
     #endif
     #if IncludePandoc
-        Filename: "msiexec.exe"; Parameters: "/i ""{{tmp}}\\pandoc-{{#PandocVersion}}-windows.msi"" /q"; WorkingDir: {{tmp}}; Flags: skipifdoesntexist; StatusMsg: "Installing Pandoc if needed"
+        Filename: "msiexec.exe"; Parameters: "/i ""{{tmp}}\\pandoc-{{#PandocVersion}}-windows.msi"" /q"; WorkingDir: {{tmp}}; Check: PandocNeeded; Flags: skipifdoesntexist; StatusMsg: "Installing Pandoc if needed"
     #endif
     #if IncludeChrome
-        Filename: "chrome_installer.exe"; Parameters: "/silent /install"; WorkingDir: {{tmp}}; Flags: skipifdoesntexist; StatusMsg: "Installing Chrome if needed"
+        Filename: "chrome_installer.exe"; Parameters: "/silent /install"; WorkingDir: {{tmp}}; Check: ChromeNeeded; Flags: skipifdoesntexist; StatusMsg: "Installing Chrome if needed"
     #endif
     Filename: "{{app}}\\{{#MyAppExeName}}"; Description: "', "{{cm:LaunchProgram,{{#StringChange(MyAppName, '&', '&&'", ')}}}}"; Flags: shellexec postinstall skipifsilent\n\n
   ')

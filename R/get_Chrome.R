@@ -9,7 +9,7 @@
 #' @return
 #' chrome_installer.exe in \code{app_dir}.
 #'
-#' @inherit setup seealso
+#' @inherit setup_section seealso
 #' @author Jonathan M. Hill
 #' @export
 

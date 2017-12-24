@@ -5,23 +5,33 @@ Type: filesandordirs; Name: "{app}\log";
 
 [Code]
 const
-  RRegKey = 'Software\R-Core\R\{#RVersion}';
   ChromeRegKey = 'Software\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe';
   IERegKey = 'Software\Microsoft\Windows\CurrentVersion\App Paths\IEXPLORE.EXE';
   FFRegKey = 'Software\Microsoft\Windows\CurrentVersion\App Paths\firefox.exe';
 var
+  RVersions: TStringList;
+  RRegKey: string;
   RegPathsFile: string;
   SecondLicensePage: TOutputMsgMemoWizardPage;
   License2AcceptedRadio: TRadioButton;
   License2NotAcceptedRadio: TRadioButton;
 
-
 // Is R installed?
 function RDetected(): boolean;
 var
+    v: Integer;
     success: boolean;
 begin
-  success := RegKeyExists(HKLM, RRegKey) or RegKeyExists(HKCU, RRegKey);
+    for v := 0 to (RVersions.Count - 1) do
+      begin
+        if RegKeyExists(HKLM, 'Software\R-Core\R\' + RVersions[v]) or RegKeyExists(HKCU, 'Software\R-Core\R\' + RVersions[v]) then
+          success := true
+        if success then
+          begin
+            RRegKey := 'Software\R-Core\R\' + RVersions[v];
+            break;
+          end;
+      end;
   begin
     Result := success;
   end;
@@ -30,7 +40,7 @@ end;
 // If R is not detected, it is needed
 function RNeeded(): Boolean;
 begin
-  Result := (RDetected = false);
+  Result := not RDetected;
 end;
 
 
@@ -48,7 +58,7 @@ end;
 // If Chrome is not detected, it is needed
 function ChromeNeeded(): Boolean;
 begin
-  Result := (ChromeDetected = false);
+  Result := not ChromeDetected;
 end;
 
 
@@ -92,7 +102,7 @@ end;
 // If Pandoc is not detected, it is needed
 function PandocNeeded(): Boolean;
 begin
-  Result := (PandocDetected = false);
+  Result := not PandocDetected;
 end;
 
 // Save installation paths
@@ -105,8 +115,12 @@ if CurStep = ssPostInstall then begin
     ChromePath := '';
     IEPath := '';
     FFPath := '';
-		PandocPath := ExpandConstant('{localappdata}\Pandoc\');
+    PandocPath := ExpandConstant('{localappdata}\Pandoc\');
     RegPathsFile := ExpandConstant('{app}\utils\regpaths.json');
+
+    if Length(RRegKey) = 0 then
+      RRegKey := 'Software\R-Core\R\' + RVersions[0];
+
     // Create registry paths file
     SaveStringToFile(RegPathsFile, '{' + #13#10, True);
 
@@ -134,12 +148,12 @@ if CurStep = ssPostInstall then begin
     else
       SaveStringToFile(RegPathsFile, '"ff": "none",' + #13#10, True);
 
-		// Pandoc RegPath
-		// ** Last Line in json file (no trailing comma) **
-		if PandocDetected() then
-			SaveStringToFile(RegPathsFile, '"pandoc": "' + AddBackSlash(PandocPath) + '"' + #13#10, True)
-		else
-			SaveStringToFile(RegPathsFile, '"pandoc": "none"' + #13#10, True);
+    // Pandoc RegPath
+    // ** Last Line in json file (no trailing comma) **
+    if PandocDetected() then
+      SaveStringToFile(RegPathsFile, '"pandoc": "' + AddBackSlash(PandocPath) + '"' + #13#10, True)
+    else
+      SaveStringToFile(RegPathsFile, '"pandoc": "none"' + #13#10, True);
 
     SaveStringToFile(RegPathsFile, '}', True);
   end;
@@ -162,6 +176,15 @@ begin
   Result.Width := Source.Width;
   Result.Height := Source.Height;
   Result.OnClick := @CheckLicense2Accepted;
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  { Update Next button when user gets to second license page }
+  if CurPageID = SecondLicensePage.ID then
+  begin
+    CheckLicense2Accepted(nil);
+  end;
 end;
 
 procedure InitializeWizard();
@@ -193,13 +216,4 @@ begin
 
   { Initially not accepted }
   License2NotAcceptedRadio.Checked := True;
-end;
 
-procedure CurPageChanged(CurPageID: Integer);
-begin
-  { Update Next button when user gets to second license page }
-  if CurPageID = SecondLicensePage.ID then
-  begin
-    CheckLicense2Accepted(nil);
-  end;
-end;

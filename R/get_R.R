@@ -9,30 +9,34 @@
 #' @return
 #' \code{sprintf('R-\%s-win.exe', R_version)} in \code{app_dir}.
 #'
-#' @inherit setup seealso
+#' @inherit setup_section seealso
 #' @author Jonathan M. Hill
 #' @export
 
-get_R <- function(app_dir, R_version) {
+get_R <- function(app_dir,
+                  R_version = paste0(">=", R.version$major, ".", R.version$minor)) {
+
+  R_version <- sanitize_R_version(R_version, clean = TRUE)
+
   latest_R_version <-
     unique(stats::na.omit(stringr::str_extract(readLines("https://cran.rstudio.com/bin/windows/base/", warn = F), "[1-3]\\.[0-9]+\\.[0-9]+")))
 
   old_R_versions <- stats::na.omit(stringr::str_extract(readLines("https://cran.rstudio.com/bin/windows/base/old/", warn = F), "[1-3]\\.[0-9]+\\.[0-9]+"))
 
-  if (!R_version %in% c(latest_R_version, old_R_versions)) stop(sprintf("That version of R (v%s) does not exist.", R_version))
+  if (!R_version %in% c(latest_R_version, old_R_versions)) stop(glue::glue("That version of R ({R_version}) does not exist."), call. = F)
 
   if (latest_R_version == R_version) {
-    base_url <- sprintf("https://cran.r-project.org/bin/windows/base/R-%s-win.exe", R_version)
+    base_url <- glue::glue("https://cran.r-project.org/bin/windows/base/R-{R_version}-win.exe")
   } else {
-    base_url <- sprintf("https://cran.r-project.org/bin/windows/base/old/%s/R-%s-win.exe", R_version, R_version)
+    base_url <- glue::glue("https://cran.r-project.org/bin/windows/base/old/{R_version}/R-{R_version}-win.exe")
   }
 
-  filename <- file.path(app_dir, sprintf("R-%s-win.exe", R_version))
+  filename <- file.path(app_dir, glue::glue("R-{R_version}-win.exe"))
 
   if (file.exists(filename)) {
     cat("Using the copy of R already included:\n", filename)
   } else {
-    cat(sprintf("Downloading R-%s ...\n", R_version))
+    cat(glue::glue("Downloading R-{R_version} ...\n"))
 
     tryCatch(curl::curl_download(base_url, filename),
       error = function(e) {
@@ -49,6 +53,6 @@ get_R <- function(app_dir, R_version) {
   "))
   })
 
-  if (!file.exists(filename)) stop(sprintf("%s failed to download.", filename))
+  if (!file.exists(filename)) stop(glue::glue("{filename} failed to download."), call. = F)
   }
 }

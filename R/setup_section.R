@@ -1,7 +1,6 @@
 #' Setup Section of ISS
 #'
 #' This section contains global settings used by the installer and uninstaller. See \href{http://www.jrsoftware.org/ishelp/index.php?topic=setupsection}{[Setup]} for details.
-#'
 #' @inheritParams create_app
 #' @param iss Character vector which cumulatively becomes an Inno Setup Script (ISS).
 #'
@@ -37,14 +36,17 @@
 #'
 #' @examples \dontrun{
 #' start_iss('myapp') %>%
-#'   directives(include_R = FALSE, R_version = '3.3.2') %>%
-#'   setup(dir_out = 'installer', default_dir = 'pf')
+#'   directives_section(
+#'     include_R = FALSE, R_version = '3.3.2') %>%
+#'   setup_section(
+#'     dir_out = 'installer', default_dir = 'pf')
 #' }
 #'
-#' @seealso \code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+#' @seealso \code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives_section}}, \code{\link{setup_section}}, \code{\link{languages_section}}, \code{\link{tasks_section}}, \code{\link{files_section}}, \code{\link{icons_section}}, \code{\link{run_section}}, and \code{\link{code_section}}.
 #' @author Jonathan M. Hill
+#' @export
 
-setup <- function(iss, app_dir, dir_out,
+setup_section <- function(iss, app_dir, dir_out,
   app_version = "{#MyAppVersion}",
   name        = "{#MyAppName}",
   publisher   = "{#MyAppPublisher}",
@@ -61,26 +63,26 @@ setup <- function(iss, app_dir, dir_out,
   compression = "lzma2/ultra64") {
 
   # Reset defaults if empty
-  for (formal in names(formals(setup))) {
-    if (length(get(formal)) == 0) assign(formal, formals(setup)[formal])
+  for (formal in names(formals(setup_section))) {
+    if (length(get(formal)) == 0) assign(formal, formals(setup_section)[formal])
   }
 
   # If infobefore or infoafter are not the default, remove the old file
-  if (info_before != formals(setup)$info_before) {
-    suppressWarnings(file.remove(file.path(app_dir, formals(setup)$info_before)))
+  if (info_before != formals(setup_section)$info_before) {
+    suppressWarnings(file.remove(file.path(app_dir, formals(setup_section)$info_before)))
   }
   if (!file.exists(file.path(app_dir, info_before))) {
     warning(glue::glue("Make sure {info_before} is in {app_dir}/ before you call compile_iss()"), call. = FALSE)
   }
-  if (info_after != formals(setup)$info_after) {
-    suppressWarnings(file.remove(file.path(app_dir, formals(setup)$info_after)))
+  if (info_after != formals(setup_section)$info_after) {
+    suppressWarnings(file.remove(file.path(app_dir, formals(setup_section)$info_after)))
   }
   if (!file.exists(file.path(app_dir, info_after))) {
     warning(glue::glue("Make sure {info_after} is in {app_dir}/ before you call compile_iss()"), call. = FALSE)
   }
   # If setup_icon is not the default, remove the default file
-  if (setup_icon != formals(setup)$setup_icon) {
-    suppressWarnings(file.remove(file.path(app_dir, formals(setup)$setup_icon)))
+  if (setup_icon != formals(setup_section)$setup_icon) {
+    suppressWarnings(file.remove(file.path(app_dir, formals(setup_section)$setup_icon)))
   }
   if (!file.exists(file.path(app_dir, setup_icon))) {
     warning(glue::glue("Make sure {setup_icon} is in {app_dir}/ before you call compile_iss()"), call. = FALSE)
@@ -91,7 +93,7 @@ setup <- function(iss, app_dir, dir_out,
             file.path(app_dir, "LICENSE"))
 
   # If a second license file is not provided, the standard license is NULL
-  if (license_file == formals(setup)$license_file) {
+  if (license_file == formals(setup_section)$license_file) {
     license_file <- NULL
   } else {
     if (!file.exists(file.path(app_dir, license_file))) {
@@ -99,7 +101,7 @@ setup <- function(iss, app_dir, dir_out,
     }
   }
 
-  if (inst_pw == formals(setup)$inst_pw) {
+  if (inst_pw == formals(setup_section)$inst_pw) {
     encrypt <- NULL
     inst_pw <- NULL
 
@@ -142,7 +144,8 @@ setup <- function(iss, app_dir, dir_out,
     InfoBeforeFile = <<info_before>>
     InfoAfterFile = <<info_after>>
     Compression = <<compression>>
-    SolidCompression = yes', .open = "<<", .close = ">>")
+    SolidCompression = yes
+    ArchitecturesInstallIn64BitMode = x64', .open = "<<", .close = ">>")
 
   if (length(license_file) > 0) {
     iss <- glue::glue("

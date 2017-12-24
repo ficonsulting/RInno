@@ -14,29 +14,34 @@
 #' @param custom_values String vector of values for \code{custom_vars}. Defaults to "", and must be the same length as \code{custom_vars}.
 #'
 #' @inheritParams create_app
-#' @inherit setup return seealso params
+#' @inherit setup_section return seealso params
 #'
 #' @examples
 #' \dontrun{
 #' start_iss('myapp') %>%
-#'   directives(include_R = FALSE, R_version = '3.3.2',
-#'     custom_vars = 'helpers', custom_values = 'path\\to\\helpers') %>%
-#'   files(app_dir = getwd(),
+#'   directives_section(
+#'     include_R = FALSE, R_version = '3.3.2',
+#'     custom_vars = 'helpers',
+#'     custom_values = 'path\\to\\helpers') %>%
+#'   files_section(
+#'     app_dir = getwd(),
 #'     file_list = '{#helpers}')
 #' }
 #'
 #' @author Jonathan M. Hill
 #' @export
 
-directives <- function(app_name, include_R = FALSE,
+directives_section <- function(app_name, include_R = FALSE,
   R_version = paste0(R.version$major, ".", R.version$minor),
   include_Pandoc = FALSE, Pandoc_version = rmarkdown::pandoc_version(),
   include_Chrome = FALSE, app_version = "0.0.0", publisher = "", main_url = "",
   custom_vars = "", custom_values = "") {
 
+  R_version <- sanitize_R_version(R_version, clean = TRUE)
+
   # Reset defaults if empty
-  for (formal in names(formals(directives))) {
-    if (length(get(formal)) == 0) assign(formal, formals(directives)[formal])
+  for (formal in names(formals(directives_section))) {
+    if (length(get(formal)) == 0) assign(formal, formals(directives_section)[formal])
   }
 
   if (!custom_vars == "") {

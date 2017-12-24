@@ -13,7 +13,7 @@ standardize_pkgs(pkgs)
 Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.
 }
 \description{
-Standardizes (named or not) character vectors of package dependencies. This creates a standard format for package dependency information stored in config.cfg
+Standardizes (named or not) character vectors of package dependencies and formats it for config.cfg.
 }
 \author{
 William Bradley and Jonathan Hill

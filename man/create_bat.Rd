@@ -7,9 +7,9 @@
 create_bat(app_name, app_dir)
 }
 \arguments{
-\item{app_name}{The name of the app being installed. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
+\item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 
-\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
+\item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 }
 \value{
 BATCH file in \code{app_dir}

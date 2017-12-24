@@ -1,12 +1,13 @@
 #' Standardize package dependencies
 #'
-#' Standardizes (named or not) character vectors of package dependencies. This creates a standard format for package dependency information stored in config.cfg
+#' Standardizes (named or not) character vectors of package dependencies and formats it for config.cfg.
 #'
 #' @param pkgs Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
 #'
 #' @return Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.
 #'
 #' @author William Bradley and Jonathan Hill
+#' @export
 
 standardize_pkgs <- function(pkgs) {
 
@@ -54,19 +55,60 @@ standardize_pkgs <- function(pkgs) {
   pkgs <- lapply(pkg_list, as.character)
 
   # Make sure the results are valid
+  df <- data.frame(utils::installed.packages())
   check_pkgs <- function(pkg, pkg_name) {
     breakpoint <- attr(regexpr("[<>=]+", pkg), "match.length")
     inequality <- substr(pkg, 1, breakpoint)
     required_version <- substr(pkg, breakpoint + 1, nchar(pkg))
 
     if (nchar(inequality) > 2 | grepl("=[<>]", inequality)) {
-      stop(glue::glue("{inequality} for {pkg_name} is not a valid logical operator"), call. = F)
+      stop(glue::glue("{pkg_name}'s inequality ({inequality}) is not a valid logical operator"), call. = F)
     }
-    if (class(try(numeric_version(required_version))) == "try-error") {
-      stop(glue::glue("{required_version} for {pkg_name} is not a valid `numeric_version`"), call. = F)
+    if (class(try(numeric_version(required_version), silent = TRUE)) == "try-error") {
+      stop(glue::glue("{required_version} is not a valid `numeric_version` for {pkg_name} "), call. = F)
     }
+    if (!pkg_name %in% df$Package) stop(glue::glue("{pkg_name} is not installed. Make sure it is in `installed.pacakges()` and try again."), call. = F)
   }
-  mapply(check_pkgs, pkg_list, names(pkg_list))
+  mapply(check_pkgs, pkgs, names(pkgs))
 
   return(pkgs)
+}
+
+#' Sanitize R's version
+#'
+#' Used to validate R versions and strip off inequalities when necessary.
+#'
+#' @inheritParams create_app
+#' @param clean Boolean. If TRUE, \code{><=} are removed. Defaults to FALSE.
+#' @export
+sanitize_R_version <- function(R_version, clean = FALSE){
+
+  # Check for valid R version
+  test <- gsub("[<>=[:space:]]", "", R_version)
+  if (any(length(strsplit(test, "\\.")[[1]]) != 3,
+          !grepl("[1-3]\\.[0-9]+\\.[0-9]+", test))) {
+    stop(glue::glue("R_version ({test}) is not valid."), call. = FALSE)
+  }
+
+  # Remove spaces
+  R_version <- gsub(" ", "", R_version)
+
+  # Check the inequality
+  if (grepl("[<>=]", R_version)) {
+    breakpoint <- attr(regexpr("[<>=]+", R_version), "match.length")
+    inequality <- substr(R_version, 1, breakpoint)
+    if (grepl("=[<>]", inequality)) {
+      stop(glue::glue("R_version's inequality, {inequality}, is not a valid logical operator"), call. = FALSE)
+    } else if (nchar(inequality) == 1) {
+      stop(glue::glue("RInno only supports >=, <= and == in R_version"), call. = FALSE)
+    } else if (breakpoint > 2) {
+      stop(glue::glue("R_version = {R_version} is not supported."), call. = FALSE)
+    }
+
+  } else {
+    # add == if no inequality is specified
+    R_version <- paste0(">=", R_version)
+  }
+  if (clean) R_version <- gsub("[<>=[:space:]]", "", R_version)
+  return(R_version)
 }

@@ -10,25 +10,25 @@
 #'
 #' @examples \dontrun{
 #' start_iss('myapp') %>%
-#'   icons(app_desc = 'This Shiny app is awesome!')
+#'   icons_section(app_desc = 'This Shiny app is awesome!')
 #' }
 #'
-#' @inherit setup return seealso params
+#' @inherit setup_section return seealso params
 #' @author Jonathan M. Hill
 #' @export
 
-icons <- function(iss, app_dir,
+icons_section <- function(iss, app_dir,
   app_desc = "", app_icon = "default.ico",
   prog_menu_icon = TRUE, desktop_icon = TRUE) {
 
   # Reset defaults if empty
-  for (formal in names(formals(icons))) {
-    if (length(get(formal)) == 0) assign(formal, formals(icons)[formal])
+  for (formal in names(formals(icons_section))) {
+    if (length(get(formal)) == 0) assign(formal, formals(icons_section)[formal])
   }
 
   # If a custom icon is provided, delete default.ico
-  if (app_icon != formals(icons)$app_icon) {
-    suppressWarnings(file.remove(file.path(app_dir, formals(icons)$app_icon)))
+  if (app_icon != formals(icons_section)$app_icon) {
+    suppressWarnings(file.remove(file.path(app_dir, formals(icons_section)$app_icon)))
   }
   # If app icon does not exist, warn developer
   if (!file.exists(file.path(app_dir, app_icon))) {

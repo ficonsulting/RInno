@@ -1,12 +1,12 @@
 #' Creates an app config file, "utils/config.cfg"
 #'
 #' @inheritParams create_app
+#' @param repo Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.
 #' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.
-#' @param locals Character vector of local package binary dependencies.
-#' @param repo Default repository to install package dependencies from. This defaults to \code{repo = "http://cran.rstudio.com"}.
+#' @param locals Character vector of local package dependencies. Supports package versions like \code{pkgs}.
 #' @param local_path Default location inside the app working directory to install local package dependencies from. This defaults to \code{local_path = "local"}
 #' @param error_log Name of error logging file. Contains start up errors from \emph{run.R}.
-#' @param app_repo_url Repository address in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
+#' @param app_repo_url Repository address for continuous installations in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
 #' @param auth_user Bitbucket username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
 #' @param auth_pw Bitbucket password matching the above username.
 #' @param auth_token To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others.
@@ -18,7 +18,10 @@
 #' @seealso \code{\link{create_app}}.
 #' @export
 
-create_config <- function(app_name, app_dir, pkgs, locals = "none",
+create_config <- function(app_name,
+  app_dir   = getwd(),
+  pkgs      = c("jsonlite", "shiny", "magrittr"),
+  locals    = "none",
   remotes = "none", repo = "http://cran.rstudio.com", local_path = 'local',
   error_log = "error.log", app_repo_url = "none", auth_user = "none",
   auth_pw = "none", auth_token = "none", user_browser = "chrome") {

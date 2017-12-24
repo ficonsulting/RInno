@@ -7,7 +7,7 @@
 get_Pandoc(app_dir, Pandoc_version = rmarkdown::pandoc_version())
 }
 \arguments{
-\item{app_dir}{Shiny app's directory, defaults to \code{getwd()}.}
+\item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
 \item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}. This ensures that the same version of Pandoc used during development is installed on users' computers.}
 }
@@ -21,7 +21,7 @@ Downloads Pandoc in \code{app_dir}. If Pandoc has already been downloaded, \code
 If \code{\link{create_app}(include_Pandoc = TRUE)}, then \code{get_Pandoc}.
 }
 \seealso{
-\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives}}, \code{\link{setup}}, \code{\link{languages}}, \code{\link{tasks}}, \code{\link{files}}, \code{\link{icons}}, \code{\link{run}}, and \code{\link{code}}.
+\code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives_section}}, \code{\link{setup_section}}, \code{\link{languages_section}}, \code{\link{tasks_section}}, \code{\link{files_section}}, \code{\link{icons_section}}, \code{\link{run_section}}, and \code{\link{code_section}}.
 }
 \author{
 Jonathan M. Hill and Hanjo Odendaal
