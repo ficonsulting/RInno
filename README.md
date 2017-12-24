@@ -75,7 +75,7 @@ If you forget to do this, users will complain that their icons are broken and ri
 Package Dependency Management
 -----------------------------
 
-Provide a list of packages to `create_app`, and RInno will install them with your shiny app. If the list does not have a version \#, the default will use `utils::packageVersion` to determine which version is installed in the development environment. Whereas if a specific package version is specified, i.e. `pkgs = c(shiny = "==1.0.5", "jsonlite", "httr")`, RInno will respect that specification and use `utils::packageVersion` for the rest.
+Provide a named character vector of packages to `create_app`, and RInno will install them with your shiny app. If the vector does not have a version \#, the default is `utils::packageVersion`. Whereas if a specific package version is specified, i.e. `pkgs = c(shiny = "==1.0.5", "jsonlite", "httr")`, RInno will respect that specification and use `utils::packageVersion` for the rest.
 
     create_app(
       app_name = "myapp", 
