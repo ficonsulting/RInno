@@ -66,10 +66,10 @@ create_app <- function(app_name,
   dots <- list(...)
 
   # If app_name is not a character, exit
-  if (class(app_name) != "character") stop("app_name must be a character.")
+  if (class(app_name) != "character") stop("app_name must be a character.", call. = F)
 
   # If dir_out is not a character, exit
-  if (class(dir_out) != "character") stop("dir_out must be a character.")
+  if (class(dir_out) != "character") stop("dir_out must be a character.", call. = F)
 
   # If not TRUE/FALSE, exit
   include_logicals <- c(
@@ -79,16 +79,14 @@ create_app <- function(app_name,
   failed_logical <- !include_logicals %in% "logical"
 
   if (any(failed_logical)) {
-    stop(glue::glue("{names(include_logicals[which(failed_logical)])} must be TRUE/FALSE."))
+    stop(glue::glue("{names(include_logicals[which(failed_logical)])} must be TRUE/FALSE."), call. = F)
   }
 
   # If app_dir does not exist create it
   if (!dir.exists(app_dir)) dir.create(app_dir)
 
   # If R_version is not valid, exit
-  if (any(length(strsplit(R_version, "\\.")[[1]]) != 3, !grepl("[1-3]\\.[0-9]+\\.[0-9]+", R_version))) {
-    stop("R_version is not valid.")
-  }
+  R_version <- sanitize_R_version(R_version)
 
   # Copy installation scripts
   copy_installation(app_dir)
@@ -102,22 +100,22 @@ create_app <- function(app_name,
   create_bat(app_name, app_dir)
 
   # Create app config file
-  create_config(app_name, app_dir, pkgs, locals = dots$locals,
-    remotes = dots$remotes, repo = dots$repo, error_log = dots$error_log,
-    app_repo_url = dots$app_repo_url, auth_user = dots$auth_user,
-    auth_pw = dots$auth_pw, auth_token = dots$auth_token,
-    user_browser = dots$user_browser)
+  create_config(app_name, app_dir, pkgs, locals = locals,
+    remotes = remotes, repo = repo, error_log = dots$error_log,
+    app_repo_url = app_repo_url, auth_user = auth_user,
+    auth_pw = auth_pw, auth_token = auth_token,
+    user_browser = user_browser)
 
   # Build the iss script
   iss <- start_iss(app_name)
 
   # C-like directives
-  iss <- directives(iss, include_R, R_version, include_Pandoc, Pandoc_version,
+  iss <- directives_section(iss, include_R, R_version, include_Pandoc, Pandoc_version,
     include_Chrome, app_version = dots$app_version, publisher = dots$publisher,
     main_url = dots$main_url)
 
   # Setup Section
-  iss <- setup(iss, app_dir, dir_out, app_version = dots$app_version,
+  iss <- setup_section(iss, app_dir, dir_out, app_version = dots$app_version,
     default_dir = dots$default_dir, privilege = dots$privilege,
     info_before = dots$info_before, info_after = dots$info_after,
     setup_icon = dots$setup_icon, inst_pw = dots$inst_pw,
@@ -125,20 +123,20 @@ create_app <- function(app_name,
     sup_url = dots$sup_url, upd_url = dots$upd_url)
 
   # Languages Section
-  iss <- languages(iss)
+  iss <- languages_section(iss)
 
   # Tasks Section
-  iss <- tasks(iss, desktop_icon = dots$desktop_icon)
+  iss <- tasks_section(iss, desktop_icon = dots$desktop_icon)
 
   # Icons Section
-  iss <- icons(iss, app_dir, app_desc = dots$app_desc, app_icon = dots$app_icon,
+  iss <- icons_section(iss, app_dir, app_desc = dots$app_desc, app_icon = dots$app_icon,
     prog_menu_icon = dots$prog_menu_icon, desktop_icon = dots$desktop_icon)
 
   # Files Section
-  iss <- files(iss, app_dir, file_list = dots$file_list)
+  iss <- files_section(iss, app_dir, file_list = dots$file_list)
 
   # Execution & Pascal code to check registry during installation
-  iss <- run(iss, dots$R_flags); iss <- code(iss)
+  iss <- run_section(iss, dots$R_flags); iss <- code_section(iss, R_version)
 
   # Write the Inno Setup script
   writeLines(iss, file.path(app_dir, paste0(app_name, ".iss")))
