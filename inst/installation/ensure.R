@@ -15,13 +15,17 @@ ensure <- function(pkg, pkg_name, repo = config$pkgs$cran) {
   required_version <- substr(pkg, breakpoint + 1, nchar(pkg))
 
   # Check if the installed version meets the specs
-  specs_met <- eval(parse(text =
-                            paste0("numeric_version('", installed_version, "')",
-                                   inequality,
-                                   "numeric_version('", required_version, "')")))
+  if (length(installed_version) == 0) {
+    specs_not_met <- TRUE
+  } else {
+    specs_not_met <- !eval(parse(text =
+      paste0("numeric_version('", installed_version, "')",
+             inequality,
+             "numeric_version('", required_version, "')")))
+  }
 
   # Check if package is installed and the specs are met
-  if (!pkg_name %in% df$Package | !specs_met) {
+  if (!pkg_name %in% df$Package | specs_not_met) {
     if (cran_version == required_version) {
       install.packages(pkg_name, repos = repo)
     } else {
@@ -56,12 +60,15 @@ ensure_local <- function(pkg, pkg_name, lib.path) {
   required_version <- substr(pkg, breakpoint + 1, nchar(pkg))
 
   # Check if the installed version meets the specs
-  specs_met <- eval(parse(text =
-                            paste0("numeric_version('", installed_version, "')",
-                                   inequality,
-                                   "numeric_version('", required_version, "')")))
-
-  if (!pkg_name %in% df$Package | !specs_met) {
+  if (length(installed_version) == 0) {
+    specs_not_met <- TRUE
+  } else {
+    specs_not_met <- !eval(parse(text =
+      paste0("numeric_version('", installed_version, "')",
+             inequality,
+             "numeric_version('", required_version, "')")))
+  }
+  if (!pkg_name %in% df$Package | specs_not_met) {
     install.packages(
       list.files(lib.path, pattern = pkg_name, full.names = TRUE),
       repos = NULL,
