@@ -4,10 +4,10 @@
 #'
 #' @param language Character vector of lower case languages to include.
 #'
-#' @inherit setup return params
+#' @inherit setup_section return params
 #' @author Jonathan M. Hill
 #' @export
-languages <- function(iss, language = "english") {
+languages_section <- function(iss, language = "english") {
 
   language <- tolower(language)
 

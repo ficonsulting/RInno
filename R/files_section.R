@@ -1,4 +1,4 @@
-#' File Section of ISS
+#' Files Section of ISS
 #'
 #' Files to be installed on user's computer. Everything in \code{app_dir} plus
 #' \code{file_list}. For more information, visit \href{http://www.jrsoftware.org/ishelp/index.php?topic=filessection}{[Files] section}.
@@ -6,11 +6,11 @@
 #' @inheritParams create_app
 #' @param file_list Character vector. Extra files to be installed with the app.
 #'
-#' @inherit setup return params
+#' @inherit setup_section return params
 #' @author Jonathan M. Hill
 #' @export
 
-files <- function(iss, app_dir, file_list = character()) {
+files_section <- function(iss, app_dir, file_list = character()) {
 
   all_files <- list.files(app_dir, recursive = T)
 

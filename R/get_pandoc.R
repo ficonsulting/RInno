@@ -10,7 +10,7 @@
 #' @return
 #' \code{sprintf("pandoc-\%s-windows.msi", Pandoc_version)} in \code{app_dir}.
 #'
-#' @inherit setup seealso
+#' @inherit setup_section seealso
 #' @author Jonathan M. Hill and Hanjo Odendaal
 #' @export
 
