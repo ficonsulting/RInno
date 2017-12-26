@@ -49,7 +49,7 @@ create_config <- function(app_name,
       }
       stop(locals_message, call. = FALSE)
     } else if (length(locals) < length(locals_check)) {
-      stop(glue::glue("Some `locals` are not uniquely named or there are multiple copies in {local_path}"), call. = FALSE)
+      stop(glue::glue("Some `locals` match multiple .tar.gz files in {local_path}"), call. = FALSE)
     }
   }
 

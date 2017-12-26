@@ -9,30 +9,20 @@ source("utils/ensure.R")
 # Create app/library if it doesn't exist (e.g. first run)
 # Initialize RInno
 if (!dir.exists(applibpath)) {
-
   pb <- winProgressBar(
     title = "Starting RInno Deployment ...",
-    label = "Initializing ...")
+    label = "Internet connection required")
+  Sys.sleep(2)
+  dir.create(applibpath)
+  chooseCRANmirror(graphics = F, ind = 28)
+  init_pkgs <- c("jsonlite", "devtools", "httr")
 
-  # Check the internet connection
-  if (ping_site("www.google.com")) {
-    dir.create(applibpath)
-    chooseCRANmirror(graphics = F, ind = 28)
-
-    init_pkgs <- c("jsonlite", "devtools", "httr")
-
-    for (i in seq_along(init_pkgs)) {
-      setWinProgressBar(pb, value = i / (length(init_pkgs) + 1),
-        label = sprintf("Loading package - %s", init_pkgs[i]))
-      install.packages(init_pkgs[i], applibpath, "http://cran.rstudio.com")
-    }
-    close(pb)
-  } else {
-    setWinProgressBar(pb, 1, "No Internet Connection", "Please connect to the internet and try again.")
-    Sys.sleep(5)
-    close(pb)
-    quit("no", 1)
+  for (i in seq_along(init_pkgs)) {
+    setWinProgressBar(pb, value = i / (length(init_pkgs) + 1),
+      label = sprintf("Loading package - %s", init_pkgs[i]))
+    install.packages(init_pkgs[i], applibpath, "http://cran.rstudio.com")
   }
+  close(pb)
 }
 
 .libPaths(c(applibpath, .libPaths()))
@@ -65,14 +55,17 @@ appexit_msg <- tryCatch({
   # ensure all package dependencies are installed
   message("ensuring packages: ", paste(pkgs, collapse = ", "))
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
-  if (ping_site("www.google.com")) {
+  if (!httr::http_error("www.google.com")) {
     ._ <- mapply(ensure, pkgs, names(pkgs))
     if (remotes[1] != "none") {
-      setWinProgressBar(pb, 0, label = "Ensuring Remote package dependencies ...")
+      message("ensuring remotes: ", paste(remotes, collapse = ", "))
+      setWinProgressBar(pb, 0, label = "Ensuring remote package dependencies ...")
       ._ <- lapply(remotes, ensure_remotes)
     }
   }
   if (locals[1] != "none") {
+    message("ensuring locals: ", paste(locals, collapse = ", "))
+    setWinProgressBar(pb, 0, label = "Ensuring local package dependencies ...")
     ._ <- mapply(ensure_local, locals, names(locals),
                  lib.path = file.path(appwd, config$locals$local))
   }

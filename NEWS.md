@@ -2,7 +2,7 @@
 * [@zhengle-advantaseeds](https://github.com/zhengle-advantaseeds) and [@trybik](https://github.com/trybik) continue to move the needle! 
 * [@willbradley](https://github.com/willbradley) sent in a pull request which adds support for package version control and local package installations [#34](https://github.com/ficonsulting/RInno/issues/34). Conditional statements like `shiny = ">= 1.0.5"` and/or local .tar.gz of R packages are now supported. These can reduce software dependency bugs caused by updates to CRAN.
 * Added support for more flexible R-version checks - [#24](https://github.com/ficonsulting/RInno/issues/24).
-* For users who use support functions (i.e. `setup`, `files`, `code` etc.), this version includes breaking changes. All of those functions have been appended with `_section` in order to avoid namespace conflicts with `devtools::setup` and `shiny::code`.
+* For users who use support functions (i.e. `setup`, `files`, `code` etc.), this version includes breaking changes. All of those functions have been appended with `_section` in order to avoid namespace conflicts with `devtools::setup` and `shiny::code` among others.
 
 # 0.1.2
 * Swapped out many `sprintf` calls with RStudio's new `glue` function for interpolating strings. This should make RInno more flexible and easier to maintain and debug moving forward.
