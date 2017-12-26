@@ -37,18 +37,20 @@ create_config <- function(app_name,
   if (any(lapply(locals, class) != "character")) stop("`locals` must be a character vector.", call. = FALSE)
 
   # Check local_path for locals
-  locals_check <- unlist(lapply(locals, function(x) list.files(file.path(app_dir, local_path), pattern = x)))
+  if (locals != "none") {
+    locals_check <- unlist(lapply(locals, function(x) list.files(file.path(app_dir, local_path), pattern = x)))
 
-  if (length(locals) > length(locals_check)) {
-    locals_message <- glue::glue("These packages were not found in {file.path(app_dir, local_path)}:")
-    for (i in seq_along(locals)) {
-      locals_message <- paste0(locals_message,
-        ifelse(!grepl(locals[i], locals_check), paste0("\n- ", locals[i]), "")
-        )
+    if (length(locals) > length(locals_check)) {
+      locals_message <- glue::glue("These packages were not found in {file.path(app_dir, local_path)}:")
+      for (i in seq_along(locals)) {
+        locals_message <- paste0(locals_message,
+          ifelse(!grepl(locals[i], locals_check), paste0("\n- ", locals[i]), "")
+          )
+      }
+      stop(locals_message, call. = FALSE)
+    } else if (length(locals) < length(locals_check)) {
+      stop(glue::glue("Some `locals` are not uniquely named or there are multiple copies in {local_path}"), call. = FALSE)
     }
-    stop(locals_message, call. = FALSE)
-  } else if (length(locals) < length(locals_check)) {
-    stop(glue::glue("Some `locals` are not uniquely named or there are multiple copies in {local_path}"), call. = FALSE)
   }
 
   # If app_dir/utils does not exist, create it
