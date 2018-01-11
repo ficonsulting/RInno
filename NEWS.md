@@ -1,6 +1,6 @@
 # 0.2.0
-* [@zhengle-advantaseeds](https://github.com/zhengle-advantaseeds) and [@trybik](https://github.com/trybik) continue to move the needle! 
-* [@willbradley](https://github.com/willbradley) sent in a pull request which adds support for package version control and local package installations [#34](https://github.com/ficonsulting/RInno/issues/34). Conditional statements like `shiny = ">= 1.0.5"` and/or local .tar.gz of R packages are now supported. These can reduce software dependency bugs caused by updates to CRAN.
+* [@zhengle-advantaseeds](https://github.com/zhengle-advantaseeds) and [@trybik](https://github.com/trybik) continue to move the project forward with great ideas and bug fixes.
+* [@willbradley](https://github.com/willbradley) created a pull request which adds support for package version control and local package installations [#34](https://github.com/ficonsulting/RInno/issues/34). Conditional statements like `shiny = ">= 1.0.5"` and/or local .tar.gz of R packages are now supported. These can reduce software dependency bugs caused by updates to CRAN.
 * Added support for more flexible R-version checks - [#24](https://github.com/ficonsulting/RInno/issues/24).
 * For users who use support functions (i.e. `setup`, `files`, `code` etc.), this version includes breaking changes. All of those functions have been appended with `_section` in order to avoid namespace conflicts with `devtools::setup` and `shiny::code` among others.
 
