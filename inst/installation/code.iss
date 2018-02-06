@@ -119,7 +119,7 @@ if CurStep = ssPostInstall then begin
     RegPathsFile := ExpandConstant('{app}\utils\regpaths.json');
 
     if Length(RRegKey) = 0 then
-      RRegKey := 'Software\R-Core\R\' + RVersions[0];
+      RDetected;
 
     // Create registry paths file
     SaveStringToFile(RegPathsFile, '{' + #13#10, True);
