@@ -8,6 +8,7 @@
 #'   \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, and \emph{utils/wsf/js/JSON.minify.js}.
 #' }
 #'
+#' @param overwrite logical; should existing destination files be overwritten?
 #' @inheritParams create_app
 #'
 #' @author Jonathan M. Hill
@@ -16,7 +17,7 @@
 #'
 #' @export
 
-copy_installation <- function(app_dir) {
+copy_installation <- function(app_dir = getwd(), overwrite = TRUE) {
 
   # Set option for location of app
   options("RInno.app_dir"   = app_dir)
@@ -38,8 +39,8 @@ copy_installation <- function(app_dir) {
   utils_files  <- grep(".R$", install_files, value = TRUE)
 
   # Return files
-  file.copy(base_files,   app_dir)
-  file.copy(wsf_files,    wsf)
-  file.copy(wsf_js_files, wsf_js)
-  file.copy(utils_files,  utils)
+  file.copy(base_files,   app_dir, overwrite = overwrite)
+  file.copy(wsf_files,    wsf, overwrite = overwrite)
+  file.copy(wsf_js_files, wsf_js, overwrite = overwrite)
+  file.copy(utils_files,  utils, overwrite = overwrite)
 }
