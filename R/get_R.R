@@ -13,8 +13,10 @@
 #' @author Jonathan M. Hill
 #' @export
 
-get_R <- function(app_dir,
+get_R <- function(app_dir = getwd(),
                   R_version = paste0(">=", R.version$major, ".", R.version$minor)) {
+
+  if (!dir.exists(app_dir)) stop(glue::glue("{app_dir} does not exist."), call. = FALSE)
 
   R_version <- sanitize_R_version(R_version, clean = TRUE)
 
@@ -53,6 +55,6 @@ get_R <- function(app_dir,
   "))
   })
 
-  if (!file.exists(filename)) stop(glue::glue("{filename} failed to download."), call. = F)
+  if (!file.exists(filename)) stop(glue::glue("{filename} failed to download."), call. = FALSE)
   }
 }
