@@ -17,7 +17,7 @@
 #'
 #' @export
 
-copy_installation <- function(app_dir, overwrite = TRUE) {
+copy_installation <- function(app_dir = getwd(), overwrite = TRUE) {
 
   # Set option for location of app
   options("RInno.app_dir"   = app_dir)
