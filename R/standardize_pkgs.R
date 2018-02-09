@@ -55,7 +55,7 @@ standardize_pkgs <- function(pkgs) {
   pkgs <- lapply(pkg_list, as.character)
 
   # Make sure the results are valid
-  df <- data.frame(utils::installed.packages())
+  df <- data.frame(utils::installed.packages(), row.names = NULL)
   check_pkgs <- function(pkg, pkg_name) {
     breakpoint <- attr(regexpr("[<>=]+", pkg), "match.length")
     inequality <- substr(pkg, 1, breakpoint)
