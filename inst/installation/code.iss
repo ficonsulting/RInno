@@ -49,7 +49,7 @@ function ChromeDetected(): boolean;
 var
     success: boolean;
 begin
-  success := RegKeyExists(HKLM, ChromeRegKey);
+  success := RegKeyExists(HKLM, ChromeRegKey) or RegKeyExists(HKCU, ChromeRegKey);
   begin
     Result := success;
   end;
@@ -131,7 +131,7 @@ if CurStep = ssPostInstall then begin
       SaveStringToFile(RegPathsFile, '"r": "none",' + #13#10, True);
 
     // Chrome RegPath
-    if RegQueryStringValue(HKLM, ChromeRegKey, 'Path', ChromePath) then
+    if RegQueryStringValue(HKLM, ChromeRegKey, 'Path', ChromePath) or RegQueryStringValue(HKCU, ChromeRegKey, 'Path', ChromePath) then
       SaveStringToFile(RegPathsFile, '"chrome": "' + AddBackSlash(ChromePath) + '",' + #13#10, True)
     else
       SaveStringToFile(RegPathsFile, '"chrome": "none",' + #13#10, True);
