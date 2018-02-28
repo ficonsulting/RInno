@@ -55,7 +55,7 @@ appexit_msg <- tryCatch({
   # ensure all package dependencies are installed
   message("ensuring packages: ", paste(pkgs, collapse = ", "))
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
-  if (!httr::http_error("www.google.com")) {
+  if (class(try(httr::http_error("www.google.com"))) != "try-error") {
     ._ <- mapply(ensure, pkgs, names(pkgs))
     if (remotes[1] != "none") {
       message("ensuring remotes: ", paste(remotes, collapse = ", "))
