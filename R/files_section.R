@@ -21,7 +21,12 @@ files_section <- function(iss, app_dir, file_list = character()) {
     all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$|exe$|msi$", all_files)])
   }
 
-  file_dirs     <- gsub("/", "\\\\", gsub("\\.", "", dirname(all_files)))
+  # Get file paths with dirname(), if no path (file in app directory/not contained in a subdirectory) dirname() returns "."
+  file_dirs <- dirname(all_files)
+  # Replace "." exact match with "" empty character
+  file_dirs[which(file_dirs == ".")] <- ""
+  # Modify path separators
+  file_dirs <- gsub("/", "\\\\", file_dirs)
   blank_dirs    <- file_dirs == ""
   nonblank_dirs <- !blank_dirs
 
