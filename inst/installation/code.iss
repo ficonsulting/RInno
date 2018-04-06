@@ -25,7 +25,7 @@ begin
     for v := 0 to (RVersions.Count - 1) do
       begin
         if RegKeyExists(HKLM, 'Software\R-Core\R\' + RVersions[v]) or RegKeyExists(HKCU, 'Software\R-Core\R\' + RVersions[v]) then
-          success := true
+          success := true;
         if success then
           begin
             RRegKey := 'Software\R-Core\R\' + RVersions[v];
