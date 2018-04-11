@@ -22,23 +22,21 @@ var
     v: Integer;
     success: boolean;
 begin
-    for v := 0 to (RVersions.Count - 1) do
+  success := false;
+  for v := 0 to (RVersions.Count - 1) do
+    begin
+      if RegKeyExists(HKLM, 'Software\R-Core\R\' + RVersions[v]) or RegKeyExists(HKCU, 'Software\R-Core\R\' + RVersions[v]) then
       begin
-        if RegKeyExists(HKLM, 'Software\R-Core\R\' + RVersions[v]) or RegKeyExists(HKCU, 'Software\R-Core\R\' + RVersions[v]) then
-          success := true;
-        if success then
-          begin
-            RRegKey := 'Software\R-Core\R\' + RVersions[v];
-            break;
-          end;
+        success := true;
+        RRegKey := 'Software\R-Core\R\' + RVersions[v];
+        break;
       end;
-  begin
-    Result := success;
-  end;
+    end;
+  Result := success;
 end;
 
 // If R is not detected, it is needed
-function RNeeded(): Boolean;
+function RNeeded(): boolean;
 begin
   Result := not RDetected;
 end;
@@ -56,7 +54,7 @@ begin
 end;
 
 // If Chrome is not detected, it is needed
-function ChromeNeeded(): Boolean;
+function ChromeNeeded(): boolean;
 begin
   Result := not ChromeDetected;
 end;
@@ -71,7 +69,7 @@ end;
 
 
 // Pandoc is stored in the System PATH
-function PandocDetected(): Boolean;
+function PandocDetected(): boolean;
 var
   PandocDir, Path: String;
 begin
@@ -100,62 +98,83 @@ begin
 end;
 
 // If Pandoc is not detected, it is needed
-function PandocNeeded(): Boolean;
+function PandocNeeded(): boolean;
 begin
   Result := not PandocDetected;
 end;
 
 // Save installation paths
-procedure CurStepChanged(CurStep: TSetupStep);
+procedure SaveInstallationPaths();
 var
   RPath, ChromePath, IEPath, FFPath, PandocPath: string;
 begin
-if CurStep = ssPostInstall then begin
-    RPath := '';
-    ChromePath := '';
-    IEPath := '';
-    FFPath := '';
-    PandocPath := ExpandConstant('{localappdata}\Pandoc\');
-    RegPathsFile := ExpandConstant('{app}\utils\regpaths.json');
+  RPath := '';
+  ChromePath := '';
+  IEPath := '';
+  FFPath := '';
+  PandocPath := ExpandConstant('{localappdata}\Pandoc\');
+  RegPathsFile := ExpandConstant('{app}\utils\regpaths.json');
 
-    if Length(RRegKey) = 0 then
-      RDetected;
+  if Length(RRegKey) = 0 then
+    RDetected;
 
-    // Create registry paths file
-    SaveStringToFile(RegPathsFile, '{' + #13#10, True);
+  // Create registry paths file
+  SaveStringToFile(RegPathsFile, '{' + #13#10, True);
 
-    // R RegPath
-    if RegQueryStringValue(HKLM, RRegKey, 'InstallPath', RPath) or RegQueryStringValue(HKCU, RRegKey, 'InstallPath', RPath) then
-      SaveStringToFile(RegPathsFile, '"r": "' + AddBackSlash(RPath) + '",' + #13#10, True)
-    else
-      SaveStringToFile(RegPathsFile, '"r": "none",' + #13#10, True);
+  // R RegPath
+  if RegQueryStringValue(HKLM, RRegKey, 'InstallPath', RPath) or RegQueryStringValue(HKCU, RRegKey, 'InstallPath', RPath) then
+    SaveStringToFile(RegPathsFile, '"r": "' + AddBackSlash(RPath) + '",' + #13#10, True)
+  else
+    SaveStringToFile(RegPathsFile, '"r": "none",' + #13#10, True);
 
-    // Chrome RegPath
-    if RegQueryStringValue(HKLM, ChromeRegKey, 'Path', ChromePath) or RegQueryStringValue(HKCU, ChromeRegKey, 'Path', ChromePath) then
-      SaveStringToFile(RegPathsFile, '"chrome": "' + AddBackSlash(ChromePath) + '",' + #13#10, True)
-    else
-      SaveStringToFile(RegPathsFile, '"chrome": "none",' + #13#10, True);
+  // Chrome RegPath
+  if RegQueryStringValue(HKLM, ChromeRegKey, 'Path', ChromePath) or RegQueryStringValue(HKCU, ChromeRegKey, 'Path', ChromePath) then
+    SaveStringToFile(RegPathsFile, '"chrome": "' + AddBackSlash(ChromePath) + '",' + #13#10, True)
+  else
+    SaveStringToFile(RegPathsFile, '"chrome": "none",' + #13#10, True);
 
-    // Internet Explorer RegPath
-    if RegQueryStringValue(HKLM, IERegKey, '', IEPath) then
-      SaveStringToFile(RegPathsFile, '"ie": "' + AddBackSlash(IEPath) + '",' + #13#10, True)
-    else
-      SaveStringToFile(RegPathsFile, '"ie": "none",' + #13#10, True);
+  // Internet Explorer RegPath
+  if RegQueryStringValue(HKLM, IERegKey, '', IEPath) then
+    SaveStringToFile(RegPathsFile, '"ie": "' + AddBackSlash(IEPath) + '",' + #13#10, True)
+  else
+    SaveStringToFile(RegPathsFile, '"ie": "none",' + #13#10, True);
 
-    // Firefox RegPath
-    if RegQueryStringValue(HKLM, FFRegKey, 'Path', FFPath) then
-      SaveStringToFile(RegPathsFile, '"ff": "' + AddBackSlash(FFPath) + '",' + #13#10, True)
-    else
-      SaveStringToFile(RegPathsFile, '"ff": "none",' + #13#10, True);
+  // Firefox RegPath
+  if RegQueryStringValue(HKLM, FFRegKey, 'Path', FFPath) then
+    SaveStringToFile(RegPathsFile, '"ff": "' + AddBackSlash(FFPath) + '",' + #13#10, True)
+  else
+    SaveStringToFile(RegPathsFile, '"ff": "none",' + #13#10, True);
 
-    // Pandoc RegPath
-    // ** Last Line in json file (no trailing comma) **
-    if PandocDetected() then
-      SaveStringToFile(RegPathsFile, '"pandoc": "' + AddBackSlash(PandocPath) + '"' + #13#10, True)
-    else
-      SaveStringToFile(RegPathsFile, '"pandoc": "none"' + #13#10, True);
+  // Pandoc RegPath
+  // ** Last Line in json file (no trailing comma) **
+  if PandocDetected() then
+    SaveStringToFile(RegPathsFile, '"pandoc": "' + AddBackSlash(PandocPath) + '"' + #13#10, True)
+  else
+    SaveStringToFile(RegPathsFile, '"pandoc": "none"' + #13#10, True);
 
-    SaveStringToFile(RegPathsFile, '}', True);
+  SaveStringToFile(RegPathsFile, '}', True);
+end;
+
+// Pre- and post-installation actions
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  // Pre-installation actions
+  if CurStep = ssInstall then
+  begin
+  #if IncludeR
+  #else
+    // With `CurStep = ssInstall` we can still `Abort` if R not included but needed
+    if RNeeded then
+    begin
+      SuppressibleMsgBox(Format('Error: R >= %s not found',[RVersions[RVersions.Count - 1]]), mbError, MB_OK, MB_OK);
+      Abort;
+    end;
+  #endif
+  end;
+  // Post-installation actions
+  if CurStep = ssPostInstall then
+  begin
+    SaveInstallationPaths;
   end;
 end;
 
