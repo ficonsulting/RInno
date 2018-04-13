@@ -60,6 +60,7 @@ create_app <- function(app_name,
   include_Chrome = FALSE,
   R_version = paste0(">=", R.version$major, ".", R.version$minor),
   Pandoc_version = rmarkdown::pandoc_version(),
+  copy_overwrite = TRUE,
   ...) {
 
   # To capture arguments for other function calls
@@ -89,7 +90,7 @@ create_app <- function(app_name,
   R_version <- sanitize_R_version(R_version)
 
   # Copy installation scripts
-  copy_installation(app_dir)
+  copy_installation(app_dir, overwrite = copy_overwrite)
 
   # Include separate installers for R, Pandoc, and Chrome if necessary
   if (include_R) get_R(app_dir, R_version)

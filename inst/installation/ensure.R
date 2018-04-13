@@ -101,6 +101,7 @@ pkgVersionCRAN = function(pkg_name, cran_url="http://cran.r-project.org/package=
 
   # Use regex to find version info
   version_line = cran_pkg_page[grep("Version:", cran_pkg_page) + 1]
-  gsub("<(td|\\/td)>","",version_line)
+  version_line = gsub("<(td|\\/td)>","",version_line)
+  numeric_version(version_line)
 
 }
