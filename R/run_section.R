@@ -37,7 +37,7 @@ run_section <- function(iss, R_flags = "/SILENT") {
         Filename: "msiexec.exe"; Parameters: "/i ""{{tmp}}\\pandoc-{{#PandocVersion}}-windows.msi"" /q"; WorkingDir: {{tmp}}; Check: PandocNeeded; Flags: skipifdoesntexist; StatusMsg: "Installing Pandoc if needed"
     #endif
     #if IncludeChrome
-        Filename: "chrome_installer.exe"; Parameters: "/silent /install"; WorkingDir: {{tmp}}; Check: ChromeNeeded; Flags: skipifdoesntexist; StatusMsg: "Installing Chrome if needed"
+        Filename: "{{tmp}}\\chrome_installer.exe"; Parameters: "/install"; WorkingDir: {{tmp}}; Check: ChromeNeeded; Flags: skipifdoesntexist; StatusMsg: "Installing Chrome if needed"
     #endif
     Filename: "{{app}}\\{{#MyAppExeName}}"; Description: "', "{{cm:LaunchProgram,{{#StringChange(MyAppName, '&', '&&'", ')}}}}"; Flags: shellexec postinstall skipifsilent\n\n
   ')
