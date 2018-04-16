@@ -38,7 +38,7 @@ create_config <- function(app_name,
 
   # Check local_path for locals
   if (locals != "none") {
-    locals_check <- unlist(lapply(locals, function(x) list.files(file.path(app_dir, local_path), pattern = x)))
+    locals_check <- unique(unlist(lapply(locals, function(x) list.files(file.path(app_dir, local_path), pattern = x))))
 
     if (length(locals) > length(locals_check)) {
       locals_message <- glue::glue("These packages were not found in {file.path(app_dir, local_path)}:")
