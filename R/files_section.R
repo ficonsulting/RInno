@@ -42,21 +42,21 @@ files_section <- function(iss, app_name, app_dir, file_list = character()) {
     Source: "{all_files[nonblank_dirs]}"; DestDir: "{{app}}\\{file_dirs[nonblank_dirs]}"; Flags: ignoreversion;')
 
 glue::glue('
-          {iss}
+{iss}
 
-          [Files]
-          Source: "LICENSE"; Flags: dontcopy
-          Source: "{{#MyAppExeName}}"; DestDir: "{{app}}"; Flags: ignoreversion
-          #if IncludeR
-              Source: "R-{{#RVersion}}-win.exe"; DestDir: "{{tmp}}"; Check: RNeeded
-          #endif
-          #if IncludePandoc
-              Source: "pandoc-{{#PandocVersion}}-windows.msi"; DestDir: "{{tmp}}"; Check: PandocNeeded
-          #endif
-          #if IncludeChrome
-              Source: "chrome_installer.exe"; DestDir: "{{tmp}}"; Check: ChromeNeeded
-          #endif
-          {glue::collapse(blank_dir_files, "\n")}
-          {glue::collapse(dir_files, "\n")}
-          ')
+[Files]
+Source: "LICENSE"; Flags: dontcopy
+Source: "{{#MyAppExeName}}"; DestDir: "{{app}}"; Flags: ignoreversion
+#if IncludeR
+    Source: "R-{{#RVersion}}-win.exe"; DestDir: "{{tmp}}"; Check: RNeeded
+#endif
+#if IncludePandoc
+    Source: "pandoc-{{#PandocVersion}}-windows.msi"; DestDir: "{{tmp}}"; Check: PandocNeeded
+#endif
+#if IncludeChrome
+    Source: "chrome_installer.exe"; DestDir: "{{tmp}}"; Check: ChromeNeeded
+#endif
+{glue::collapse(blank_dir_files, "\n")}
+{glue::collapse(dir_files, "\n")}
+')
 }
