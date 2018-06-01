@@ -10,16 +10,19 @@
 #' @author Jonathan M. Hill
 #' @export
 
-files_section <- function(iss, app_dir, file_list = character()) {
+files_section <- function(iss, app_name, app_dir, file_list = character()) {
 
   all_files <- list.files(app_dir, recursive = T)
 
   # If a file list is not provided than list only files in app_dir
   if (length(file_list) == 0) {
-    all_files <- all_files[!grepl("iss$|info.*txt$|exe$|msi$", all_files)]
+    all_files <- all_files[!grepl("iss$|info.*txt$", all_files)]
   } else {
-    all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$|exe$|msi$", all_files)])
+    all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$", all_files)])
   }
+
+  # Explicitly remove setup_app_name.exe if it has been compiled before
+  all_files <- all_files[!grepl(paste0("setup_", app_name, ".exe"), all_files)]
 
   # Get file paths with dirname(), if no path (file in app directory/not contained in a subdirectory) dirname() returns "."
   file_dirs <- dirname(all_files)

@@ -134,7 +134,7 @@ create_app <- function(app_name,
     prog_menu_icon = dots$prog_menu_icon, desktop_icon = dots$desktop_icon)
 
   # Files Section
-  iss <- files_section(iss, app_dir, file_list = dots$file_list)
+  iss <- files_section(iss, app_name, app_dir, file_list = dots$file_list)
 
   # Execution & Pascal code to check registry during installation
   iss <- run_section(iss, dots$R_flags); iss <- code_section(iss, R_version)

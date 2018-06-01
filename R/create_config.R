@@ -85,6 +85,7 @@ create_config <- function(app_name,
     flex_file <- flexdashboard_check(check_files)
 
     if (length(flex_file) > 0) {
+      # Make sure flexdashboard and rmarkdown are included in the dependency list
       pkgs <- add_pkg(pkgs, c("flexdashboard", "rmarkdown"))
       cat("This flexdashboard will be used:\n - ", flex_file, "\n")
     } else {
