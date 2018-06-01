@@ -1,4 +1,4 @@
-df = data.frame(installed.packages())
+installed_pkgs = data.frame(installed.packages())
 
 # Ensure that a package is installed
 ensure <- function(pkg, pkg_name, repo = config$pkgs$cran) {
@@ -9,7 +9,7 @@ ensure <- function(pkg, pkg_name, repo = config$pkgs$cran) {
 
   # Get the CRAN version & requirements
   cran_version <- pkgVersionCRAN(pkg_name)
-  installed_version <- df$Version[df$Package == pkg_name]
+  installed_version <- installed_pkgs$Version[installed_pkgs$Package == pkg_name]
   breakpoint <- attr(regexpr("[<>=]+", pkg), "match.length")
   inequality <- substr(pkg, 1, breakpoint)
   required_version <- substr(pkg, breakpoint + 1, nchar(pkg))
@@ -25,11 +25,11 @@ ensure <- function(pkg, pkg_name, repo = config$pkgs$cran) {
   }
 
   # Check if package is installed and the specs are met
-  if (!pkg_name %in% df$Package | specs_not_met) {
+  if (!pkg_name %in% installed_pkgs$Package | specs_not_met) {
     if (cran_version == required_version) {
-      install.packages(pkg_name, repos = repo)
+      devtools::install_cran(pkg_name, repos = repo, dependencies = TRUE)
     } else {
-      devtools::install_version(pkg_name, version = required_version, repos = repo)
+      devtools::install_version(pkg_name, version = required_version, repos = repo, dependencies = TRUE)
     }
   }
   library(pkg_name, character.only = TRUE)
@@ -42,19 +42,19 @@ ensure_remotes <- function(remote) {
     label = sprintf("Loading - %s...", remote))
   pkg <- basename(remote)
   if (!(pkg %in% row.names(installed.packages()))) {
-    devtools::install_github(remote)
+    devtools::install_github(remote, dependencies = TRUE)
   }
   library(pkg, character.only = TRUE)
 }
 
 # Ensures local packages are installed
-ensure_local <- function(pkg, pkg_name, lib.path) {
+ensure_local <- function(pkg, pkg_name, lib_path) {
   setWinProgressBar(pb,
     value = grep(paste0("\\b", pkg_name, "\\b"), names(locals)) / (length(locals) + 1),
     label = sprintf("Loading - %s...", pkg_name))
 
   # Get the requirements
-  installed_version <- df$Version[df$Package == pkg_name]
+  installed_version <- installed_pkgs$Version[installed_pkgs$Package == pkg_name]
   breakpoint <- attr(regexpr("[<>=]+", pkg), "match.length")
   inequality <- substr(pkg, 1, breakpoint)
   required_version <- substr(pkg, breakpoint + 1, nchar(pkg))
@@ -68,11 +68,8 @@ ensure_local <- function(pkg, pkg_name, lib.path) {
              inequality,
              "numeric_version('", required_version, "')")))
   }
-  if (!pkg_name %in% df$Package | specs_not_met) {
-    install.packages(
-      list.files(lib.path, pattern = pkg_name, full.names = TRUE),
-      repos = NULL,
-      type = "source")
+  if (!pkg_name %in% installed_pkgs$Package | specs_not_met) {
+    devtools::install(dirname(list.files(path = lib_path, pattern = pkg_name, full.names = T)))
   }
   library(pkg_name, character.only = TRUE)
 }
