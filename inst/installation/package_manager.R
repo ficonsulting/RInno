@@ -53,7 +53,7 @@ if (config$app_repo[[1]] != "none") {
 appexit_msg <- tryCatch({
 
   # ensure all package dependencies are installed
-  message("ensuring packages: ", paste(pkgs, collapse = ", "))
+  message("ensuring packages: ", paste(names(pkgs), collapse = ", "))
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
   if (class(try(httr::http_error("www.google.com"))) != "try-error") {
     ._ <- mapply(ensure, pkgs, names(pkgs))
@@ -73,7 +73,7 @@ appexit_msg <- tryCatch({
   for (i in seq_along(pkgs)) {
     setWinProgressBar(pb,
       value = i / (length(pkgs) + 1),
-      label = sprintf("Loading package - %s", pkgs[i]))
+      label = sprintf("Loading package - %s", names(pkgs)[i]))
 
     library(names(pkgs)[i], character.only = TRUE)
   }
