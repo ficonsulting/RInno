@@ -4,10 +4,12 @@
 \alias{standardize_pkgs}
 \title{Standardize package dependencies}
 \usage{
-standardize_pkgs(pkgs)
+standardize_pkgs(pkgs, check_version = FALSE)
 }
 \arguments{
 \item{pkgs}{Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.}
+
+\item{check_version}{Boolean. If true, check to make sure the package version is not ahead of CRAN.}
 }
 \value{
 Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.

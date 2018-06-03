@@ -98,7 +98,7 @@ create_config <- function(app_name,
   jsonlite::write_json(
     list(
       appname = app_name,
-      pkgs = list(pkgs = standardize_pkgs(pkgs), cran = repo),
+      pkgs = list(pkgs = standardize_pkgs(pkgs, check_version = TRUE), cran = repo),
       remotes = remotes,
       locals = list(pkgs = standardize_pkgs(locals), local = local_path),
       logging = error_log,

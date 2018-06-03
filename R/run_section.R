@@ -39,6 +39,9 @@ run_section <- function(iss, R_flags = "/SILENT") {
     #if IncludeChrome
         Filename: "{{tmp}}\\chrome_installer.exe"; Parameters: "/install"; WorkingDir: {{tmp}}; Check: ChromeNeeded; Flags: skipifdoesntexist; StatusMsg: "Installing Chrome if needed"
     #endif
+    #if IncludeRtools
+        Filename: "{{tmp}}\\Rtools{{#RtoolsVersion}}.exe"; Parameters: "/VERYSILENT"; WorkingDir: {{tmp}}; Flags: skipifdoesntexist; StatusMsg: "Installing Rtools"
+    #endif
     Filename: "{{app}}\\{{#MyAppExeName}}"; Description: "', "{{cm:LaunchProgram,{{#StringChange(MyAppName, '&', '&&'", ')}}}}"; Flags: shellexec postinstall skipifsilent\n\n
   ')
 
