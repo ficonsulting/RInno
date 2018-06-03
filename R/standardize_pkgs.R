@@ -3,13 +3,14 @@
 #' Standardizes (named or not) character vectors of package dependencies and formats it for config.cfg.
 #'
 #' @param pkgs Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
+#' @param check_version Boolean. If true, check to make sure the package version is not ahead of CRAN.
 #'
 #' @return Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.
 #'
 #' @author William Bradley and Jonathan Hill
 #' @export
 
-standardize_pkgs <- function(pkgs) {
+standardize_pkgs <- function(pkgs, check_version = FALSE) {
 
   if (pkgs[1] == "none") return("none")
 
@@ -55,11 +56,15 @@ standardize_pkgs <- function(pkgs) {
   pkgs <- lapply(pkg_list, as.character)
 
   # Make sure the results are valid
-  df <- data.frame(utils::installed.packages(), row.names = NULL)
+  installed_pkgs <- data.frame(utils::installed.packages(), row.names = NULL)
+  if (check_version) {
+    cran_pkgs <- tools::CRAN_package_db()
+  }
   check_pkgs <- function(pkg, pkg_name) {
     breakpoint <- attr(regexpr("[<>=]+", pkg), "match.length")
     inequality <- substr(pkg, 1, breakpoint)
     required_version <- substr(pkg, breakpoint + 1, nchar(pkg))
+    cran_version <- cran_pkgs$Version[cran_pkgs$Package == pkg_name]
 
     if (nchar(inequality) > 2 | grepl("=[<>]", inequality)) {
       stop(glue::glue("{pkg_name}'s inequality ({inequality}) is not a valid logical operator"), call. = F)
@@ -67,7 +72,14 @@ standardize_pkgs <- function(pkgs) {
     if (class(try(numeric_version(required_version), silent = TRUE)) == "try-error") {
       stop(glue::glue("{required_version} is not a valid `numeric_version` for {pkg_name} "), call. = F)
     }
-    if (!pkg_name %in% df$Package) stop(glue::glue("{pkg_name} is not installed. Make sure it is in `installed.pacakges()` and try again."), call. = F)
+    if (!pkg_name %in% installed_pkgs$Package) {
+      stop(glue::glue("{pkg_name} is not installed. Make sure it is in `installed.pacakges()` and try again."), call. = F)
+    }
+    if (check_version) {
+      if (numeric_version(required_version) > numeric_version(cran_version)) {
+        stop(glue::glue("{pkg_name} v{required_version} is ahead of CRAN - v{cran_version}. Please add it to `remotes` to use {pkg_name}'s development version from Github/Bitbucket or decrease its version to one published on CRAN."), call. = FALSE)
+      }
+    }
   }
   mapply(check_pkgs, pkgs, names(pkgs))
 
