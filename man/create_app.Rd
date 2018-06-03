@@ -9,9 +9,10 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
   repo = "http://cran.rstudio.com", locals = "none", remotes = "none",
   app_repo_url = "none", auth_user = "none", auth_pw = "none",
   auth_token = "none", user_browser = "chrome", include_R = FALSE,
-  include_Pandoc = FALSE, include_Chrome = FALSE, R_version = paste0(">=",
-  R.version$major, ".", R.version$minor),
-  Pandoc_version = rmarkdown::pandoc_version(), ...)
+  include_Pandoc = FALSE, include_Chrome = FALSE, include_Rtools = FALSE,
+  R_version = paste0(">=", R.version$major, ".", R.version$minor),
+  Pandoc_version = rmarkdown::pandoc_version(), Rtools_version = "3.5",
+  copy_overwrite = TRUE, ...)
 }
 \arguments{
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}

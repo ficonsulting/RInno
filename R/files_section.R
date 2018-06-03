@@ -16,13 +16,10 @@ files_section <- function(iss, app_name, app_dir, file_list = character()) {
 
   # If a file list is not provided than list only files in app_dir
   if (length(file_list) == 0) {
-    all_files <- all_files[!grepl("iss$|info.*txt$", all_files)]
+    all_files <- all_files[!grepl("iss$|info.*txt$|exe$", all_files)]
   } else {
-    all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$", all_files)])
+    all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$|exe$", all_files)])
   }
-
-  # Explicitly remove setup_app_name.exe if it has been compiled before
-  all_files <- all_files[!grepl(paste0("setup_", app_name, ".exe"), all_files)]
 
   # Get file paths with dirname(), if no path (file in app directory/not contained in a subdirectory) dirname() returns "."
   file_dirs <- dirname(all_files)
@@ -55,6 +52,9 @@ Source: "{{#MyAppExeName}}"; DestDir: "{{app}}"; Flags: ignoreversion
 #endif
 #if IncludeChrome
     Source: "chrome_installer.exe"; DestDir: "{{tmp}}"; Check: ChromeNeeded
+#endif
+#if IncludeRtools
+    Source: "Rtools{{#RtoolsVersion}}.exe"; DestDir: "{{tmp}}";
 #endif
 {glue::collapse(blank_dir_files, "\n")}
 {glue::collapse(dir_files, "\n")}

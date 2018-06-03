@@ -58,8 +58,10 @@ create_app <- function(app_name,
   include_R    = FALSE,
   include_Pandoc = FALSE,
   include_Chrome = FALSE,
+  include_Rtools = FALSE,
   R_version = paste0(">=", R.version$major, ".", R.version$minor),
   Pandoc_version = rmarkdown::pandoc_version(),
+  Rtools_version = "3.5",
   copy_overwrite = TRUE,
   ...) {
 
@@ -96,6 +98,7 @@ create_app <- function(app_name,
   if (include_R) get_R(app_dir, R_version)
   if (include_Pandoc) get_Pandoc(app_dir, Pandoc_version)
   if (include_Chrome) get_Chrome(app_dir)
+  if (include_Rtools) get_Rtools(app_dir, Rtools_version, R_version)
 
   # Create batch file
   create_bat(app_name, app_dir)
@@ -112,7 +115,8 @@ create_app <- function(app_name,
 
   # C-like directives
   iss <- directives_section(iss, include_R, R_version, include_Pandoc, Pandoc_version,
-    include_Chrome, app_version = dots$app_version, publisher = dots$publisher,
+    include_Chrome, include_Rtools, Rtools_version,
+    app_version = dots$app_version, publisher = dots$publisher,
     main_url = dots$main_url)
 
   # Setup Section
