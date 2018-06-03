@@ -43,11 +43,15 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{include_Pandoc}{To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.}
 
-\item{include_Chrome}{To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, this option includes a copy of Chrome for users that do not have it installed yet.}
+\item{include_Chrome}{To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, it is no longer supported by Google :(.}
+
+\item{include_Rtools}{To include Rtools in the installer, \code{include_Rtools = TRUE}. For some packages to build properly, you may need to include Rtools.}
 
 \item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 
 \item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.}
+
+\item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
 
 \item{...}{Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.}
 }

@@ -9,6 +9,8 @@ get_Rtools(app_dir, Rtools_version, R_version)
 \arguments{
 \item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
+\item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
+
 \item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 }
 \value{
