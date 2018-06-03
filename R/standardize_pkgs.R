@@ -64,7 +64,7 @@ standardize_pkgs <- function(pkgs, check_version = FALSE) {
     breakpoint <- attr(regexpr("[<>=]+", pkg), "match.length")
     inequality <- substr(pkg, 1, breakpoint)
     required_version <- substr(pkg, breakpoint + 1, nchar(pkg))
-    cran_version <- cran_pkgs$Version[cran_pkgs$Package == pkg_name]
+
 
     if (nchar(inequality) > 2 | grepl("=[<>]", inequality)) {
       stop(glue::glue("{pkg_name}'s inequality ({inequality}) is not a valid logical operator"), call. = F)
@@ -76,6 +76,7 @@ standardize_pkgs <- function(pkgs, check_version = FALSE) {
       stop(glue::glue("{pkg_name} is not installed. Make sure it is in `installed.pacakges()` and try again."), call. = F)
     }
     if (check_version) {
+      cran_version <- cran_pkgs$Version[cran_pkgs$Package == pkg_name]
       if (numeric_version(required_version) > numeric_version(cran_version)) {
         stop(glue::glue("{pkg_name} v{required_version} is ahead of CRAN - v{cran_version}. Please add it to `remotes` to use {pkg_name}'s development version from Github/Bitbucket or decrease its version to one published on CRAN."), call. = FALSE)
       }
