@@ -4,11 +4,13 @@ OS_type: windows
 Title: An Installation Framework for Shiny Apps
 Version: 0.2.1
 Authors@R: c(
-    person("Jon", "Hill", role = c("aut", "cre", "cph"), email = "jon.mark.hill@gmail.com"),
+    person("Jon", "Hill", email = "jon.mark.hill@gmail.com", role = c("aut", "cre", "cph")),
     person("W. Lee", "Pang", role = c("aut", "cph"), comment = "DesktopDeployR project at https://github.com/wleepang/DesktopDeployR"),
-    person("Hanjo", "Odendaal", role = "ctb", email = "hanjo.oden@gmail.com"),
-    person("William", "Bradley", role = "ctb", email = "bradley@ficonsulting.com"),
-    person("Brent (Tom)", "Bailey", role = "ctb", email = "bailey@ficonsulting.com")
+    person("Hanjo", "Odendaal", email = "hanjo.oden@gmail.com", role = "ctb"),
+    person("William", "Bradley", email = "bradley@ficonsulting.com", role = "ctb"),
+    person("Brent (Tom)", "Bailey", email = "bailey@ficonsulting.com", role = "ctb"),
+    person("Mikołaj", "Rybiński", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
+    person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb")
     )
 Maintainer: Jon Hill <jon.mark.hill@gmail.com>
 URL: www.ficonsulting.com
