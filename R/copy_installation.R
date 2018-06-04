@@ -7,8 +7,7 @@
 #'   \item First/last page of the installation wizard, \emph{infobefore.txt} and \emph{infoafter.txt}.
 #'   \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, and \emph{utils/wsf/js/JSON.minify.js}.
 #' }
-#'
-#' @param overwrite logical; should existing destination files be overwritten?
+
 #' @inheritParams create_app
 #'
 #' @author Jonathan M. Hill

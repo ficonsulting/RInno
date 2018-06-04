@@ -24,6 +24,7 @@
 #' @param include_Chrome To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, it is no longer supported by Google :(.
 #' @param include_Rtools To include Rtools in the installer, \code{include_Rtools = TRUE}. For some packages to build properly, you may need to include Rtools.
 #' @param Rtools_version Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.
+#' @param overwrite Logical. Should existing destination files be overwritten?
 #' @param ... Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.
 #' @inheritParams create_config
 #' @examples
@@ -64,7 +65,7 @@ create_app <- function(app_name,
   R_version = paste0(">=", R.version$major, ".", R.version$minor),
   Pandoc_version = rmarkdown::pandoc_version(),
   Rtools_version = "3.5",
-  copy_overwrite = TRUE,
+  overwrite = TRUE,
   ...) {
 
   # To capture arguments for other function calls
@@ -94,7 +95,7 @@ create_app <- function(app_name,
   R_version <- sanitize_R_version(R_version)
 
   # Copy installation scripts
-  copy_installation(app_dir, overwrite = copy_overwrite)
+  copy_installation(app_dir, overwrite)
 
   # Include separate installers for R, Pandoc, and Chrome if necessary
   if (include_R) get_R(app_dir, R_version)

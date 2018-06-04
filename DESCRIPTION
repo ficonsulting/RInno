@@ -31,7 +31,6 @@ Imports:
     stringr (>= 1.2.0)
 Suggests:
     knitr,
-    magrittr,
     stringi,
     covr,
     testthat

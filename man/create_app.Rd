@@ -12,7 +12,7 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
   include_Pandoc = FALSE, include_Chrome = FALSE, include_Rtools = FALSE,
   R_version = paste0(">=", R.version$major, ".", R.version$minor),
   Pandoc_version = rmarkdown::pandoc_version(), Rtools_version = "3.5",
-  copy_overwrite = TRUE, ...)
+  overwrite = TRUE, ...)
 }
 \arguments{
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -52,6 +52,8 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 \item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.}
 
 \item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
+
+\item{overwrite}{Logical. Should existing destination files be overwritten?}
 
 \item{...}{Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.}
 }
