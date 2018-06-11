@@ -14,7 +14,6 @@
 #'
 #' }
 #'
-#'
 #' @inherit setup_section return seealso params
 #' @author Jonathan M. Hill
 #' @export

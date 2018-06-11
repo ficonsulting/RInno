@@ -67,7 +67,7 @@ create_config <- function(app_name,
     app_repo <- strsplit(app_repo_url, "org/|com/")[[1]][2]
 
     # Make sure httr is included
-    pkgs <- add_pkg(pkgs, "httr")
+    pkgs <- add_pkgs(pkgs, "httr")
 
     # Set host
     if (grepl("bitbucket.org", app_repo_url)) host <- "bitbucket"
@@ -86,7 +86,7 @@ create_config <- function(app_name,
 
     if (length(flex_file) > 0) {
       # Make sure flexdashboard and rmarkdown are included in the dependency list
-      pkgs <- add_pkg(pkgs, c("flexdashboard", "rmarkdown"))
+      pkgs <- add_pkgs(pkgs, c("flexdashboard", "rmarkdown"))
       cat("This flexdashboard will be used:\n - ", flex_file, "\n")
     } else {
       flex_file <- "none"
