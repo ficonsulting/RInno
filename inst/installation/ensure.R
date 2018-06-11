@@ -33,6 +33,7 @@ ensure <- function(pkg, pkg_name, repo = config$pkgs$cran) {
     }
   }
   library(pkg_name, character.only = TRUE)
+  message(paste0(pkg_name, " installed\n"))
 }
 
 # Ensure that remotes are installed
@@ -45,10 +46,11 @@ ensure_remotes <- function(remote) {
     devtools::install_github(remote, dependencies = TRUE)
   }
   library(pkg, character.only = TRUE)
+  message(paste0(pkg_name, " installed\n"))
 }
 
 # Ensures local packages are installed
-ensure_local <- function(pkg, pkg_name, lib_path) {
+ensure_local <- function(pkg, pkg_name, lib_path = file.path(appwd, config$locals$local)) {
   setWinProgressBar(pb,
     value = grep(paste0("\\b", pkg_name, "\\b"), names(locals)) / (length(locals) + 1),
     label = sprintf("Loading - %s...", pkg_name))
@@ -69,9 +71,10 @@ ensure_local <- function(pkg, pkg_name, lib_path) {
              "numeric_version('", required_version, "')")))
   }
   if (!pkg_name %in% installed_pkgs$Package | specs_not_met) {
-    devtools::install(dirname(list.files(path = lib_path, pattern = pkg_name, full.names = T)))
+    install.packages(list.files(path = lib_path, pattern = pkg_name, full.names = T), repos = NULL, type = "source")
   }
   library(pkg_name, character.only = TRUE)
+  message(paste0(pkg_name, " installed\n"))
 }
 
 # Internet connection test
@@ -80,10 +83,10 @@ ping_site <- function(site_url) {
 }
 
 # Check CRAN if package version is current
-pkgVersionCRAN = function(pkg_name, cran_url="http://cran.r-project.org/package=") {
+pkgVersionCRAN = function(pkg_name, cran_url = "http://cran.r-project.org/package=") {
 
   # Create URL
-  cran_pkg_loc = paste0(cran_url,pkg_name)
+  cran_pkg_loc = paste0(cran_url, pkg_name)
 
   # Establish connection
   suppressWarnings(conn <- try(url(cran_pkg_loc), silent = TRUE))
