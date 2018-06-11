@@ -20,15 +20,16 @@ if (!dir.exists(applibpath)) {
   for (i in seq_along(init_pkgs)) {
     setWinProgressBar(pb, value = i / (length(init_pkgs) + 1),
       label = sprintf("Loading package - %s", init_pkgs[i]))
-    install.packages(init_pkgs[i], applibpath, "http://cran.rstudio.com")
+    install.packages(init_pkgs[i], applibpath, "http://cran.rstudio.com", dependencies = TRUE)
   }
   close(pb)
 }
 
 .libPaths(c(applibpath, .libPaths()))
 
-message("library paths:\n", paste0("... ", .libPaths(), collapse = "\n"))
-message("working path:\n", paste("...", appwd))
+message("library paths:\n", paste("...", .libPaths(), collapse = "\n"))
+message("working path:\n", paste("...", appwd, "\n"))
+message("interactive R session:\n", paste("...", interactive()))
 
 # Read the application config
 library("jsonlite", character.only = TRUE)
@@ -64,10 +65,9 @@ appexit_msg <- tryCatch({
     }
   }
   if (locals[1] != "none") {
-    message("ensuring locals: ", paste(locals, collapse = ", "))
+    message("ensuring locals: ", paste(names(locals), collapse = ", "))
     setWinProgressBar(pb, 0, label = "Ensuring local package dependencies ...")
-    ._ <- mapply(ensure_local, locals, names(locals),
-                 lib.path = file.path(appwd, config$locals$local))
+    ._ <- mapply(ensure_local, locals, names(locals))
   }
 
   for (i in seq_along(pkgs)) {
