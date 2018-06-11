@@ -53,7 +53,8 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
 
-\item{overwrite}{Logical. Should existing destination files be overwritten?}
+\item{overwrite}{Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
+?}
 
 \item{...}{Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.}
 }

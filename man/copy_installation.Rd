@@ -9,7 +9,8 @@ copy_installation(app_dir = getwd(), overwrite = TRUE)
 \arguments{
 \item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{overwrite}{Logical. Should existing destination files be overwritten?}
+\item{overwrite}{Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
+?}
 }
 \description{
 This function moves files stored in \code{system.file('installation', package = 'RInno')} to \code{app_dir}:

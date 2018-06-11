@@ -27,7 +27,6 @@ run_section(iss, R_flags = '/SILENT /DIR=""{userdocs}""')
 
 }
 
-
 }
 \seealso{
 \code{\link{get_R}}, \code{\link{copy_installation}}, \code{\link{create_config}}, \code{\link{create_bat}}, \code{\link{directives_section}}, \code{\link{setup_section}}, \code{\link{languages_section}}, \code{\link{tasks_section}}, \code{\link{files_section}}, \code{\link{icons_section}}, \code{\link{run_section}}, and \code{\link{code_section}}.
