@@ -42,7 +42,7 @@ glue::glue('
 {iss}
 
 [Files]
-Source: "LICENSE"; Flags: dontcopy
+Source: "LICENSE"; Flags: dontcopy noencryption
 Source: "{{#MyAppExeName}}"; DestDir: "{{app}}"; Flags: ignoreversion
 #if IncludeR
     Source: "R-{{#RVersion}}-win.exe"; DestDir: "{{tmp}}"; Check: RNeeded
