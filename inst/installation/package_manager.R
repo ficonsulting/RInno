@@ -10,7 +10,7 @@ source("utils/ensure.R")
 # Initialize RInno
 if (!dir.exists(applibpath)) {
   pb <- winProgressBar(
-    title = "Starting RInno Deployment ...",
+    title = "Starting RInno ...",
     label = "Internet connection required")
   Sys.sleep(2)
   dir.create(applibpath)
@@ -20,14 +20,14 @@ if (!dir.exists(applibpath)) {
   for (i in seq_along(init_pkgs)) {
     setWinProgressBar(pb, value = i / (length(init_pkgs) + 1),
       label = sprintf("Loading package - %s", init_pkgs[i]))
-    install.packages(init_pkgs[i], applibpath, "http://cran.rstudio.com", dependencies = TRUE)
+    install.packages(pkgs = init_pkgs[i], lib = applibpath, repos = "http://cran.rstudio.com", dependencies = TRUE)
   }
   close(pb)
 }
 
 .libPaths(c(applibpath, .libPaths()))
 
-message("library paths:\n", paste("...", .libPaths(), collapse = "\n"))
+message("library paths:\n", paste("...", applibpath, collapse = "\n"))
 message("working path:\n", paste("...", appwd, "\n"))
 message("interactive R session:\n", paste("...", interactive()))
 
@@ -70,12 +70,14 @@ appexit_msg <- tryCatch({
     ._ <- mapply(ensure_local, locals, names(locals))
   }
 
-  for (i in seq_along(pkgs)) {
-    setWinProgressBar(pb,
-      value = i / (length(pkgs) + 1),
-      label = sprintf("Loading package - %s", names(pkgs)[i]))
+  all_deps <- c(pkgs, remotes, locals)[!grepl("none", c(pkgs, remotes, locals))]
 
-    library(names(pkgs)[i], character.only = TRUE)
+  for (i in seq_along(all_deps)) {
+    setWinProgressBar(pb,
+      value = i / (length(all_deps) + 1),
+      label = sprintf("Loading package - %s", names(all_deps)[i]))
+
+    library(names(all_deps)[i], character.only = TRUE)
   }
 
   setWinProgressBar(pb, 1.00, label = "Starting application")
