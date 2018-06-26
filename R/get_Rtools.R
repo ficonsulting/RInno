@@ -94,7 +94,7 @@ get_Rtools <- function(app_dir, Rtools_version, R_version) {
   download_url <- paste0(Rtools_url, Rtools_file)
 
   if (file.exists(filename)) {
-    cat("Using the copy of Rtools already included:\n", filename)
+    cat("Using the copy of Rtools already included:\n", filename, "\n")
   } else {
     cat(glue::glue("Downloading Rtools {Rtools_version} ...\n"))
 

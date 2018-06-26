@@ -36,7 +36,7 @@ get_R <- function(app_dir = getwd(),
   filename <- file.path(app_dir, glue::glue("R-{R_version}-win.exe"))
 
   if (file.exists(filename)) {
-    cat("Using the copy of R already included:\n", filename)
+    cat("Using the copy of R already included:\n", filename, "\n")
   } else {
     cat(glue::glue("Downloading R-{R_version} ...\n"))
 
