@@ -1,7 +1,7 @@
-installed_pkgs = data.frame(installed.packages())
+installed_pkgs = data.frame(installed.packages(applibpath))
 
 # Ensure that a package is installed
-ensure <- function(pkg, pkg_name, repo = config$pkgs$cran) {
+ensure <- function(pkg, pkg_name, lib_loc = applibpath, repo = config$pkgs$cran) {
 
   setWinProgressBar(pb,
     value = grep(paste0("\\b", pkg_name, "\\b"), names(pkgs)) / (length(pkgs) + 1),
@@ -27,30 +27,28 @@ ensure <- function(pkg, pkg_name, repo = config$pkgs$cran) {
   # Check if package is installed and the specs are met
   if (!pkg_name %in% installed_pkgs$Package | specs_not_met) {
     if (cran_version == required_version) {
-      devtools::install_cran(pkg_name, repos = repo, dependencies = TRUE)
+      install.packages(pkgs = pkg_name, lib = lib_loc, repos = repo, dependencies = TRUE)
     } else {
-      devtools::install_version(pkg_name, version = required_version, repos = repo, dependencies = TRUE)
+      devtools::install_version(package = pkg_name, version = required_version, repos = repo, dependencies = TRUE)
     }
   }
-  library(pkg_name, character.only = TRUE)
   message(paste0(pkg_name, " installed\n"))
 }
 
 # Ensure that remotes are installed
-ensure_remotes <- function(remote) {
+ensure_remotes <- function(remote, lib_loc = applibpath) {
   setWinProgressBar(pb,
     value = grep(paste0("\\b", remote, "\\b"), remotes) / (length(remotes) + 1),
     label = sprintf("Loading - %s...", remote))
   pkg <- basename(remote)
   if (!(pkg %in% row.names(installed.packages()))) {
-    devtools::install_github(remote, dependencies = TRUE)
+    devtools::install_github(repo = remote, lib = lib_loc, dependencies = TRUE)
   }
-  library(pkg, character.only = TRUE)
   message(paste0(pkg_name, " installed\n"))
 }
 
 # Ensures local packages are installed
-ensure_local <- function(pkg, pkg_name, lib_path = file.path(appwd, config$locals$local)) {
+ensure_local <- function(pkg, pkg_name, lib_loc = applibpath, lib_path = file.path(appwd, config$locals$local)) {
   setWinProgressBar(pb,
     value = grep(paste0("\\b", pkg_name, "\\b"), names(locals)) / (length(locals) + 1),
     label = sprintf("Loading - %s...", pkg_name))
@@ -71,9 +69,8 @@ ensure_local <- function(pkg, pkg_name, lib_path = file.path(appwd, config$local
              "numeric_version('", required_version, "')")))
   }
   if (!pkg_name %in% installed_pkgs$Package | specs_not_met) {
-    install.packages(list.files(path = lib_path, pattern = pkg_name, full.names = T), repos = NULL, type = "source")
+    install.packages(pkgs = list.files(path = lib_path, pattern = pkg_name, full.names = T), lib = lib_loc, repos = NULL, type = "source")
   }
-  library(pkg_name, character.only = TRUE)
   message(paste0(pkg_name, " installed\n"))
 }
 
