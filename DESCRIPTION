@@ -10,7 +10,8 @@ Authors@R: c(
     person("William", "Bradley", email = "bradley@ficonsulting.com", role = "ctb"),
     person("Brent (Tom)", "Bailey", email = "bailey@ficonsulting.com", role = "ctb"),
     person("Mikołaj", "Rybiński", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
-    person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb")
+    person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb"),
+    person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = c("ctb"))
     )
 Maintainer: Jon Hill <jon.mark.hill@gmail.com>
 URL: www.ficonsulting.com
