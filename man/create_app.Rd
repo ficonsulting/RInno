@@ -6,11 +6,12 @@
 \usage{
 create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
   pkgs = c("jsonlite", "shiny", "magrittr"),
-  repo = "http://cran.rstudio.com", locals = "none", remotes = "none",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none",
-  auth_token = "none", user_browser = "chrome", include_R = FALSE,
-  include_Pandoc = FALSE, include_Chrome = FALSE, include_Rtools = FALSE,
-  R_version = paste0(">=", R.version$major, ".", R.version$minor),
+  repo = "http://cran.rstudio.com", locals = "none",
+  locals_path = "local", remotes = "none", app_repo_url = "none",
+  auth_user = "none", auth_pw = "none", auth_token = "none",
+  user_browser = "chrome", include_R = FALSE, include_Pandoc = FALSE,
+  include_Chrome = FALSE, include_Rtools = FALSE, R_version = paste0(">=",
+  R.version$major, ".", R.version$minor),
   Pandoc_version = rmarkdown::pandoc_version(), Rtools_version = "3.5",
   overwrite = TRUE, ...)
 }
@@ -21,13 +22,14 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not exist. Defaults to 'RInno_installer'.}
 
-\item{pkgs}{Character vector of package dependencies. To provide version limits, a named character vector with an inequality in front of the version number, \code{pkgs = c(httr = ">=1.3")}, is supported. Local .tar.gz packages and remote development versions are also supported via \code{locals} and \code{remotes}.}
+\item{pkgs}{Character vector of package dependencies. To provide version limits, a named character vector with an inequality in front of the version number, \code{pkgs = c(httr = ">=1.3")}, is supported. Local .tar.gz packages and remote development versions are also supported via \code{locals} and \code{remotes}. \code{pkgs} are downloaded into \code{file.path(app_dir, local_path)}.
+#' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
 
 \item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.}
 
 \item{locals}{Character vector of local package dependencies. Supports package versions like \code{pkgs}.}
 
-\item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
+\item{locals_path}{Default location inside the app working directory to install local package dependencies from. This defaults to \code{local_path = "local"}}
 
 \item{app_repo_url}{Repository address for continuous installations in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.}
 
