@@ -15,7 +15,8 @@ get_remote_version <- function(
 
     } else if (sc == 403) {
       stop("This is a private repo. Provide an authorized user and password to create_config().")
-    } else {
+
+      } else {
       stop("It looks like your username and/or password are incorrect.")
     }
   }
