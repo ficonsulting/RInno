@@ -1,71 +1,11 @@
 #' @importFrom magrittr %>%
 `%>%` <- magrittr::`%>%`
 
-#' Download packages
-#'
-#' Places package dependencies in \code{locals_path}.
-#'
-#' @inheritParams create_app
-#' @export
-download_packages <- function(app_dir, pkgs, locals_path, repo) {
-
-  if (pkgs[[1]] == "none") return(NULL)
-
-  cat("\nGetting package dependencies... \n\n")
-
-  # Check pkgs class
-  if (any(lapply(pkgs, class) != "character")) stop("`pkgs` must be a character vector.", call. = FALSE)
-
-  # Standardize pkgs
-  standard_deps <- standardize_pkgs(pkgs, check_version = TRUE, string = TRUE)
-
-  # Add packages required by RInno
-  standard_deps <- add_pkgs(standard_deps, c("jsonlite", "devtools", "httr", "shiny"))
-
-  # Find all the pkg dependencies
-  pkg_deps <-
-    unique(
-      unlist(
-        tools::package_dependencies(
-          packages = standard_deps
-        )
-      )
-    )
-
-  all_deps <- add_pkgs(pkg_deps, standard_deps)
-
-  # Get a list of base packages
-  base_pkgs <- data.frame(installed.packages(), stringsAsFactors = FALSE)
-  base_pkgs <- base_pkgs[!is.na(base_pkgs$Priority), ]
-  base_pkgs <- base_pkgs[base_pkgs$Priority == "base", "Package"]
-
-  # Remove base packages from the dependency list
-  all_deps_no_base <- all_deps[!all_deps %in% base_pkgs]
-
-  # Figure out which files need to be downloaded
-  locals_files <- lapply(all_deps_no_base, function(x) list.files(file.path(app_dir, locals_path), pattern = x))
-  downloaded_deps <- unlist(lapply(locals_files, function(x) if(length(x) == 1) TRUE else FALSE))
-  using <- locals_files[downloaded_deps]
-
-  # Let developer know which files are already included
-  if (length(using) > 0) {
-    cat("Using packages:\n - ")
-    cat(file.path(app_dir, locals_path, using), sep = "\n - ")
-  }
-
-  # Download any required pacakges in app_dir/local_path
-  req_deps <- all_deps_no_base[!downloaded_deps]
-  if (length(req_deps) > 0) {
-    cat("\nDownloading required packages...\n")
-    check_pkg_version(utils::download.packages(req_deps, file.path(app_dir, locals_path), repos = repo, type = "win.binary"))
-  }
-}
-
 #' Standardize package dependencies
 #'
 #' Standardizes (named or not) character vectors of package dependencies and formats it for config.cfg.
 #'
-#' @param pkgs Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
+#' @param pkgs Processes \code{pkgs}, and \code{pkgs}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
 #' @param check_version Boolean. If true, check to make sure the package version is not ahead of CRAN.
 #'
 #' @return Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.
@@ -91,7 +31,7 @@ standardize_pkgs <- function(pkgs, check_version = FALSE, string = FALSE) {
 
       error = function(e) {
         stop(e$message,
-          "\n\nPlease provide versions of `pkgs` and `locals` if they are not installed in the development environment.", call. = FALSE)
+          "\n\nPlease provide versions of `pkgs` if they are not installed in the development environment.", call. = FALSE)
       })
 
     names(pkg_list) <- pkgs
@@ -106,7 +46,7 @@ standardize_pkgs <- function(pkgs, check_version = FALSE, string = FALSE) {
       pkg_list[no_version] <- lapply(pkg_list[no_version], utils::packageVersion),
 
       error = function(e) {
-       stop(e$message, "\n\nPlease provide versions of `pkgs` and `locals` if they are not installed in the development environment.", call. = FALSE)
+       stop(e$message, "\n\nPlease provide versions of `pkgs` if they are not installed in the development environment.", call. = FALSE)
       })
 
     names(pkg_list)[no_version] <- pkgs[no_version]
@@ -236,7 +176,7 @@ cran_version = function(pkg_name, cran_url = "http://cran.r-project.org/package=
 #'
 #' Adds (named or not) package dependencies to a named vector of packages.
 #'
-#' @param pkgs Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
+#' @param pkgs Processes \code{pkgs} argument of \code{\link{create_config}} and \code{\link{create_app}}.
 #' @param pkg String. Name of package to add
 #'
 #' @return Package dependency string vector for \code{\link{standardize_pkgs}}.
@@ -293,14 +233,14 @@ flexdashboard_check <- function(file_list) {
 
 #' @keywords internal
 #' @export
-check_app <- function(app_dir, locals_path) {
+check_app <- function(app_dir, pkgs_path) {
   win_binary_pkgs <- list.files(
-    file.path(app_dir, locals_path),
+    file.path(app_dir, pkgs_path),
     ".zip$"
   )
 
   mac_binary_pkgs <- list.files(
-    file.path(app_dir, locals_path),
+    file.path(app_dir, pkgs_path),
     ".tgz$"
   )
 
@@ -314,7 +254,7 @@ check_app <- function(app_dir, locals_path) {
   }
 
   source_pkgs <- list.files(
-    file.path(app_dir, locals_path),
+    file.path(app_dir, pkgs_path),
     ".tar.gz$"
   )
 
