@@ -7,7 +7,7 @@
 standardize_pkgs(pkgs, check_version = FALSE, string = FALSE)
 }
 \arguments{
-\item{pkgs}{Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.}
+\item{pkgs}{Processes \code{pkgs}, and \code{pkgs}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.}
 
 \item{check_version}{Boolean. If true, check to make sure the package version is not ahead of CRAN.}
 }

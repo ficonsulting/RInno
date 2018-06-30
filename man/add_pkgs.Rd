@@ -7,7 +7,7 @@
 add_pkgs(pkgs, pkg)
 }
 \arguments{
-\item{pkgs}{Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.}
+\item{pkgs}{Processes \code{pkgs} argument of \code{\link{create_config}} and \code{\link{create_app}}.}
 
 \item{pkg}{String. Name of package to add}
 }

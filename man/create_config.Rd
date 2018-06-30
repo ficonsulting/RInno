@@ -5,7 +5,7 @@
 \title{Creates an app config file, "utils/config.cfg"}
 \usage{
 create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite", "devtools",
-  "magrittr"), locals = "none", locals_path = "local", remotes = "none",
+  "magrittr"), pkgs_path = "library", remotes = "none",
   repo = "http://cran.rstudio.com", error_log = "error.log",
   app_repo_url = "none", auth_user = "none", auth_pw = "none",
   auth_token = "none", user_browser = "chrome")
@@ -15,12 +15,11 @@ create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite", "devtools",
 
 \item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{pkgs}{Character vector of package dependencies. To provide version limits, a named character vector with an inequality in front of the version number, \code{pkgs = c(httr = ">=1.3")}, is supported. Local .tar.gz packages and remote development versions are also supported via \code{locals} and \code{remotes}. \code{pkgs} are downloaded into \code{file.path(app_dir, local_path)}.
-#' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
+\item{pkgs}{Character vector of package dependencies. Remote development versions are supported via \code{remotes}. \code{pkgs} are downloaded into \code{file.path(app_dir, pkgs_path)} as Windows binary packages (.zip). If you build binary packages and store them there before calling \code{create_app}, they will be included as well.}
 
-\item{locals}{Character vector of local package dependencies. Supports package versions like \code{pkgs}.}
+\item{pkgs_path}{Default location inside the app working directory to install package dependencies This defaults to \code{pkgs_path = "bin"}}
 
-\item{locals_path}{Default location inside the app working directory to install local package dependencies from. This defaults to \code{local_path = "local"}}
+\item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
 
 \item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.}
 
