@@ -3,7 +3,6 @@
 #' Places package dependencies in \code{pkgs_path}.
 #'
 #' @inheritParams create_app
-#' @importFrom devtools github_remote remote_download.github_remote source_pkg
 #' @export
 download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user, auth_token) {
 
