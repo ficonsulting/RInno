@@ -281,7 +281,7 @@ check_pkg_version <- function(result) {
     function(x) package_version(x)
   )
 
-  df$installed_versions <- lapply(df$pkg, function(x) packageVersion(x))
+  df$installed_versions <- lapply(df$pkg, function(x) utils::packageVersion(x))
 
   df$different <- is.na(match(df$downloaded_versions, df$installed_versions))
 

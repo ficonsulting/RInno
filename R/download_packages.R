@@ -3,6 +3,7 @@
 #' Places package dependencies in \code{pkgs_path}.
 #'
 #' @inheritParams create_app
+#' @importFrom devtools github_remote remote_download.github_remote source_pkg
 #' @export
 download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user, auth_token) {
 
@@ -31,8 +32,8 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
 
   all_deps <- add_pkgs(pkg_deps, standard_deps)
 
-  avail_pkgs <- data.frame(installed.packages(), stringsAsFactors = F)
-  base_pkgs <- avail_pkgs[complete.cases(avail_pkgs$Priority), ]
+  avail_pkgs <- data.frame(utils::installed.packages(), stringsAsFactors = F)
+  base_pkgs <- avail_pkgs[stats::complete.cases(avail_pkgs$Priority), ]
   base_pkgs <- base_pkgs[base_pkgs$Priority == "base", "Package"]
 
   all_deps_no_base <- all_deps[!all_deps %in% base_pkgs]
