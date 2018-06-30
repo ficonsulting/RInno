@@ -79,14 +79,14 @@ Creates the following files in \code{app_dir}:
 create_app('myapp')
 
 create_app(
-  app_name  = 'My AppName',
-  app_dir    = 'My/app/path',
-  dir_out   = 'wizard',
-  pkgs      = c('jsonlite', 'shiny', 'magrittr', 'xkcd'),
-  include_R = TRUE,   # Download R and install it with the app
-  R_version = "2.2.1",  # Old version of R
-  privilege = 'high', # Admin only installation
-  default_dir = 'pf') # Program Files
+  app_name     = 'My AppName',
+  app_dir      = 'My/app/path',
+  dir_out      = 'wizard',
+  pkgs         = c('jsonlite', 'shiny', 'magrittr', 'xkcd'),
+  include_R    = TRUE,   # Download R and install it with the app
+  R_version    = "2.2.1",  # Old version of R
+  privilege    = 'high', # Admin only installation
+  default_dir  = 'pf') # Program Files
 }
 }
 \seealso{
