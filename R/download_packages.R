@@ -39,7 +39,7 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
 
   # Figure out which files need to be downloaded
   pkgs_files <- lapply(all_deps_no_base, function(x) list.files(pkgs_path, pattern = x))
-  downloaded_deps <- unlist(lapply(pkgs_files, function(x) if(length(x) == 1) TRUE else FALSE))
+  downloaded_deps <- unlist(lapply(pkgs_files, function(x) if(length(x) >= 1) TRUE else FALSE))
   using <- pkgs_files[downloaded_deps]
 
   # Let developer know which files are already included
@@ -60,7 +60,7 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
     pkgs_files <- lapply(remotes, function(x) {
       list.files(pkgs_path, pattern = gsub("[@#].*", "", basename(x)))
     })
-    downloaded_deps <- unlist(lapply(pkgs_files, function(x) if(length(x) == 1) TRUE else FALSE))
+    downloaded_deps <- unlist(lapply(pkgs_files, function(x) if(length(x) >= 1) TRUE else FALSE))
     using <- pkgs_files[downloaded_deps]
 
     if (length(using) > 0) {
