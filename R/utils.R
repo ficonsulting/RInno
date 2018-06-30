@@ -211,7 +211,6 @@ add_pkgs <- function(pkgs, pkg) {
 #'
 #' @author Hanjo Odendaal.
 #' @keywords internal
-#' @export
 flexdashboard_check <- function(file_list) {
 
   for (file in file_list) {
@@ -232,7 +231,6 @@ flexdashboard_check <- function(file_list) {
 
 
 #' @keywords internal
-#' @export
 check_app <- function(app_dir, pkgs_path) {
   win_binary_pkgs <- list.files(
     file.path(app_dir, pkgs_path),
@@ -269,7 +267,6 @@ check_app <- function(app_dir, pkgs_path) {
 }
 
 #' @keywords internal
-#' @export
 check_pkg_version <- function(result) {
 
   df <- data.frame(result, stringsAsFactors = FALSE)

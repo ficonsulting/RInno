@@ -81,6 +81,7 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
       decompressed_pkgs <- lapply(zip_files, function(x) {
         gsub("[\\/]+", "/", devtools:::source_pkg(x))
       })
+
       lapply(decompressed_pkgs, devtools::build, path = pkgs_path, binary = TRUE)
     }
   }
