@@ -18,7 +18,7 @@ if (!dir.exists(applibpath)) {
     label = "Initializing ...")
 
   dir.create(applibpath)
-  init_pkgs <- c("jsonlite", "httr")
+  init_pkgs <- c("jsonlite")
 
   for (i in seq_along(init_pkgs)) {
     setWinProgressBar(pb, value = i / (length(init_pkgs) + 1),
