@@ -81,7 +81,10 @@ create_config <- function(app_name, app_dir = getwd(),
   jsonlite::write_json(
     list(
       appname = app_name,
-      pkgs = file.path(pkgs_path, list.files(file.path(app_dir, pkgs_path))),
+      pkgs = list(
+        pkgs_names = standardize_pkgs(pkgs, string = TRUE),
+        pkgs_loc = file.path(pkgs_path, list.files(file.path(app_dir, pkgs_path)))
+      ),
       logging = error_log,
       host = host,
       app_repo = app_repo,

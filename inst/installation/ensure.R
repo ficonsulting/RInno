@@ -15,15 +15,7 @@ ensure <- function(pkgs, lib_loc = applibpath) {
 
     if (!pkg_names[i] %in% installed_pkgs$Package) {
       install.packages(pkgs = pkgs[i], lib = lib_loc, repos = NULL, type = "win.binary")
+      message(paste0(pkg_names[i], " installed\n"))
     }
-    message(paste0(pkg_names[i], " installed\n"))
-  }
-
-  for (i in seq_along(pkg_names)) {
-    setWinProgressBar(pb,
-      value = i / (length(pkg_names) + 1),
-      label = sprintf("Loading package - %s", pkg_names[i]))
-
-    library(pkg_names[i], character.only = TRUE)
   }
 }

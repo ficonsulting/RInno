@@ -37,7 +37,7 @@ library("jsonlite", character.only = TRUE)
 config <- jsonlite::fromJSON(file.path(appwd, "utils/config.cfg"))
 
 # Package dependency list
-pkgs <- config$pkgs
+pkgs_loc <- config$pkgs$pkgs_loc; pkgs_names <- config$pkgs$pkgs_names
 
 # Provide some initial status updates
 pb <- winProgressBar(
@@ -48,10 +48,18 @@ pb <- winProgressBar(
 appexit_msg <- tryCatch({
 
   # ensure all package dependencies are installed
-  message("ensuring packages: ", paste(names(pkgs), collapse = ", "))
+  message("ensuring packages: ", paste(pkgs_names, collapse = ", "))
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
 
-  ensure(pkgs)
+  ensure(pkgs_loc)
+
+  for (i in seq_along(pkgs_names)) {
+    setWinProgressBar(pb,
+      value = i / (length(pkgs_names) + 1),
+      label = sprintf("Loading package - %s", pkgs_names[i]))
+
+    library(pkgs_names[i], character.only = TRUE)
+  }
 
   # If an app repository has been provided, install the app from there
   if (config$app_repo[[1]] != "none") {
