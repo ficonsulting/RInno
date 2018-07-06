@@ -8,6 +8,7 @@
 #' @param auth_pw Bitbucket password matching the above username.
 #' @param auth_token To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others.
 #' @param user_browser Character for the default browser. Options include "chrome", "firefox", and "ie."
+#' @param ping_site URL of a site to ping to check internet connectivity. Defaults to "www.ficonsulting.com".
 #'
 #' @author Jonathan M. Hill
 #'
@@ -21,7 +22,7 @@ create_config <- function(app_name, app_dir = getwd(),
   remotes   = "none",
   repo = "http://cran.rstudio.com",
   error_log = "error.log", app_repo_url = "none", auth_user = "none",
-  auth_pw = "none", auth_token = "none", user_browser = "chrome") {
+  auth_pw = "none", auth_token = "none", user_browser = "chrome", ping_site = "www.ficonsulting.com") {
 
   # Reset defaults if empty
   for (formal in names(formals(create_config))) {
@@ -92,6 +93,7 @@ create_config <- function(app_name, app_dir = getwd(),
       auth_pw = auth_pw,
       auth_token = auth_token,
       user_browser = tolower(user_browser),
-      flex_file = flex_file),
+      flex_file = flex_file,
+      ping_site = ping_site),
     file.path(app_dir, "utils/config.cfg"), pretty = T, auto_unbox = T)
 }

@@ -116,7 +116,7 @@ create_app <- function(app_name,
                 repo = repo, error_log = dots$error_log,
                 app_repo_url = app_repo_url, auth_user = auth_user,
                 auth_pw = auth_pw, auth_token = auth_token,
-                user_browser = user_browser)
+                user_browser = user_browser, ping_site = dots$ping_site)
 
   # Build the iss script
   start_iss(app_name) %>%
