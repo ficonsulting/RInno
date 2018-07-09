@@ -1,10 +1,11 @@
 get_remote_version <- function(
   app_repo = "none", host = "none",
-  auth_user = "none", auth_pw  = "none", auth_token = "none") {
+  auth_user = "none", auth_pw  = "none",
+  auth_token = "none", ping_site = "") {
 
   # Fail early
   if (app_repo == "none") return("none")
-  if (class(try(httr::http_error("www.google.com"))) == "try-error") return("none")
+  if (class(try(httr::http_error(ping_site))) == "try-error") return("none")
 
   # Method to provide more specific feedback
   warn_user <- function(response) {
@@ -15,7 +16,8 @@ get_remote_version <- function(
 
     } else if (sc == 403) {
       stop("This is a private repo. Provide an authorized user and password to create_config().")
-    } else {
+
+      } else {
       stop("It looks like your username and/or password are incorrect.")
     }
   }
@@ -68,7 +70,8 @@ api_response <- get_remote_version(
   host       = config$host[[1]],
   auth_user  = config$auth_user[[1]],
   auth_pw    = config$auth_pw[[1]],
-  auth_token = config$auth_token[[1]])
+  auth_token = config$auth_token[[1]],
+  ping_site  = config$ping_site[[1]])
 
 # If information about an app repo has been supplied,
 if (api_response != "none") {

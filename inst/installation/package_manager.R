@@ -3,6 +3,10 @@
 appwd <- getwd()
 applibpath <- file.path(appwd, "library")
 
+message("library path:\n", paste("...", applibpath, "\n"))
+message("working path:\n", paste("...", appwd, "\n"))
+message("interactive R session:\n", paste("...", interactive(), "\n"))
+
 # Load functions to ensure software dependencies and check the internet
 source("utils/ensure.R")
 
@@ -11,78 +15,61 @@ source("utils/ensure.R")
 if (!dir.exists(applibpath)) {
   pb <- winProgressBar(
     title = "Starting RInno ...",
-    label = "Internet connection required")
-  Sys.sleep(2)
+    label = "Initializing ...")
+
   dir.create(applibpath)
-  chooseCRANmirror(graphics = F, ind = 28)
-  init_pkgs <- c("jsonlite", "devtools", "httr")
+  init_pkgs <- c("jsonlite")
 
   for (i in seq_along(init_pkgs)) {
     setWinProgressBar(pb, value = i / (length(init_pkgs) + 1),
       label = sprintf("Loading package - %s", init_pkgs[i]))
-    install.packages(pkgs = init_pkgs[i], lib = applibpath, repos = "http://cran.rstudio.com", dependencies = TRUE)
+    pkg <- list.files(appwd, paste0(init_pkgs[i], ".*zip$"), full.names = TRUE, recursive = TRUE)
+    install.packages(pkgs = pkg, lib = applibpath, repos = NULL, type = "win.binary")
   }
   close(pb)
 }
 
+# Add app/library to R's library search path
 .libPaths(c(applibpath, .libPaths()))
-
-message("library paths:\n", paste("...", applibpath, collapse = "\n"))
-message("working path:\n", paste("...", appwd, "\n"))
-message("interactive R session:\n", paste("...", interactive()))
 
 # Read the application config
 library("jsonlite", character.only = TRUE)
-library("devtools", character.only = TRUE)
-library("httr", character.only = TRUE)
 config <- jsonlite::fromJSON(file.path(appwd, "utils/config.cfg"))
 
 # Package dependency list
-pkgs <- config$pkgs$pkgs; remotes <- config$remotes; locals <- config$locals$pkgs
+pkgs_loc <- config$pkgs$pkgs_loc; pkgs_names <- config$pkgs$pkgs_names
 
-# Provide some initialization status updates
+# Provide some initial status updates
 pb <- winProgressBar(
   title = sprintf("Starting %s ...", config$appname),
   label = "Initializing ...")
-
-# If an app repository has been provided, install the app from there
-if (config$app_repo[[1]] != "none") {
-  source("utils/get_app_from_app_url.R")
-}
 
 # Use tryCatch to display error messages in config$logging$filename
 appexit_msg <- tryCatch({
 
   # ensure all package dependencies are installed
-  message("ensuring packages: ", paste(names(pkgs), collapse = ", "))
+  message("ensuring packages: ", paste(pkgs_names, collapse = ", "))
   setWinProgressBar(pb, 0, label = "Ensuring package dependencies ...")
-  if (class(try(httr::http_error("www.google.com"))) != "try-error") {
-    ._ <- mapply(ensure, pkgs, names(pkgs))
-    if (remotes[1] != "none") {
-      message("ensuring remotes: ", paste(remotes, collapse = ", "))
-      setWinProgressBar(pb, 0, label = "Ensuring remote package dependencies ...")
-      ._ <- lapply(remotes, ensure_remotes)
-    }
-  }
-  if (locals[1] != "none") {
-    message("ensuring locals: ", paste(names(locals), collapse = ", "))
-    setWinProgressBar(pb, 0, label = "Ensuring local package dependencies ...")
-    ._ <- mapply(ensure_local, locals, names(locals))
-  }
 
-  all_deps <- c(pkgs, remotes, locals)[!grepl("none", c(pkgs, remotes, locals))]
+  ensure(pkgs_loc)
 
-  for (i in seq_along(all_deps)) {
+  for (i in seq_along(pkgs_names)) {
     setWinProgressBar(pb,
-      value = i / (length(all_deps) + 1),
-      label = sprintf("Loading package - %s", names(all_deps)[i]))
+      value = i / (length(pkgs_names) + 1),
+      label = sprintf("Loading package - %s", pkgs_names[i]))
 
-    library(names(all_deps)[i], character.only = TRUE)
+    library(pkgs_names[i], character.only = TRUE)
+  }
+
+  # If an app repository has been provided, install the app from there
+  if (config$app_repo[[1]] != "none") {
+    source("utils/get_app_from_app_url.R")
   }
 
   setWinProgressBar(pb, 1.00, label = "Starting application")
   close(pb)
 
+  # Start the app
   source(file.path(appwd, "utils/app.R"))
 
   "application terminated normally"

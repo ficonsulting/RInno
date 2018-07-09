@@ -1,16 +1,19 @@
+#' @importFrom magrittr %>%
+`%>%` <- magrittr::`%>%`
+
 #' Standardize package dependencies
 #'
 #' Standardizes (named or not) character vectors of package dependencies and formats it for config.cfg.
 #'
-#' @param pkgs Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
+#' @param pkgs Processes \code{pkgs}, and \code{pkgs}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
 #' @param check_version Boolean. If true, check to make sure the package version is not ahead of CRAN.
 #'
 #' @return Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.
 #'
 #' @author William Bradley and Jonathan Hill
+#' @keywords internal
 #' @export
-
-standardize_pkgs <- function(pkgs, check_version = FALSE) {
+standardize_pkgs <- function(pkgs, check_version = FALSE, string = FALSE) {
 
   if (pkgs[1] == "none") return("none")
 
@@ -23,10 +26,13 @@ standardize_pkgs <- function(pkgs, check_version = FALSE) {
   # No versions are specified
   if (length(no_version) == 0) {
 
-    tryCatch(pkg_list <- lapply(pkg_list, utils::packageVersion),
+    tryCatch(
+      pkg_list <- lapply(pkg_list, utils::packageVersion),
+
       error = function(e) {
-        stop(e$message, "\n\nPlease provide versions of `pkgs` and `locals` if they are not installed in the development environment.", call. = FALSE)
-    })
+        stop(e$message,
+          "\n\nPlease provide versions of `pkgs` if they are not installed in the development environment.", call. = FALSE)
+      })
 
     names(pkg_list) <- pkgs
 
@@ -36,17 +42,19 @@ standardize_pkgs <- function(pkgs, check_version = FALSE) {
   # Some versions are specified
   } else if (sum(no_version) > 0) {
 
-    tryCatch(pkg_list[no_version] <- lapply(pkg_list[no_version], utils::packageVersion),
+    tryCatch(
+      pkg_list[no_version] <- lapply(pkg_list[no_version], utils::packageVersion),
+
       error = function(e) {
-        stop(e$message, "\n\nPlease provide versions of `pkgs` and `locals` if they are not installed in the development environment.", call. = FALSE)
-    })
+       stop(e$message, "\n\nPlease provide versions of `pkgs` if they are not installed in the development environment.", call. = FALSE)
+      })
 
     names(pkg_list)[no_version] <- pkgs[no_version]
 
     # add greater than or equal to
     pkg_list[no_inequality] <- lapply(pkg_list[no_inequality], function(x) paste0(">=", x))
 
-  # All versions are specified
+    # All versions are specified
   } else {
     # add greater than or equal to
     pkg_list[no_inequality] <- lapply(pkg_list[no_inequality], function(x) paste0(">=", x))
@@ -80,7 +88,11 @@ standardize_pkgs <- function(pkgs, check_version = FALSE) {
   }
   mapply(check_pkgs, pkgs, names(pkgs))
 
-  return(pkgs)
+  if (string) {
+    return(names(pkgs))
+  } else {
+    return(pkgs)
+  }
 }
 
 
@@ -90,6 +102,7 @@ standardize_pkgs <- function(pkgs, check_version = FALSE) {
 #'
 #' @inheritParams create_app
 #' @param clean Boolean. If TRUE, \code{><=} are removed. Defaults to FALSE.
+#' @keywords internal
 #' @export
 sanitize_R_version <- function(R_version, clean = FALSE){
 
@@ -133,7 +146,7 @@ sanitize_R_version <- function(R_version, clean = FALSE){
 #'
 #' @examples
 #' cran_version("shiny")
-#'
+#' @keywords internal
 #' @export
 cran_version = function(pkg_name, cran_url = "http://cran.r-project.org/package=") {
 
@@ -163,7 +176,7 @@ cran_version = function(pkg_name, cran_url = "http://cran.r-project.org/package=
 #'
 #' Adds (named or not) package dependencies to a named vector of packages.
 #'
-#' @param pkgs Processes \code{pkgs}, and \code{locals}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
+#' @param pkgs Processes \code{pkgs} argument of \code{\link{create_config}} and \code{\link{create_app}}.
 #' @param pkg String. Name of package to add
 #'
 #' @return Package dependency string vector for \code{\link{standardize_pkgs}}.
@@ -173,6 +186,7 @@ cran_version = function(pkg_name, cran_url = "http://cran.r-project.org/package=
 #' add_pkgs(pkgs, c("rmarkdown", "dplyr"))
 #'
 #' @author Jonathan Hill
+#' @keywords internal
 #' @export
 add_pkgs <- function(pkgs, pkg) {
 
@@ -186,4 +200,93 @@ add_pkgs <- function(pkgs, pkg) {
   }
 
   return(pkgs)
+}
+
+
+#' Search for flexdashboard
+#'
+#' This function locates a flexdashboard within a file list.
+#'
+#' @param file_list Character vector. List of files within \code{app_dir}.
+#'
+#' @author Hanjo Odendaal.
+#' @keywords internal
+flexdashboard_check <- function(file_list) {
+
+  for (file in file_list) {
+    # Identify and read in yaml
+    yaml_index <- grep("---", readLines(file), fixed = T)
+    yaml_content <- readLines(file, (yaml_index[2] - 1))[-1]
+
+    # Check for flexdashboard, and return it
+    if (any(grepl("flexdashboard", yaml_content))) {
+      return(basename(file))
+
+      # If no flexdashboard is found, check the next file
+    } else {
+      next
+    }
+  }
+}
+
+
+#' @keywords internal
+check_app <- function(app_dir, pkgs_path) {
+  win_binary_pkgs <- list.files(
+    file.path(app_dir, pkgs_path),
+    ".zip$"
+  )
+
+  mac_binary_pkgs <- list.files(
+    file.path(app_dir, pkgs_path),
+    ".tgz$"
+  )
+
+  if (length(mac_binary_pkgs) > 0) {
+    stop(
+      "Please build 'win.binary' packages for the following:\n",
+      glue::glue("- {mac_binary_pkgs}", .sep = "\n"),
+      "\nSee ?install.packages 'Binary packages' for details.\n",
+      call. = F
+    )
+  }
+
+  source_pkgs <- list.files(
+    file.path(app_dir, pkgs_path),
+    ".tar.gz$"
+  )
+
+  if (length(source_pkgs) > 0) {
+    stop(
+      "Please build 'win.binary' packages for the following:\n",
+      glue::glue("- {source_pkgs}", .sep = "\n"),
+      "\nSee ?install.packages 'Binary packages' for details.\n",
+      call. = F
+    )
+  }
+}
+
+#' @keywords internal
+check_pkg_version <- function(result) {
+
+  df <- data.frame(result, stringsAsFactors = FALSE)
+
+  names(df) <- c("pkg", "loc")
+
+  df$downloaded_versions <- lapply(
+    stringr::str_extract(df$loc, "[0-9]+[\\.-]?[0-9]+[\\.-]?[0-9]*[\\.-]?[0-9]*(?=.zip)"),
+    function(x) package_version(x)
+  )
+
+  df$installed_versions <- lapply(df$pkg, function(x) utils::packageVersion(x))
+
+  df$different <- is.na(match(df$downloaded_versions, df$installed_versions))
+
+  if (sum(df$different) != 0) {
+
+    df <- df[df$different, ]
+
+    cat(glue::glue("The following installed packages differ from those downloaded from {repo}:"), "\n")
+    cat(glue::glue("\n - {df$pkg}, {sapply(df$downloaded_versions, paste0, collapse = '')} (downloaded) vs {sapply(df$installed_versions, paste0, collapse = '')} (installed)\n"), sep = "\n")
+  }
 }
