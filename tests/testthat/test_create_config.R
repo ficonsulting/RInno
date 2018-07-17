@@ -16,5 +16,5 @@ test_that("create_config builds a valid json file.", {
 })
 
 test_that("create_config accepts only bitbucket and github repos.", {
-  expect_error(create_config("myapp", "3.3.2", "app", pkgs = c("jsonlite", "shiny", "magrittr"), app_repo_url = "www.myrepo.com"))
+  expect_error(create_config("myapp", "app", pkgs = c("jsonlite", "shiny", "magrittr"), app_repo_url = "www.myrepo.com"))
 })

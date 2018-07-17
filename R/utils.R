@@ -267,26 +267,30 @@ check_app <- function(app_dir, pkgs_path) {
 }
 
 #' @keywords internal
-check_pkg_version <- function(result) {
+check_pkg_version <- function(pkgs_path) {
 
-  df <- data.frame(result, stringsAsFactors = FALSE)
+  df <- data.frame(loc = list.files(pkgs_path, full.names = TRUE), stringsAsFactors = FALSE)
+  df$pkg <- gsub("_.*", "", basename(df$loc))
+  df$downloaded_versions <- gsub("-", "\\.", stringr::str_extract(df$loc, "[0-9]+[\\.-]?[0-9]+[\\.-]?[0-9]*[\\.-]?[0-9]*(?=.zip)"))
 
-  names(df) <- c("pkg", "loc")
+  lapply(df$loc, {
+    function(x) {
+      tryCatch(unzip(x, list = TRUE),
+        error = function (e) {
+          download.packages(df$pkg[df$loc == x], destdir = pkgs_path, type = "win.binary")
+      })
+    }
+  })
 
-  df$downloaded_versions <- lapply(
-    stringr::str_extract(df$loc, "[0-9]+[\\.-]?[0-9]+[\\.-]?[0-9]*[\\.-]?[0-9]*(?=.zip)"),
-    function(x) package_version(x)
-  )
+  df$installed_versions <- unlist(lapply(df$pkg, function(x) toString(utils::packageVersion(x))))
 
-  df$installed_versions <- lapply(df$pkg, function(x) utils::packageVersion(x))
-
-  df$different <- is.na(match(df$downloaded_versions, df$installed_versions))
+  df$different <- !df$downloaded_versions == df$installed_versions
 
   if (sum(df$different) != 0) {
 
     df <- df[df$different, ]
 
-    cat(glue::glue("The following installed packages differ from those downloaded from {repo}:"), "\n")
-    cat(glue::glue("\n - {df$pkg}, {sapply(df$downloaded_versions, paste0, collapse = '')} (downloaded) vs {sapply(df$installed_versions, paste0, collapse = '')} (installed)\n"), sep = "\n")
+    cat(glue::glue("\n\nThe following installed packages differ from those downloaded from {repo}:"), "\n")
+    cat(glue::glue("\n - {df$pkg}: \t{sapply(df$downloaded_versions, paste0, collapse = '')} (downloaded) \t{sapply(df$installed_versions, paste0, collapse = '')} (installed)\n"), sep = "\n")
   }
 }
