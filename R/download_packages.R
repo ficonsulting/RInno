@@ -24,7 +24,7 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
     unique(
       unlist(
         tools::package_dependencies(
-          packages = standard_deps
+          packages = standard_deps, recursive = TRUE
         )
       )
     )
