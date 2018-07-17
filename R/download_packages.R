@@ -38,22 +38,23 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
   all_deps_no_base <- all_deps[!all_deps %in% base_pkgs]
 
   # Figure out which files need to be downloaded
-  pkgs_files <- lapply(all_deps_no_base, function(x) list.files(pkgs_path, pattern = x))
+  pkgs_files <- lapply(all_deps_no_base, function(x) list.files(pkgs_path, pattern = paste0("^", x, "_")))
   downloaded_deps <- unlist(lapply(pkgs_files, function(x) if(length(x) >= 1) TRUE else FALSE))
   using <- pkgs_files[downloaded_deps]
 
   # Let developer know which files are already included
   if (length(using) > 0) {
-    cat("Using packages:\n - ")
-    cat(file.path(pkgs_path, using), sep = "\n - ")
+    cat("\nUsing packages:\n - ")
+    cat(file.path(pkgs_path, sort(unlist(using))), sep = "\n - ")
   }
 
   # Download any required pacakges in app_dir/pkg_path
   req_deps <- all_deps_no_base[!downloaded_deps]
   if (length(req_deps) > 0) {
     cat("\nDownloading required packages...\n")
-    check_pkg_version(utils::download.packages(req_deps, pkgs_path, repos = repo, type = "win.binary"))
+    utils::download.packages(req_deps, pkgs_path, repos = repo, type = "win.binary")
   }
+  check_pkg_version(pkgs_path)
 
   if (remotes[1] != "none") {
 
