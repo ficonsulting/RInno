@@ -1,3 +1,5 @@
+context("create_app")
+
 test_that("create_app runs without errors.", {
   expect_error(create_app("myapp", app_dir = 1))
   expect_error(create_app("myapp", app_dir = tempdir(), dir_out = 1))

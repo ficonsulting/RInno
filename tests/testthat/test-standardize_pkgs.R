@@ -1,4 +1,4 @@
-context("test-standardize_pkgs.R")
+context("standardize_pkgs")
 
 test_that("Package dependencies are installed", {
   expect_error(standardize_pkgs("test"))

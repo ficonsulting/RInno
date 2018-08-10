@@ -1,3 +1,5 @@
+context("config checks")
+
 # avoid 'trying to use CRAN without setting a mirror' errors
 repos <- getOption("repos")
 options(repos = c(CRAN = "https://cran.rstudio.com"))
@@ -16,5 +18,5 @@ test_that("create_config builds a valid json file.", {
 })
 
 test_that("create_config accepts only bitbucket and github repos.", {
-  expect_error(create_config("myapp", "app", pkgs = c("jsonlite", "shiny", "magrittr"), app_repo_url = "www.myrepo.com"))
+  expect_error(create_config("myapp", tempdir(), pkgs = c("jsonlite", "shiny", "magrittr"), app_repo_url = "www.myrepo.com"))
 })
