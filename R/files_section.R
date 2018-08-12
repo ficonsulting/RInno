@@ -56,7 +56,7 @@ Source: "{{#MyAppExeName}}"; DestDir: "{{app}}"; Flags: ignoreversion
 #if IncludeRtools
     Source: "Rtools{{#RtoolsVersion}}.exe"; DestDir: "{{tmp}}";
 #endif
-{glue::collapse(blank_dir_files, "\n")}
-{glue::collapse(dir_files, "\n")}
+{glue::glue_collapse(blank_dir_files, "\n")}
+{glue::glue_collapse(dir_files, "\n")}
 ')
 }
