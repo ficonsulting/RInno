@@ -294,3 +294,17 @@ check_pkg_version <- function(pkgs_path) {
     cat(glue::glue("\n - {df$pkg}: \t{sapply(df$downloaded_versions, paste0, collapse = '')} (downloaded) \t{sapply(df$installed_versions, paste0, collapse = '')} (installed)\n"), sep = "\n")
   }
 }
+
+#' @keywords internal
+node_exists <- function(npm = TRUE) {
+  tryCatch(
+    {
+      system("node -v", intern = TRUE)
+      if (npm) system("npm -v", intern = TRUE)
+      return(TRUE)
+    },
+    error = function(e) {
+      return(FALSE)
+    }
+  )
+}
