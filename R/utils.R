@@ -275,9 +275,9 @@ check_pkg_version <- function(pkgs_path) {
 
   lapply(df$loc, {
     function(x) {
-      tryCatch(unzip(x, list = TRUE),
+      tryCatch(utils::unzip(x, list = TRUE),
         error = function (e) {
-          download.packages(df$pkg[df$loc == x], destdir = pkgs_path, type = "win.binary")
+          utils::download.packages(df$pkg[df$loc == x], destdir = pkgs_path, type = "win.binary")
       })
     }
   })

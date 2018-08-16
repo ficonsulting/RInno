@@ -10,8 +10,8 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
   app_repo_url = "none", auth_user = "none", auth_pw = "none",
   auth_token = devtools::github_pat(), user_browser = "chrome",
   include_R = FALSE, include_Pandoc = FALSE, include_Chrome = FALSE,
-  include_Rtools = FALSE, R_version = paste0(">=", R.version$major, ".",
-  R.version$minor), Pandoc_version = rmarkdown::pandoc_version(),
+  include_Rtools = FALSE, R_version = paste0(">=", R.version$major,
+  ".", R.version$minor), Pandoc_version = rmarkdown::pandoc_version(),
   Rtools_version = "3.5", overwrite = TRUE, ...)
 }
 \arguments{

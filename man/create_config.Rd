@@ -4,8 +4,8 @@
 \alias{create_config}
 \title{Creates an app config file, "utils/config.cfg"}
 \usage{
-create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite", "devtools",
-  "magrittr"), pkgs_path = "library", remotes = "none",
+create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite",
+  "devtools", "magrittr"), pkgs_path = "library", remotes = "none",
   repo = "http://cran.rstudio.com", error_log = "error.log",
   app_repo_url = "none", auth_user = "none", auth_pw = "none",
   auth_token = "none", user_browser = "chrome",

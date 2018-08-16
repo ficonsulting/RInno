@@ -9,7 +9,7 @@ Authors@R: c(
     person("Hanjo", "Odendaal", email = "hanjo.oden@gmail.com", role = "ctb"),
     person("William", "Bradley", email = "bradley@ficonsulting.com", role = "ctb"),
     person("Brent (Tom)", "Bailey", email = "bailey@ficonsulting.com", role = "ctb"),
-    person("Mikołaj", "Rybiński", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
+    person("Mikolaj", "Rybinski", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
     person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb"),
     person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = c("ctb"))
     )
@@ -32,11 +32,12 @@ Imports:
     magrittr (>= 1.5),
     rmarkdown (>= 1.6),
     shiny (>= 1.0.4),
-    stringr (>= 1.2.0)
+    stringr (>= 1.2.0),
+    utils (>= 3.5.1)
 Suggests:
     knitr,
     stringi,
     covr,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
