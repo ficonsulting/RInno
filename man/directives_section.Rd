@@ -7,9 +7,9 @@
 directives_section(app_name, include_R = FALSE,
   R_version = paste0(R.version$major, ".", R.version$minor),
   include_Pandoc = FALSE, Pandoc_version = rmarkdown::pandoc_version(),
-  include_Chrome = FALSE, include_Rtools = FALSE, Rtools_version = "3.5",
-  app_version = "0.0.0", publisher = "", main_url = "",
-  custom_vars = "", custom_values = "")
+  include_Chrome = FALSE, include_Rtools = FALSE,
+  Rtools_version = "3.5", app_version = "0.0.0", publisher = "",
+  main_url = "", custom_vars = "", custom_values = "")
 }
 \arguments{
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}

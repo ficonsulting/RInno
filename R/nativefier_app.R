@@ -4,7 +4,10 @@
 nativefier_app <- function(app_name, app_dir) {
   # Get Nodejs, npm and nativefier
   if (!node_exists()) {
-    installr::install.nodejs()
+    cat("\nNodejs is not installed...\n")
+    ans <- utils::menu(c("Yes", "No"), title = "Would you like to install it?")
+    if (ans == 1) install_nodejs()
+    else stop("Change the user_browser to 'chrome', 'firefox' or 'ie' if you do not have Nodejs installed.")
   }
   system(glue::glue("npm install nativefier -g"))
 
