@@ -129,7 +129,7 @@ sanitize_R_version <- function(R_version, clean = FALSE){
     }
 
   } else {
-    # add == if no inequality is specified
+    # add >= if no inequality is specified
     R_version <- paste0(">=", R_version)
   }
   if (clean) R_version <- gsub("[<>=[:space:]]", "", R_version)
@@ -267,7 +267,7 @@ check_app <- function(app_dir, pkgs_path) {
 }
 
 #' @keywords internal
-check_pkg_version <- function(pkgs_path) {
+check_pkg_version <- function(pkgs_path, repo) {
 
   df <- data.frame(loc = list.files(pkgs_path, full.names = TRUE), stringsAsFactors = FALSE)
   df$pkg <- gsub("_.*", "", basename(df$loc))
@@ -277,7 +277,7 @@ check_pkg_version <- function(pkgs_path) {
     function(x) {
       tryCatch(utils::unzip(x, list = TRUE),
         error = function (e) {
-          utils::download.packages(df$pkg[df$loc == x], destdir = pkgs_path, type = "win.binary")
+          utils::download.packages(df$pkg[df$loc == x], destdir = pkgs_path, repos = repo, type = "win.binary", quiet = TRUE)
       })
     }
   })
