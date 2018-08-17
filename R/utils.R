@@ -1,4 +1,5 @@
 #' @importFrom magrittr %>%
+#' @export
 `%>%` <- magrittr::`%>%`
 
 #' Standardize package dependencies

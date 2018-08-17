@@ -28,14 +28,20 @@ install_inno <- function(
   quick_start_pack = FALSE,
   ...) {
 
-  page_with_download_url = 'http://www.jrsoftware.org/download.php/'
-  exe_filename = 'is.exe'
+  domain = "https://github.com/"
 
   if (quick_start_pack) {
-    exe_filename = 'ispack.exe'
+    page_with_download_url <- domain %>% file.path("jrsoftware/ispack/releases")
+  } else {
+    page_with_download_url <- domain %>% file.path("jrsoftware/issrc/releases")
   }
 
-  URL <- paste0(page_with_download_url, exe_filename)
+  download_url <- page_with_download_url %>%
+    readLines(warn = FALSE) %>%
+    stringr::str_extract("/jrsoftware.*innosetup-[1-9]\\.[0-9]+\\.[0-9]+.exe") %>%
+    stats::na.omit()
 
-  installr::install.URL(URL, ...)
+  installr::install.URL(
+    exe_URL = paste0(domain, download_url),
+    ...)
 }
