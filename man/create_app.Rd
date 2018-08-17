@@ -49,7 +49,7 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 
-\item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.}
+\item{Pandoc_version}{Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}.}
 
 \item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
 
