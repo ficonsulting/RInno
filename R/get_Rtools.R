@@ -68,8 +68,8 @@ get_Rtools <- function(app_dir, Rtools_version, R_version) {
       version_max = "3.4.99"
     ),
     "3.5" = list(
-      version_min = "3.4.0",
-      version_max = "3.5.99"
+      version_min = "3.3.0",
+      version_max = "99.99.99"
     )
   )
 
