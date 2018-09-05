@@ -5,13 +5,14 @@
 \title{Creates installation files and Inno Setup Script (ISS), "app_name.iss"}
 \usage{
 create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
-  pkgs = c("jsonlite", "shiny", "magrittr"),
-  repo = "http://cran.rstudio.com", locals = "none", remotes = "none",
+  pkgs = c("jsonlite", "shiny", "magrittr"), pkgs_path = "bin",
+  repo = "http://cran.rstudio.com", remotes = "none",
   app_repo_url = "none", auth_user = "none", auth_pw = "none",
-  auth_token = "none", user_browser = "chrome", include_R = FALSE,
-  include_Pandoc = FALSE, include_Chrome = FALSE, R_version = paste0(">=",
-  R.version$major, ".", R.version$minor),
-  Pandoc_version = rmarkdown::pandoc_version(), ...)
+  auth_token = devtools::github_pat(), user_browser = "chrome",
+  include_R = FALSE, include_Pandoc = FALSE, include_Chrome = FALSE,
+  include_Rtools = FALSE, R_version = paste0(">=", R.version$major,
+  ".", R.version$minor), Pandoc_version = rmarkdown::pandoc_version(),
+  Rtools_version = "3.5", overwrite = TRUE, ...)
 }
 \arguments{
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -20,11 +21,11 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{dir_out}{Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not exist. Defaults to 'RInno_installer'.}
 
-\item{pkgs}{Character vector of package dependencies. To provide version limits, a named character vector with an inequality in front of the version number, \code{pkgs = c(httr = ">=1.3")}, is supported. Local .tar.gz packages and remote development versions are also supported via \code{locals} and \code{remotes}.}
+\item{pkgs}{Character vector of package dependencies. Remote development versions are supported via \code{remotes}. \code{pkgs} are downloaded into \code{file.path(app_dir, pkgs_path)} as Windows binary packages (.zip). If you build binary packages and store them there before calling \code{create_app}, they will be included as well.}
+
+\item{pkgs_path}{Default location inside the app working directory to install package dependencies This defaults to \code{pkgs_path = "bin"}}
 
 \item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.}
-
-\item{locals}{Character vector of local package dependencies. Supports package versions like \code{pkgs}.}
 
 \item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
 
@@ -42,11 +43,18 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{include_Pandoc}{To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.}
 
-\item{include_Chrome}{To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, this option includes a copy of Chrome for users that do not have it installed yet.}
+\item{include_Chrome}{To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, it is no longer supported by Google :(.}
+
+\item{include_Rtools}{To include Rtools in the installer, \code{include_Rtools = TRUE}. For some packages to build properly, you may need to include Rtools.}
 
 \item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 
-\item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.}
+\item{Pandoc_version}{Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}.}
+
+\item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
+
+\item{overwrite}{Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
+?}
 
 \item{...}{Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.}
 }
@@ -71,15 +79,14 @@ Creates the following files in \code{app_dir}:
 create_app('myapp')
 
 create_app(
-  app_name  = 'My AppName',
-  app_dir    = 'My/app/path',
-  dir_out   = 'wizard',
-  pkgs      = c('jsonlite', shiny = '1.0.5', magrittr = '1.5', 'xkcd'),
-  locals = c('my_pkg'),
-  include_R = TRUE,   # Download R and install it with the app
-  R_version = "2.2.1",  # Old version of R
-  privilege = 'high', # Admin only installation
-  default_dir = 'pf') # Program Files
+  app_name     = 'My AppName',
+  app_dir      = 'My/app/path',
+  dir_out      = 'wizard',
+  pkgs         = c('jsonlite', 'shiny', 'magrittr', 'xkcd'),
+  include_R    = TRUE,   # Download R and install it with the app
+  R_version    = "2.2.1",  # Old version of R
+  privilege    = 'high', # Admin only installation
+  default_dir  = 'pf') # Program Files
 }
 }
 \seealso{

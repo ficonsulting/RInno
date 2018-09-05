@@ -34,10 +34,12 @@
 directives_section <- function(app_name, include_R = FALSE,
   R_version = paste0(R.version$major, ".", R.version$minor),
   include_Pandoc = FALSE, Pandoc_version = rmarkdown::pandoc_version(),
-  include_Chrome = FALSE, app_version = "0.0.0", publisher = "", main_url = "",
+  include_Chrome = FALSE, include_Rtools = FALSE, Rtools_version = "3.5",
+  app_version = "0.0.0", publisher = "", main_url = "",
   custom_vars = "", custom_values = "") {
 
   R_version <- sanitize_R_version(R_version, clean = TRUE)
+  Rtools_version <- gsub("\\.", "", Rtools_version)
 
   # Reset defaults if empty
   for (formal in names(formals(directives_section))) {
@@ -58,6 +60,8 @@ directives_section <- function(app_name, include_R = FALSE,
     #define PandocVersion "{Pandoc_version}"
     #define IncludePandoc {tolower(include_Pandoc)}
     #define IncludeChrome {tolower(include_Chrome)}
+    #define RtoolsVersion "{Rtools_version}"
+    #define IncludeRtools {tolower(include_Rtools)}
     #define MyAppPublisher "{publisher}"
     #define MyAppURL "{main_url}"
     {custom_ispp}')

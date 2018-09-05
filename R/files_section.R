@@ -10,15 +10,15 @@
 #' @author Jonathan M. Hill
 #' @export
 
-files_section <- function(iss, app_dir, file_list = character()) {
+files_section <- function(iss, app_name, app_dir, file_list = character()) {
 
   all_files <- list.files(app_dir, recursive = T)
 
   # If a file list is not provided than list only files in app_dir
   if (length(file_list) == 0) {
-    all_files <- all_files[!grepl("iss$|info.*txt$|exe$|msi$", all_files)]
+    all_files <- all_files[!grepl("iss$|info.*txt$|exe$", all_files)]
   } else {
-    all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$|exe$|msi$", all_files)])
+    all_files <- c(file_list, all_files[!grepl("iss$|info.*txt$|exe$", all_files)])
   }
 
   # Get file paths with dirname(), if no path (file in app directory/not contained in a subdirectory) dirname() returns "."
@@ -39,21 +39,24 @@ files_section <- function(iss, app_dir, file_list = character()) {
     Source: "{all_files[nonblank_dirs]}"; DestDir: "{{app}}\\{file_dirs[nonblank_dirs]}"; Flags: ignoreversion;')
 
 glue::glue('
-          {iss}
+{iss}
 
-          [Files]
-          Source: "LICENSE"; Flags: dontcopy
-          Source: "{{#MyAppExeName}}"; DestDir: "{{app}}"; Flags: ignoreversion
-          #if IncludeR
-              Source: "R-{{#RVersion}}-win.exe"; DestDir: "{{tmp}}"; Check: RNeeded
-          #endif
-          #if IncludePandoc
-              Source: "pandoc-{{#PandocVersion}}-windows.msi"; DestDir: "{{tmp}}"; Check: PandocNeeded
-          #endif
-          #if IncludeChrome
-              Source: "chrome_installer.exe"; DestDir: "{{tmp}}"; Check: ChromeNeeded
-          #endif
-          {glue::collapse(blank_dir_files, "\n")}
-          {glue::collapse(dir_files, "\n")}
-          ')
+[Files]
+Source: "LICENSE"; Flags: dontcopy noencryption
+Source: "{{#MyAppExeName}}"; DestDir: "{{app}}"; Flags: ignoreversion
+#if IncludeR
+    Source: "R-{{#RVersion}}-win.exe"; DestDir: "{{tmp}}"; Check: RNeeded
+#endif
+#if IncludePandoc
+    Source: "pandoc-{{#PandocVersion}}-windows.msi"; DestDir: "{{tmp}}"; Check: PandocNeeded
+#endif
+#if IncludeChrome
+    Source: "chrome_installer.exe"; DestDir: "{{tmp}}"; Check: ChromeNeeded
+#endif
+#if IncludeRtools
+    Source: "Rtools{{#RtoolsVersion}}.exe"; DestDir: "{{tmp}}";
+#endif
+{glue::glue_collapse(blank_dir_files, "\n")}
+{glue::glue_collapse(dir_files, "\n")}
+')
 }

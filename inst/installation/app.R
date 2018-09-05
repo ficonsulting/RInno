@@ -16,11 +16,7 @@ start_app <- function(
     if (chrome != "none") {
       chrome <- gsub("\\\\", "/", file.path(chrome, "chrome.exe", fsep = "\\"))
       options(browser = chrome)
-      # Launch Chrome in app-mode
-      launch_browser <- function(appUrl) {
-        message('Browser path: ', chrome)
-        system(sprintf('"%s" --app=%s', chrome, appUrl))
-      }
+      launch_browser = TRUE
     }
 
   } else if (user_browser == "firefox") {

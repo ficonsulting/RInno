@@ -1,3 +1,8 @@
+# 0.2.1
+* Numerous bug fixes over the past 6 months
+* Big shout outs to [@bthomasbailey](https://github.com/bthomasbailey), [@chasemc](https://github.com/chasemc), [@trybik](https://github.com/trybik) and [@Laurae2](https://github.com/Laurae2) for their pull requests and support of the project's issue submissions.
+* Roled back `--app` tag for Chrome in preparation for a true stand-alone release using the Electron framework (0.3.0). We will focus on that instead of the numerous issues caused by running Chrome in app mode.
+
 # 0.2.0
 * [@zhengle-advantaseeds](https://github.com/zhengle-advantaseeds) and [@trybik](https://github.com/trybik) continue to move the project forward with great ideas and bug fixes.
 * [@willbradley](https://github.com/willbradley) created a pull request which adds support for package version control and local package installations [#34](https://github.com/ficonsulting/RInno/issues/34). Conditional statements like `shiny = ">= 1.0.5"` and/or local .tar.gz of R packages are now supported. These can reduce software dependency bugs caused by updates to CRAN.

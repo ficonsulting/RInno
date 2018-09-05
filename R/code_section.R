@@ -37,6 +37,9 @@ code_section <- function(iss, R_version = paste0(">=", R.version$major, ".", R.v
   version_specs <- paste0("numeric_version('", R_versions, "')",
                           inequality,
                           "numeric_version('", R_version, "')")
+
+  if (!R_version %in% R_versions) stop(glue::glue("R version - {R_version} - was not found on CRAN. Please use `R_version` to specify one that is or let us know if you think you received this message in error: \n\nhttps://github.com/ficonsulting/RInno/issues"), call. = FALSE)
+
   results <- unlist(lapply(version_specs, function(x) eval(parse(text = x))))
   acceptable_R_versions <-
     paste0(glue::glue("RVersions.Add('{R_versions[results]}');"), collapse = "\n  ")

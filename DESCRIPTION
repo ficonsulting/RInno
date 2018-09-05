@@ -2,13 +2,16 @@ Package: RInno
 Type: Package
 OS_type: windows
 Title: An Installation Framework for Shiny Apps
-Version: 0.2.0
+Version: 0.3.0.9000
 Authors@R: c(
-    person("Jon", "Hill", role = c("aut", "cre", "cph"), email = "jon.mark.hill@gmail.com"),
+    person("Jon", "Hill", email = "jon.mark.hill@gmail.com", role = c("aut", "cre", "cph")),
     person("W. Lee", "Pang", role = c("aut", "cph"), comment = "DesktopDeployR project at https://github.com/wleepang/DesktopDeployR"),
-    person("Hanjo", "Odendaal", role = "ctb", email = "hanjo.oden@gmail.com"),
-    person("William", "Bradley", role = "ctb", email = "bradley@ficonsulting.com"),
-    person("Brent (Tom)", "Bailey", role = "ctb", email = "bailey@ficonsulting.com")
+    person("Hanjo", "Odendaal", email = "hanjo.oden@gmail.com", role = "ctb"),
+    person("William", "Bradley", email = "bradley@ficonsulting.com", role = "ctb"),
+    person("Brent (Tom)", "Bailey", email = "bailey@ficonsulting.com", role = "ctb"),
+    person("Mikolaj", "Rybinski", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
+    person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb"),
+    person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = c("ctb"))
     )
 Maintainer: Jon Hill <jon.mark.hill@gmail.com>
 URL: www.ficonsulting.com
@@ -21,6 +24,7 @@ Depends:
     R (>= 3.3.0)
 Imports:
     curl (>= 2.8.1),
+    devtools (>= 1.13.6),
     glue (>= 1.1.1),
     httr (>= 1.3.0),
     installr (>= 0.19.0),
@@ -28,12 +32,12 @@ Imports:
     magrittr (>= 1.5),
     rmarkdown (>= 1.6),
     shiny (>= 1.0.4),
-    stringr (>= 1.2.0)
+    stringr (>= 1.2.0),
+    utils (>= 3.5.1)
 Suggests:
     knitr,
-    magrittr,
     stringi,
     covr,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

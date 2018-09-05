@@ -4,26 +4,25 @@
 \alias{create_config}
 \title{Creates an app config file, "utils/config.cfg"}
 \usage{
-create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite", "shiny",
-  "magrittr"), locals = "none", remotes = "none",
-  repo = "http://cran.rstudio.com", local_path = "local",
-  error_log = "error.log", app_repo_url = "none", auth_user = "none",
-  auth_pw = "none", auth_token = "none", user_browser = "chrome")
+create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite",
+  "devtools", "magrittr"), pkgs_path = "library", remotes = "none",
+  repo = "http://cran.rstudio.com", error_log = "error.log",
+  app_repo_url = "none", auth_user = "none", auth_pw = "none",
+  auth_token = "none", user_browser = "chrome",
+  ping_site = "www.ficonsulting.com")
 }
 \arguments{
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 
 \item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{pkgs}{Character vector of package dependencies. To provide version limits, a named character vector with an inequality in front of the version number, \code{pkgs = c(httr = ">=1.3")}, is supported. Local .tar.gz packages and remote development versions are also supported via \code{locals} and \code{remotes}.}
+\item{pkgs}{Character vector of package dependencies. Remote development versions are supported via \code{remotes}. \code{pkgs} are downloaded into \code{file.path(app_dir, pkgs_path)} as Windows binary packages (.zip). If you build binary packages and store them there before calling \code{create_app}, they will be included as well.}
 
-\item{locals}{Character vector of local package dependencies. Supports package versions like \code{pkgs}.}
+\item{pkgs_path}{Default location inside the app working directory to install package dependencies This defaults to \code{pkgs_path = "bin"}}
 
 \item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
 
 \item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.}
-
-\item{local_path}{Default location inside the app working directory to install local package dependencies from. This defaults to \code{local_path = "local"}}
 
 \item{error_log}{Name of error logging file. Contains start up errors from \emph{run.R}.}
 
@@ -36,6 +35,8 @@ create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite", "shiny",
 \item{auth_token}{To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others.}
 
 \item{user_browser}{Character for the default browser. Options include "chrome", "firefox", and "ie."}
+
+\item{ping_site}{URL of a site to ping to check internet connectivity. Defaults to "www.ficonsulting.com".}
 }
 \value{
 A json file, \emph{config.cfg}, in \code{app_dir}/utils.

@@ -29,10 +29,10 @@
 #    dir_out     = "wizard",
 #    pkgs        = c("jsonlite", "shiny", "magrittr", "xkcd"),  # CRAN-like repo packages
 #    remotes     = c("talgalili/installr", "daattali/shinyjs"), # GitHub packages
-#    include_R   = TRUE,   # Download R and install it with your app, if necessary
-#    R_version   = 2.2.1,  # Old versions of R
-#    privilege   = "high", # Admin only installation
-#    default_dir = "pf")   # Install app in to Program Files
+#    include_R   = TRUE,     # Download R and install it with your app, if necessary
+#    R_version   = "2.2.1",  # Old versions of R
+#    privilege   = "high",   # Admin only installation
+#    default_dir = "pf")     # Install app in to Program Files
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  # Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, app.R)
@@ -45,21 +45,21 @@
 #  create_bat(app_name = "My AppName", app_dir = "my/app/path")
 #  
 #  # Create app config file
-#  create_config(app_name = "My AppName", R_version = 2.2.1, app_dir = "my/app/path",
+#  create_config(app_name = "My AppName", R_version = "2.2.1", app_dir = "my/app/path",
 #    pkgs = c("jsonlite", "shiny", "magrittr", "dplyr", "caret", "xkcd"))
 #  
 #  # Build the iss script
 #  start_iss(app_name = "My AppName") %>%
 #  
 #    # C-like directives
-#    directives(R_version   = 2.2.1,
+#    directives_section(R_version   = "2.2.1",
 #               include_R   = TRUE,
 #               app_version = "0.1.2",
 #               publisher   = "Your Company",
 #               main_url    = "yourcompany.com") %>%
 #  
 #    # Setup Section
-#    setup(output_dir  = "wizard",
+#    setup_section(output_dir  = "wizard",
 #          app_version = "0.1.2",
 #          default_dir = "pf",
 #          privilege   = "high",
@@ -70,16 +70,16 @@
 #          upd_url     = "mycompany.github.com") %>%
 #  
 #    # Languages Section
-#    languages() %>%
+#    languages_section() %>%
 #  
 #    # Tasks Section
-#    tasks(desktop_icon = FALSE) %>%
+#    tasks_section(desktop_icon = FALSE) %>%
 #  
 #    # Files Section
-#    files(app_dir = "my/app/path", file_list = "path/to/extra/files") %>%
+#    files_section(app_dir = "my/app/path", file_list = "path/to/extra/files") %>%
 #  
 #    # Icons Section
-#    icons(app_desc       = "This is my local shiny app",
+#    icons_section(app_desc       = "This is my local shiny app",
 #          app_icon       = "notdefault.ico",
 #          prog_menu_icon = FALSE,
 #          desktop_icon   = FALSE) %>%
@@ -87,8 +87,8 @@
 #    # Execution & Pascal code to check registry during installation
 #    # If the user has R, don't give them an extra copy
 #    # If the user needs R, give it to them
-#    run() %>%
-#    code() %>%
+#    run_section() %>%
+#    code_section() %>%
 #  
 #    # Write the Inno Setup script
 #    writeLines(file.path("my/app/path", "My AppName.iss"))
