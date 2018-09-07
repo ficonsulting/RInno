@@ -82,7 +82,9 @@ standardize_pkgs <- function(pkgs, check_version = FALSE, string = FALSE) {
       stop(glue::glue("{pkg_name} is not installed. Make sure it is in `installed.pacakges()` and try again."), call. = F)
     }
     if (check_version) {
-      if (numeric_version(required_version) > cran_version(pkg_name)) {
+      pkg_cran_version <-  cran_version(pkg_name)
+      if (is.null(cran_version)) stop("Can't connect to CRAN")
+      if (numeric_version(required_version) > pkg_cran_version) {
         stop(glue::glue("{pkg_name} v{required_version} is ahead of CRAN - v{cran_version(pkg_name)}. Please add it to `remotes` to use {pkg_name}'s development version from Github/Bitbucket or decrease its version to one published on CRAN."), call. = FALSE)
       }
     }
