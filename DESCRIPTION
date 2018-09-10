@@ -11,7 +11,8 @@ Authors@R: c(
     person("Brent (Tom)", "Bailey", email = "bailey@ficonsulting.com", role = "ctb"),
     person("Mikolaj", "Rybinski", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
     person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb"),
-    person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = c("ctb"))
+    person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = "ctb"),
+    person("Jonathan", "Godfrey", email = "a.j.godfrey@massey.ac.nz", role = "ctb", comment = "https://github.com/ajrgodfrey")
     )
 Maintainer: Jon Hill <jon.mark.hill@gmail.com>
 URL: www.ficonsulting.com

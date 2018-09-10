@@ -1,3 +1,7 @@
+# 0.3.0
+* Large change to dependency management. Moving towards a self-contained application with windows binaries of all dependencies. This makes it easier for IT to create security rules for the .exe, and removes the need for an internet connection to install dependencies from CRAN and Github/Bitbucket.
+
+
 # 0.2.1
 * Numerous bug fixes over the past 6 months
 * Big shout outs to [@bthomasbailey](https://github.com/bthomasbailey), [@chasemc](https://github.com/chasemc), [@trybik](https://github.com/trybik) and [@Laurae2](https://github.com/Laurae2) for their pull requests and support of the project's issue submissions.

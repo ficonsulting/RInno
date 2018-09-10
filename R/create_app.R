@@ -59,7 +59,7 @@ create_app <- function(app_name,
   auth_user    = "none",
   auth_pw      = "none",
   auth_token   = devtools::github_pat(),
-  user_browser = "chrome",
+  user_browser = "electron",
   include_R    = FALSE,
   include_Pandoc = FALSE,
   include_Chrome = FALSE,
@@ -101,11 +101,14 @@ create_app <- function(app_name,
   # Copy installation scripts
   copy_installation(app_dir, overwrite)
 
-  # Include separate installers for R, Pandoc, and Chrome if necessary
+  # Include separate installers for R, Pandoc, and Chrome
   if (include_R) get_R(app_dir, R_version)
   if (include_Pandoc) get_Pandoc(app_dir, Pandoc_version)
   if (include_Chrome) get_Chrome(app_dir)
   if (include_Rtools) get_Rtools(app_dir, Rtools_version, R_version)
+
+  # nativefy the app
+  if (user_browser == "electron") nativefier_app(app_name, app_dir)
 
   # Create batch file
   create_bat(app_name, app_dir)
@@ -146,7 +149,7 @@ create_app <- function(app_name,
     prog_menu_icon = dots$prog_menu_icon, desktop_icon = dots$desktop_icon) %>%
 
   # Files Section
-  files_section(app_name, app_dir, file_list = dots$file_list) %>%
+  files_section(app_name, app_dir, user_browser, file_list = dots$file_list) %>%
 
 
   # Execution & Pascal code to check registry during installation

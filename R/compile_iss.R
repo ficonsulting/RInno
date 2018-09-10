@@ -18,7 +18,13 @@ compile_iss <- function() {
 
   inno <- progs[grep("Inno Setup", progs)]
 
-  if (!dir.exists(inno)) stop("Make sure Inno Setup is installed to 'C:/Program Files'. Call install_inno(), and try again!", call. = FALSE)
+  if (!dir.exists(inno)) {
+    install_inno()
+    progs <- c(list.dirs("C:/Program Files", TRUE, FALSE),
+             list.dirs("C:/Program Files (x86)", TRUE, FALSE))
+
+    inno <- progs[grep("Inno Setup", progs)]
+  }
 
   compil32 <- file.path(inno, "Compil32.exe")
 

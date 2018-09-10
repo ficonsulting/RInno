@@ -22,7 +22,7 @@ create_config <- function(app_name, app_dir = getwd(),
   remotes   = "none",
   repo = "http://cran.rstudio.com",
   error_log = "error.log", app_repo_url = "none", auth_user = "none",
-  auth_pw = "none", auth_token = "none", user_browser = "chrome", ping_site = "www.ficonsulting.com") {
+  auth_pw = "none", auth_token = "none", user_browser = "electron", ping_site = "www.ficonsulting.com") {
 
   # Reset defaults if empty
   for (formal in names(formals(create_config))) {
@@ -93,6 +93,7 @@ create_config <- function(app_name, app_dir = getwd(),
       auth_pw = auth_pw,
       auth_token = auth_token,
       user_browser = tolower(user_browser),
+      nativefier = file.path("nativefier-app", list.files(file.path(app_dir, "nativefier-app"), pattern = ".exe", recursive = TRUE)),
       flex_file = flex_file,
       ping_site = ping_site),
     file.path(app_dir, "utils/config.cfg"), pretty = T, auto_unbox = T)
