@@ -81,9 +81,11 @@ start_app <- function(
     } else {
       if (user_browser == "electron") {
         # start app
-        system('R -e "shiny::runApp(\'./\', port=1984)"', wait = FALSE)
+      	# applibpath variable is set in package_manager.R
+        # OPT: use `dput` to copy whole .libPaths() and .GlobalEnv contents
+        system(sprintf('R -e ".libPaths(c(\'%s\', .libPaths())); shiny::runApp(\'./\', port=1984)"', applibpath), wait = FALSE)
         # start electron
-        system(sprintf('cmd /K "%s"', electron), wait = FALSE)
+        system(sprintf('cmd /C "%s"', electron), wait = FALSE)
 
       } else {
         shiny::runApp("./", launch.browser = launch_browser, port = 1984)

@@ -22,11 +22,12 @@
 #' @param include_R To include R in the installer, \code{include_R = TRUE}. The version of R specified by \code{R_version} is used. The installer will check each user's registry and only install R if necessary.
 #' @param R_version R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.
 #' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.
-#' @param Pandoc_version Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.
+#' @param Pandoc_version Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}.
 #' @param include_Chrome To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, it is no longer supported by Google :(.
 #' @param include_Rtools To include Rtools in the installer, \code{include_Rtools = TRUE}. For some packages to build properly, you may need to include Rtools.
 #' @param Rtools_version Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.
 #' @param overwrite Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
+#' @param nativefier_opts List of character vectors. Extra options, except of the app name, to pass to the nativefier when \code{user_browser = 'electron'} - cf. \code{system('nativefier --help')}. List entries names are used as options names, and values as options values. If option has no value use \code{NULL} or \code{NA} as a value. Defaults to an empty list (no extra options).
 #' ?
 #' @param ... Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.
 #' @inheritParams create_config
@@ -68,6 +69,7 @@ create_app <- function(app_name,
   Pandoc_version = rmarkdown::pandoc_version(),
   Rtools_version = "3.5",
   overwrite = TRUE,
+  nativefier_opts = list(),
   ...) {
 
   # To capture arguments for other function calls
@@ -108,7 +110,7 @@ create_app <- function(app_name,
   if (include_Rtools) get_Rtools(app_dir, Rtools_version, R_version)
 
   # nativefy the app
-  if (user_browser == "electron") nativefier_app(app_name, app_dir)
+  if (user_browser == "electron") do.call(nativefier_app, c(app_name, app_dir, nativefier_opts))
 
   # Create batch file
   create_bat(app_name, app_dir)

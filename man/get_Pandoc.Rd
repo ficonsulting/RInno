@@ -9,7 +9,7 @@ get_Pandoc(app_dir, Pandoc_version = rmarkdown::pandoc_version())
 \arguments{
 \item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}. This ensures that the same version of Pandoc used during development is installed on users' computers.}
+\item{Pandoc_version}{Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}. This ensures that the same version of Pandoc used during development is installed on users' computers.}
 }
 \value{
 \code{sprintf("pandoc-\%s-windows.msi", Pandoc_version)} in \code{app_dir}.

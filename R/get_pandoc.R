@@ -5,7 +5,7 @@
 #' If \code{\link{create_app}(include_Pandoc = TRUE)}, then \code{get_Pandoc}.
 #'
 #' @inheritParams create_app
-#' @param Pandoc_version Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}. This ensures that the same version of Pandoc used during development is installed on users' computers.
+#' @param Pandoc_version Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}. This ensures that the same version of Pandoc used during development is installed on users' computers.
 #'
 #' @return
 #' \code{sprintf("pandoc-\%s-windows.msi", Pandoc_version)} in \code{app_dir}.

@@ -20,7 +20,7 @@ directives_section(app_name, include_R = FALSE,
 
 \item{include_Pandoc}{To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.}
 
-\item{Pandoc_version}{Pandoc version to use, defaults to: \code{\link[rmarkdown]{pandoc_version}}.}
+\item{Pandoc_version}{Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}.}
 
 \item{include_Chrome}{To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, it is no longer supported by Google :(.}
 

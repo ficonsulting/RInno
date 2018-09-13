@@ -52,9 +52,9 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
   req_deps <- all_deps_no_base[!downloaded_deps]
   if (length(req_deps) > 0) {
     cat("\nDownloading required packages...\n")
-    utils::download.packages(req_deps, pkgs_path, repos = repo, type = "win.binary")
+    utils::download.packages(req_deps, destdir = pkgs_path, repos = repo, type = "win.binary", quiet = TRUE)
   }
-  check_pkg_version(pkgs_path)
+  check_pkg_version(pkgs_path, repo)
 
   if (remotes[1] != "none") {
 

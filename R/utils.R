@@ -1,4 +1,5 @@
 #' @importFrom magrittr %>%
+#' @export
 `%>%` <- magrittr::`%>%`
 
 #' Standardize package dependencies
@@ -81,7 +82,9 @@ standardize_pkgs <- function(pkgs, check_version = FALSE, string = FALSE) {
       stop(glue::glue("{pkg_name} is not installed. Make sure it is in `installed.pacakges()` and try again."), call. = F)
     }
     if (check_version) {
-      if (numeric_version(required_version) > cran_version(pkg_name)) {
+      pkg_cran_version <-  cran_version(pkg_name)
+      if (is.null(cran_version)) stop("Can't connect to CRAN")
+      if (numeric_version(required_version) > pkg_cran_version) {
         stop(glue::glue("{pkg_name} v{required_version} is ahead of CRAN - v{cran_version(pkg_name)}. Please add it to `remotes` to use {pkg_name}'s development version from Github/Bitbucket or decrease its version to one published on CRAN."), call. = FALSE)
       }
     }
@@ -98,23 +101,33 @@ standardize_pkgs <- function(pkgs, check_version = FALSE, string = FALSE) {
 
 #' Sanitize R's version
 #'
-#' Used to validate R versions and strip off inequalities when necessary.
+#' Used to validate R version, strip whitespaces and, optionally, to stripp off
+#' leading inequalities.
 #'
 #' @inheritParams create_app
 #' @param clean Boolean. If TRUE, \code{><=} are removed. Defaults to FALSE.
+#' @param R_version_min Minimal supported R version. If \code{NULL} check won't
+#'   be done. Default value is \code{"3.0.2"}.
 #' @keywords internal
 #' @export
-sanitize_R_version <- function(R_version, clean = FALSE){
-
-  # Check for valid R version
-  test <- gsub("[<>=[:space:]]", "", R_version)
-  if (any(length(strsplit(test, "\\.")[[1]]) != 3,
-          !grepl("[1-3]\\.[0-9]+\\.[0-9]+", test))) {
-    stop(glue::glue("R_version ({test}) is not valid."), call. = FALSE)
-  }
+sanitize_R_version <- function(R_version, clean = FALSE, R_version_min = "3.0.2"){
 
   # Remove spaces
   R_version <- gsub(" ", "", R_version)
+
+  # Check for valid R version
+  test <- gsub("^[<>=]+", "", R_version)
+  test_vec <- strsplit(test, "\\.")[[1]]
+  # add patchlevel version "0" if none given
+  if (length(test_vec) < 3) test_vec[3] = "0"
+  test.full <- paste(test_vec, collapse = ".")
+  R_version <- gsub(test, test.full, R_version)
+  rsv <- tryCatch(R_system_version(test.full),
+    error = function(e) stop(glue::glue("R_version ({test}) is not valid."), call. = FALSE))
+  # Check for minimal supported R version
+  if (!is.null(R_version_min) && rsv < R_version_min) {
+    stop(glue::glue("R_version ({test}) <= {R_version_min} is not supported."), call. = FALSE)
+  }
 
   # Check the inequality
   if (grepl("[<>=]", R_version)) {
@@ -129,10 +142,10 @@ sanitize_R_version <- function(R_version, clean = FALSE){
     }
 
   } else {
-    # add == if no inequality is specified
+    # add >= if no inequality is specified
     R_version <- paste0(">=", R_version)
   }
-  if (clean) R_version <- gsub("[<>=[:space:]]", "", R_version)
+  if (clean) R_version <- gsub("[<>=]", "", R_version)
   return(R_version)
 }
 
@@ -267,7 +280,7 @@ check_app <- function(app_dir, pkgs_path) {
 }
 
 #' @keywords internal
-check_pkg_version <- function(pkgs_path) {
+check_pkg_version <- function(pkgs_path, repo) {
 
   df <- data.frame(loc = list.files(pkgs_path, full.names = TRUE), stringsAsFactors = FALSE)
   df$pkg <- gsub("_.*", "", basename(df$loc))
@@ -275,9 +288,9 @@ check_pkg_version <- function(pkgs_path) {
 
   lapply(df$loc, {
     function(x) {
-      tryCatch(unzip(x, list = TRUE),
+      tryCatch(utils::unzip(x, list = TRUE),
         error = function (e) {
-          download.packages(df$pkg[df$loc == x], destdir = pkgs_path, type = "win.binary")
+          utils::download.packages(df$pkg[df$loc == x], destdir = pkgs_path, repos = repo, type = "win.binary", quiet = TRUE)
       })
     }
   })
