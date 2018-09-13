@@ -2,7 +2,7 @@
 #'
 #' This function moves files stored in \code{system.file('installation', package = 'RInno')} to \code{app_dir}:
 #' \itemize{
-#'   \item Icons for installer and app, \emph{setup.ico} and \emph{default.ico}.
+#'   \item Icons for installer and app, \emph{setup.ico}, \emph{default.ico} and \emph{default.png}.
 #'   \item Files that manage app start up, \emph{utils/package_manager.R} and \emph{utils/app.R}.
 #'   \item First/last page of the installation wizard, \emph{infobefore.txt} and \emph{infoafter.txt}.
 #'   \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, and \emph{utils/wsf/js/JSON.minify.js}.
@@ -29,7 +29,7 @@ copy_installation <- function(app_dir = getwd(), overwrite = TRUE) {
   if (!dir.exists(wsf)) dir.create(wsf)
   if (!dir.exists(wsf_js)) dir.create(wsf_js)
 
-  install_files <- list.files(system.file("installation", package = "RInno"), full.names = T)
+  install_files <- list.files(system.file("installation", package = "RInno"), full.names = TRUE)
 
   # Files for each dir
   base_files   <- grep("ico$|txt$", install_files, value = TRUE)

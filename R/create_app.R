@@ -27,6 +27,7 @@
 #' @param include_Rtools To include Rtools in the installer, \code{include_Rtools = TRUE}. For some packages to build properly, you may need to include Rtools.
 #' @param Rtools_version Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.
 #' @param overwrite Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
+#' @param nativefier_opts List of character vectors. Extra options, except of the app name, to pass to the nativefier when \code{user_browser = 'electron'} - cf. \code{system('nativefier --help')}. List entries names are used as options names, and values as options values. If option has no value use \code{NULL} or \code{NA} as a value. Defaults to an empty list (no extra options).
 #' ?
 #' @param ... Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.
 #' @inheritParams create_config
@@ -68,6 +69,7 @@ create_app <- function(app_name,
   Pandoc_version = rmarkdown::pandoc_version(),
   Rtools_version = "3.5",
   overwrite = TRUE,
+  nativefier_opts = list(),
   ...) {
 
   # To capture arguments for other function calls
@@ -108,7 +110,7 @@ create_app <- function(app_name,
   if (include_Rtools) get_Rtools(app_dir, Rtools_version, R_version)
 
   # nativefy the app
-  if (user_browser == "electron") nativefier_app(app_name, app_dir)
+  if (user_browser == "electron") do.call(nativefier_app, c(app_name, app_dir, nativefier_opts))
 
   # Create batch file
   create_bat(app_name, app_dir)
