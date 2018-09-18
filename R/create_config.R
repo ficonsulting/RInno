@@ -1,7 +1,7 @@
 #' Creates an app config file, "utils/config.cfg"
 #'
 #' @inheritParams create_app
-#' @param repo Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.
+#' @param repo Default repository to install CRAN package dependencies. Defaults to \code{repo = "https://cran.rstudio.com"}.
 #' @param error_log Name of error logging file. Contains start up errors from \emph{run.R}.
 #' @param app_repo_url Repository address for continuous installations in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.
 #' @param auth_user Bitbucket username. It is recommended to create a read-only account for each app.  Support for OAuth 2 and tokens is in the works.
@@ -20,7 +20,7 @@ create_config <- function(app_name, app_dir = getwd(),
   pkgs = c("jsonlite", "devtools", "magrittr"),
   pkgs_path = "library",
   remotes   = "none",
-  repo = "http://cran.rstudio.com",
+  repo = "https://cran.rstudio.com",
   error_log = "error.log", app_repo_url = "none", auth_user = "none",
   auth_pw = "none", auth_token = "none", user_browser = "electron", ping_site = "www.ficonsulting.com") {
 

@@ -282,29 +282,41 @@ check_app <- function(app_dir, pkgs_path) {
 #' @keywords internal
 check_pkg_version <- function(pkgs_path, repo) {
 
-  df <- data.frame(loc = list.files(pkgs_path, full.names = TRUE), stringsAsFactors = FALSE)
-  df$pkg <- gsub("_.*", "", basename(df$loc))
-  df$downloaded_versions <- gsub("-", "\\.", stringr::str_extract(df$loc, "[0-9]+[\\.-]?[0-9]+[\\.-]?[0-9]*[\\.-]?[0-9]*(?=.zip)"))
+  binary <- data.frame(loc = list.files(pkgs_path, full.names = TRUE), stringsAsFactors = FALSE)
+  binary$pkg <- gsub("_.*", "", basename(binary$loc))
+  binary$downloaded_versions <- gsub("-", "\\.", stringr::str_extract(binary$loc, "[0-9]+[\\.-]?[0-9]+[\\.-]?[0-9]*[\\.-]?[0-9]*(?=.zip)"))
 
-  lapply(df$loc, {
-    function(x) {
-      tryCatch(utils::unzip(x, list = TRUE),
-        error = function (e) {
-          utils::download.packages(df$pkg[df$loc == x], destdir = pkgs_path, repos = repo, type = "win.binary", quiet = TRUE)
-      })
-    }
-  })
+  # Validate successful downloads
+  for (loc in binary$loc) {
+    tryCatch(
 
-  df$installed_versions <- unlist(lapply(df$pkg, function(x) toString(utils::packageVersion(x))))
+      expr = utils::unzip(loc, list = TRUE),
 
-  df$different <- !df$downloaded_versions == df$installed_versions
+      error = function (e) {
+        pkg <- binary$pkg[binary$loc == loc]
+        file.remove(loc)
+        utils::download.packages(pkg, destdir = pkgs_path, repos = repo, type = "win.binary")
+      }
+    )
+  }
 
-  if (sum(df$different) != 0) {
+  binary$installed_versions <- unlist(lapply(binary$pkg, function(x) toString(utils::packageVersion(x))))
 
-    df <- df[df$different, ]
+  binary$different <- binary$downloaded_versions != binary$installed_versions
+
+  if (sum(binary$different) != 0) {
+
+    binary <- binary[binary$different, ]
 
     cat(glue::glue("\n\nThe following installed packages differ from those downloaded from {repo}:"), "\n")
-    cat(glue::glue("\n - {df$pkg}: \t{sapply(df$downloaded_versions, paste0, collapse = '')} (downloaded) \t{sapply(df$installed_versions, paste0, collapse = '')} (installed)\n"), sep = "\n")
+    cat(glue::glue("\n - {binary$pkg}: \t{sapply(binary$downloaded_versions, paste0, collapse = '')} (downloaded) \t{sapply(binary$installed_versions, paste0, collapse = '')} (installed)\n\n"), sep = "\n")
+
+    ans <- utils::menu(title = "Would you like to update these packages?", choices = c("Yes", "No"))
+
+    if (ans == 1) {
+      cat("\n\nYou should re-run and test your app to confirm that the updated packages work correctly. \n")
+      install.packages(binary$pkg, repos = repo)
+    }
   }
 }
 
