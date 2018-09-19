@@ -4,15 +4,17 @@
 \alias{create_app}
 \title{Creates installation files and Inno Setup Script (ISS), "app_name.iss"}
 \usage{
-create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
-  pkgs = c("jsonlite", "shiny", "magrittr"), pkgs_path = "bin",
-  repo = "http://cran.rstudio.com", remotes = "none",
-  app_repo_url = "none", auth_user = "none", auth_pw = "none",
-  auth_token = devtools::github_pat(), user_browser = "electron",
-  include_R = FALSE, include_Pandoc = FALSE, include_Chrome = FALSE,
+create_app(app_name = "myapp", app_dir = getwd(),
+  dir_out = "RInno_installer", pkgs = c("jsonlite", "shiny",
+  "magrittr"), pkgs_path = "bin", repo = "https://cran.rstudio.com",
+  remotes = "none", app_repo_url = "none", auth_user = "none",
+  auth_pw = "none", auth_token = github_pat(),
+  user_browser = "electron", include_R = FALSE,
+  include_Pandoc = FALSE, include_Chrome = FALSE,
   include_Rtools = FALSE, R_version = paste0(">=", R.version$major,
   ".", R.version$minor), Pandoc_version = rmarkdown::pandoc_version(),
-  Rtools_version = "3.5", overwrite = TRUE, ...)
+  Rtools_version = "3.5", overwrite = TRUE, nativefier_opts = c(),
+  ...)
 }
 \arguments{
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -25,7 +27,7 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{pkgs_path}{Default location inside the app working directory to install package dependencies This defaults to \code{pkgs_path = "bin"}}
 
-\item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.}
+\item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "https://cran.rstudio.com"}.}
 
 \item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
 
@@ -47,14 +49,15 @@ create_app(app_name, app_dir = getwd(), dir_out = "RInno_installer",
 
 \item{include_Rtools}{To include Rtools in the installer, \code{include_Rtools = TRUE}. For some packages to build properly, you may need to include Rtools.}
 
-\item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
+\item{R_version}{R version to use. Supports inequalities. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 
 \item{Pandoc_version}{Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}.}
 
 \item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
 
-\item{overwrite}{Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
-?}
+\item{overwrite}{Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.}
+
+\item{nativefier_opts}{Character vectors. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the character should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.}
 
 \item{...}{Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.}
 }
