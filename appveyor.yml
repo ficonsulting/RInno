@@ -43,5 +43,5 @@ artifacts:
 
 # scripts to run after deployment
 on_success:
-  - Rscript -e "covr::codecov(line_exclusions = as.list(list.files('R', pattern = 'remotes_', full.names = T)))"
+  - Rscript -e "covr::codecov(line_exclusions = as.list(list.files('R', pattern = 'remotes_|get_|download_|nativefier_|install_|compile_|example_', full.names = T)))"
 
