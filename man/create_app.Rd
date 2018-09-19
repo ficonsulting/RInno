@@ -13,8 +13,8 @@ create_app(app_name = "myapp", app_dir = getwd(),
   include_Pandoc = FALSE, include_Chrome = FALSE,
   include_Rtools = FALSE, R_version = paste0(">=", R.version$major,
   ".", R.version$minor), Pandoc_version = rmarkdown::pandoc_version(),
-  Rtools_version = "3.5", overwrite = TRUE, nativefier_opts = c(),
-  ...)
+  Rtools_version = "3.5", overwrite = TRUE, force_nativefier = TRUE,
+  nativefier_opts = c(), ...)
 }
 \arguments{
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -56,6 +56,8 @@ create_app(app_name = "myapp", app_dir = getwd(),
 \item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
 
 \item{overwrite}{Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.}
+
+\item{force_nativefier}{Boolean. Defaults to true and re-builds UI. If false, the UI is not rebuilt.}
 
 \item{nativefier_opts}{Character vectors. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the character should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.}
 
