@@ -31,7 +31,7 @@ get_Pandoc <- function(app_dir, Pandoc_version = rmarkdown::pandoc_version()) {
 
                               This is likely to have happened because there was a change in the URL.
 
-                              This might have already been fixed in the latest version of RInno. Install it with devtools::install_github('ficonsulting/RInno').
+                              This might have already been fixed in the latest version of RInno. Install it with remotes::install_github('ficonsulting/RInno').
 
                               If this doesn't help please submit an issue: {packageDescription('RInno', fields = 'BugReports')}
 

@@ -24,11 +24,11 @@ If a user does not have R installed, the RInno installer can be configured to as
 ## Getting Started
 
 ```
-# If you don't have development tools, install them
-install.packages("devtools"); require(devtools)
+# Get remotes package
+install.packages("remotes"); require(remotes)
 
 # Use install_github to get RInno
-devtools::install_github("ficonsulting/RInno",  build_vignettes = TRUE)
+remotes::install_github("ficonsulting/RInno")
 
 # Require Package
 require(RInno)

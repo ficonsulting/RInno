@@ -17,7 +17,7 @@
 #' @export
 
 create_config <- function(app_name, app_dir = getwd(),
-  pkgs = c("jsonlite", "devtools", "magrittr"),
+  pkgs = c("jsonlite", "remotes", "magrittr"),
   pkgs_path = "library",
   remotes   = "none",
   repo = "https://cran.rstudio.com",
@@ -45,7 +45,7 @@ create_config <- function(app_name, app_dir = getwd(),
       stop(sprintf("%s is not a valid app_repo_url.", app_repo_url), call. = FALSE)
     }
 
-    pkgs <- add_pkgs(pkgs, c("devtools", "httr"))
+    pkgs <- add_pkgs(pkgs, c("remotes", "httr"))
 
     # Set app_repo
     app_repo <- strsplit(app_repo_url, "org/|com/")[[1]][2]
@@ -77,7 +77,7 @@ create_config <- function(app_name, app_dir = getwd(),
   }
 
   # Download packages and store them in pkgs_path
-  download_packages(app_dir, pkgs_path, pkgs, repo, remotes, auth_user, devtools::github_pat())
+  download_packages(app_dir, pkgs_path, pkgs, repo, remotes, auth_user, github_pat())
 
   jsonlite::write_json(
     list(

@@ -20,7 +20,7 @@
 #' @param pkgs_path Default location inside the app working directory to install package dependencies This defaults to \code{pkgs_path = "bin"}
 #' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.
 #' @param include_R To include R in the installer, \code{include_R = TRUE}. The version of R specified by \code{R_version} is used. The installer will check each user's registry and only install R if necessary.
-#' @param R_version R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.
+#' @param R_version R version to use. Supports inequalities. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.
 #' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.
 #' @param Pandoc_version Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}.
 #' @param include_Chrome To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, it is no longer supported by Google :(.
@@ -49,26 +49,27 @@
 #' @inherit setup_section seealso
 #' @author Jonathan M. Hill and Hanjo Odendaal
 #' @export
-create_app <- function(app_name,
-  app_dir      = getwd(),
-  dir_out      = "RInno_installer",
-  pkgs         = c("jsonlite", "shiny", "magrittr"),
-  pkgs_path    = "bin",
-  repo         = "https://cran.rstudio.com",
-  remotes      = "none",
-  app_repo_url = "none",
-  auth_user    = "none",
-  auth_pw      = "none",
-  auth_token   = devtools::github_pat(),
-  user_browser = "electron",
-  include_R    = FALSE,
-  include_Pandoc = FALSE,
-  include_Chrome = FALSE,
-  include_Rtools = FALSE,
-  R_version = paste0(">=", R.version$major, ".", R.version$minor),
-  Pandoc_version = rmarkdown::pandoc_version(),
-  Rtools_version = "3.5",
-  overwrite = TRUE,
+create_app <- function(
+  app_name        = "myapp",
+  app_dir         = getwd(),
+  dir_out         = "RInno_installer",
+  pkgs            = c("jsonlite", "shiny", "magrittr"),
+  pkgs_path       = "bin",
+  repo            = "https://cran.rstudio.com",
+  remotes         = "none",
+  app_repo_url    = "none",
+  auth_user       = "none",
+  auth_pw         = "none",
+  auth_token      = github_pat(),
+  user_browser    = "electron",
+  include_R       = FALSE,
+  include_Pandoc  = FALSE,
+  include_Chrome  = FALSE,
+  include_Rtools  = FALSE,
+  R_version       = paste0(">=", R.version$major, ".", R.version$minor),
+  Pandoc_version  = rmarkdown::pandoc_version(),
+  Rtools_version  = "3.5",
+  overwrite       = TRUE,
   nativefier_opts = c(),
   ...) {
 
@@ -114,7 +115,7 @@ create_app <- function(app_name,
     if (dir.exists(file.path(app_dir, "nativefier-app"))) {
       cat("\nUsing previously built electron app...\n")
     } else {
-      nativefier_app(app_name, app_dir, nativefier_opts)
+      nativefier_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
     }
   }
 
