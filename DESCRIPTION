@@ -12,7 +12,15 @@ Authors@R: c(
     person("Mikolaj", "Rybinski", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
     person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb"),
     person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = "ctb"),
-    person("Jonathan", "Godfrey", email = "a.j.godfrey@massey.ac.nz", role = "ctb", comment = "https://github.com/ajrgodfrey")
+    person("Jonathan", "Godfrey", email = "a.j.godfrey@massey.ac.nz", role = "ctb", comment = "https://github.com/ajrgodfrey"),
+    person("Gábor", "Csárdi", , "csardi.gabor@gmail.com", role = c("aut")),
+    person("Hadley", "Wickham", role = c("aut")),
+    person("Winston", "Chang", role = "aut"),
+    person("Jim", "Hester", role = "aut"),
+    person("RStudio", role = "cph"),
+    person("Martin", "Morgan", role = "aut"),
+    person("Dan", "Tenenbaum", role = "aut"),
+    person("Mango Solutions", role = "cph")
     )
 Maintainer: Jon Hill <jon.mark.hill@gmail.com>
 URL: www.ficonsulting.com
