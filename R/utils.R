@@ -311,11 +311,11 @@ check_pkg_version <- function(pkgs_path, repo) {
     cat(glue::glue("\n\nThe following installed packages differ from those downloaded from {repo}:"), "\n")
     cat(glue::glue("\n - {binary$pkg}: \t{sapply(binary$downloaded_versions, paste0, collapse = '')} (downloaded) \t{sapply(binary$installed_versions, paste0, collapse = '')} (installed)\n\n"), sep = "\n")
 
-    ans <- utils::menu(title = "Would you like to update these packages?", choices = c("Yes", "No"))
+    ans <- utils::menu(title = "It is recommended that you update these packages. Would you like to do so now?", choices = c("Yes", "No"))
 
     if (ans == 1) {
+      update.packages()
       cat("\n\nYou should re-run and test your app to confirm that the updated packages work correctly. \n")
-      install.packages(binary$pkg, repos = repo)
     }
   }
 }
