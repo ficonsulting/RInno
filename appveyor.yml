@@ -42,6 +42,6 @@ artifacts:
     name: Bits
 
 # scripts to run after deployment
-after_deploy:
+after_finish:
     - Rscript -e 'library(covr); codecov()'
 
