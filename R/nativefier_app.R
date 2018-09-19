@@ -1,8 +1,13 @@
 #' Package app into electron with nativefier
 #' @inheritParams create_app
 #' @export
-nativefier_app <- function(app_name, app_dir, nativefier_opts) {
+nativefier_app <- function(app_name, app_dir, nativefier_opts, app_icon = "default.ico") {
   cat("\nBuilding stand-alone UI with Electron...\n")
+
+  # Reset defaults if empty
+  for (formal in names(formals(nativefier_app))) {
+    if (length(get(formal)) == 0) assign(formal, formals(nativefier_app)[formal])
+  }
 
   # Get Nodejs, npm and nativefier
   if (!node_exists()) {
@@ -25,7 +30,7 @@ nativefier_app <- function(app_name, app_dir, nativefier_opts) {
   opts_str <- paste(nativefier_opts, collapse = " ")
 
   cmd <- glue::glue(
-   "nativefier --name {glue::double_quote(app_name)} {opts_str} {glue::double_quote(local_url)} {glue::double_quote(nativefier_loc)}"
+   "nativefier --name {glue::double_quote(app_name)} --icon {app_icon} {opts_str} {glue::double_quote(local_url)} {glue::double_quote(nativefier_loc)}"
   )
   cat("\n", cmd, "\n")
   system(cmd)
