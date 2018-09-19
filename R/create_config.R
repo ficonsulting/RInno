@@ -77,7 +77,7 @@ create_config <- function(app_name, app_dir = getwd(),
   }
 
   # Download packages and store them in pkgs_path
-  download_packages(app_dir, pkgs_path, pkgs, repo, remotes, auth_user, github_pat())
+  if (interactive()) download_packages(app_dir, pkgs_path, pkgs, repo, remotes, auth_user, github_pat())
 
   jsonlite::write_json(
     list(

@@ -51,28 +51,28 @@
 #' @author Jonathan M. Hill and Hanjo Odendaal
 #' @export
 create_app <- function(
-  app_name        = "myapp",
-  app_dir         = getwd(),
-  dir_out         = "RInno_installer",
-  pkgs            = c("jsonlite", "shiny", "magrittr"),
-  pkgs_path       = "bin",
-  repo            = "https://cran.rstudio.com",
-  remotes         = "none",
-  app_repo_url    = "none",
-  auth_user       = "none",
-  auth_pw         = "none",
-  auth_token      = github_pat(),
-  user_browser    = "electron",
-  include_R       = FALSE,
-  include_Pandoc  = FALSE,
-  include_Chrome  = FALSE,
-  include_Rtools  = FALSE,
-  R_version       = paste0(">=", R.version$major, ".", R.version$minor),
-  Pandoc_version  = rmarkdown::pandoc_version(),
-  Rtools_version  = "3.5",
-  overwrite       = TRUE,
+  app_name         = "myapp",
+  app_dir          = getwd(),
+  dir_out          = "RInno_installer",
+  pkgs             = c("jsonlite", "shiny", "magrittr"),
+  pkgs_path        = "bin",
+  repo             = "https://cran.rstudio.com",
+  remotes          = "none",
+  app_repo_url     = "none",
+  auth_user        = "none",
+  auth_pw          = "none",
+  auth_token       = github_pat(),
+  user_browser     = "electron",
+  include_R        = FALSE,
+  include_Pandoc   = FALSE,
+  include_Chrome   = FALSE,
+  include_Rtools   = FALSE,
+  R_version        = paste0(">=", R.version$major, ".", R.version$minor),
+  Pandoc_version   = rmarkdown::pandoc_version(),
+  Rtools_version   = "3.5",
+  overwrite        = TRUE,
   force_nativefier = TRUE,
-  nativefier_opts = c(),
+  nativefier_opts  = c(),
   ...) {
 
   # To capture arguments for other function calls
@@ -113,7 +113,7 @@ create_app <- function(
   if (include_Rtools) get_Rtools(app_dir, Rtools_version, R_version)
 
   # nativefy the app
-  if (user_browser == "electron") {
+  if (user_browser == "electron" && interactive()) {
     if (force_nativefier) {
       nativefier_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
     } else {
