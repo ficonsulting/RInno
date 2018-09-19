@@ -27,6 +27,7 @@
 #' @param include_Rtools To include Rtools in the installer, \code{include_Rtools = TRUE}. For some packages to build properly, you may need to include Rtools.
 #' @param Rtools_version Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.
 #' @param overwrite Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
+#' @param force_nativefier Boolean. Defaults to true and re-builds UI. If false, the UI is not rebuilt.
 #' @param nativefier_opts Character vectors. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the character should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.
 #'
 #' @param ... Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.
@@ -70,6 +71,7 @@ create_app <- function(
   Pandoc_version  = rmarkdown::pandoc_version(),
   Rtools_version  = "3.5",
   overwrite       = TRUE,
+  force_nativefier = TRUE,
   nativefier_opts = c(),
   ...) {
 
@@ -112,10 +114,12 @@ create_app <- function(
 
   # nativefy the app
   if (user_browser == "electron") {
-    if (dir.exists(file.path(app_dir, "nativefier-app"))) {
-      cat("\nUsing previously built electron app...\n")
-    } else {
+    if (force_nativefier) {
       nativefier_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+    } else {
+      if (!dir.exists(file.path(app_dir, "nativefier-app")))
+        nativefier_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+      cat("\nUsing previously built electron app...\n")
     }
   }
 
