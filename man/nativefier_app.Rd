@@ -4,7 +4,14 @@
 \alias{nativefier_app}
 \title{Package app into electron with nativefier}
 \usage{
-nativefier_app(app_name, app_dir)
+nativefier_app(app_name, app_dir, nativefier_opts)
+}
+\arguments{
+\item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
+
+\item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
+
+\item{nativefier_opts}{Character vectors. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the character should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.}
 }
 \description{
 Package app into electron with nativefier

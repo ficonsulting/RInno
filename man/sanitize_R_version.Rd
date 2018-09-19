@@ -4,14 +4,18 @@
 \alias{sanitize_R_version}
 \title{Sanitize R's version}
 \usage{
-sanitize_R_version(R_version, clean = FALSE)
+sanitize_R_version(R_version, clean = FALSE, R_version_min = "3.0.2")
 }
 \arguments{
-\item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
+\item{R_version}{R version to use. Supports inequalities. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 
 \item{clean}{Boolean. If TRUE, \code{><=} are removed. Defaults to FALSE.}
+
+\item{R_version_min}{Minimal supported R version. If \code{NULL} check won't
+be done. Default value is \code{"3.0.2"}.}
 }
 \description{
-Used to validate R versions and strip off inequalities when necessary.
+Used to validate R version, strip whitespaces and, optionally, to stripp off
+leading inequalities.
 }
 \keyword{internal}
