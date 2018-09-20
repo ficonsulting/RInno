@@ -18,11 +18,12 @@ compile_iss <- function() {
 
   if (length(inno) == 0) {
     ans <- utils::menu(title = "Inno Setup was not found. Would you like to install it now?", choices = c("Yes", "No"))
-    if (ans == 1)
+    if (ans == 1) {
       install_inno()
       inno <- find_inno()
-    else
+    } else {
       stop(glue::glue("Please install Inno Setup before compiling {iss_file}."), call. = FALSE)
+    }
   }
 
   compil32 <- file.path(inno, "Compil32.exe")
