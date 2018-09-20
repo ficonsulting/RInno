@@ -12,50 +12,12 @@
 
 <meta name="author" content="Jonathan M. Hill" />
 
-<meta name="date" content="2018-06-08" />
+<meta name="date" content="2018-09-20" />
 
 <title>Introduction</title>
 
 
 
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-</style>
 
 
 
@@ -70,36 +32,42 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction</h1>
 <h4 class="author"><em>Jonathan M. Hill</em></h4>
-<h4 class="date"><em>2018-06-08</em></h4>
+<h4 class="date"><em>2018-09-20</em></h4>
 
 
 
-<p><a href="https://codecov.io/github/ficonsulting/RInno"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSIyMCI+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgyPSIwIiB5Mj0iMTAwJSI+CiAgICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIiAvPgogICAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bWFzayBpZD0iYSI+CiAgICAgICAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iI2ZmZiIgLz4KICAgIDwvbWFzaz4KICAgIDxnIG1hc2s9InVybCgjYSkiPgogICAgICAgIDxwYXRoIGZpbGw9IiM1NTUiIGQ9Ik0wIDBoNjB2MjBIMHoiIC8+CiAgICAgICAgPHBhdGggZmlsbD0iI2U1NjE0MiIgZD0iTTYwIDBoMzZ2MjBINjB6IiAvPgogICAgICAgIDxwYXRoIGZpbGw9InVybCgjYikiIGQ9Ik0wIDBoOTZ2MjBIMHoiIC8+CiAgICA8L2c+CiAgICA8ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSI+CiAgICAgICAgPHRleHQgeD0iMzAiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj5jb2RlY292PC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjMwIiB5PSIxNCI+Y29kZWNvdjwvdGV4dD4KICAgICAgICA8dGV4dCB4PSI3NyIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPjcxJTwvdGV4dD4KICAgICAgICA8dGV4dCB4PSI3NyIgeT0iMTQiPjcxJTwvdGV4dD4KICAgIDwvZz4KPC9zdmc+" alt="codecov" /></a> <a href="http://www.repostatus.org/#active"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjIwIj48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgyPSIwIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PC9saW5lYXJHcmFkaWVudD48Y2xpcFBhdGggaWQ9ImEiPjxyZWN0IHdpZHRoPSIxMTYiIGhlaWdodD0iMjAiIHJ4PSIzIiBmaWxsPSIjZmZmIi8+PC9jbGlwUGF0aD48ZyBjbGlwLXBhdGg9InVybCgjYSkiPjxwYXRoIGZpbGw9IiM1NTUiIGQ9Ik0wIDBoNzN2MjBIMHoiLz48cGF0aCBmaWxsPSIjNGMxIiBkPSJNNzMgMGg0M3YyMEg3M3oiLz48cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDExNnYyMEgweiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSI+PHRleHQgeD0iMzYuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPnJlcG8gc3RhdHVzPC90ZXh0Pjx0ZXh0IHg9IjM2LjUiIHk9IjE0Ij5yZXBvIHN0YXR1czwvdGV4dD48dGV4dCB4PSI5My41IiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+QWN0aXZlPC90ZXh0Pjx0ZXh0IHg9IjkzLjUiIHk9IjE0Ij5BY3RpdmU8L3RleHQ+PC9nPjwvc3ZnPg==" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed." /></a></p>
-<p>RInno makes it easy to install local shiny apps by providing an interface between R and <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a>, an installer for Windows programs (sorry Mac and Linux users). It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.</p>
+<p><a href="https://codecov.io/github/ficonsulting/RInno"><img src="data:image/svg+xml;base64,CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTIxIiBoZWlnaHQ9IjIwIj4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYiIgeDI9IjAiIHkyPSIxMDAlIj4KICAgICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiIC8+CiAgICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLW9wYWNpdHk9Ii4xIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxtYXNrIGlkPSJhIj4KICAgICAgICA8cmVjdCB3aWR0aD0iMTIxIiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iI2ZmZiIgLz4KICAgIDwvbWFzaz4KICAgIDxnIG1hc2s9InVybCgjYSkiPgogICAgICAgIDxwYXRoIGZpbGw9IiM1NTUiIGQ9Ik0wIDBoNjB2MjBIMHoiIC8+CiAgICAgICAgPHBhdGggZmlsbD0iIzlmOWY5ZiIgZD0iTTYwIDBoNjF2MjBINjB6IiAvPgogICAgICAgIDxwYXRoIGZpbGw9InVybCgjYikiIGQ9Ik0wIDBoMTIxdjIwSDB6IiAvPgogICAgPC9nPgogICAgPGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLFZlcmRhbmEsR2VuZXZhLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiPgogICAgICAgIDx0ZXh0IHg9IjMwIiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+Y29kZWNvdjwvdGV4dD4KICAgICAgICA8dGV4dCB4PSIzMCIgeT0iMTQiPmNvZGVjb3Y8L3RleHQ+CiAgICAgICAgPHRleHQgeD0iODkuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPnVua25vd248L3RleHQ+CiAgICAgICAgPHRleHQgeD0iODkuNSIgeT0iMTQiPnVua25vd248L3RleHQ+CiAgICA8L2c+Cjwvc3ZnPgo=" alt="codecov" /></a> <a href="http://www.repostatus.org/#active"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjIwIj48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgyPSIwIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PC9saW5lYXJHcmFkaWVudD48Y2xpcFBhdGggaWQ9ImEiPjxyZWN0IHdpZHRoPSIxMTYiIGhlaWdodD0iMjAiIHJ4PSIzIiBmaWxsPSIjZmZmIi8+PC9jbGlwUGF0aD48ZyBjbGlwLXBhdGg9InVybCgjYSkiPjxwYXRoIGZpbGw9IiM1NTUiIGQ9Ik0wIDBoNzN2MjBIMHoiLz48cGF0aCBmaWxsPSIjNGMxIiBkPSJNNzMgMGg0M3YyMEg3M3oiLz48cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJNMCAwaDExNnYyMEgweiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSI+PHRleHQgeD0iMzYuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPnJlcG8gc3RhdHVzPC90ZXh0Pjx0ZXh0IHg9IjM2LjUiIHk9IjE0Ij5yZXBvIHN0YXR1czwvdGV4dD48dGV4dCB4PSI5My41IiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+QWN0aXZlPC90ZXh0Pjx0ZXh0IHg9IjkzLjUiIHk9IjE0Ij5BY3RpdmU8L3RleHQ+PC9nPjwvc3ZnPg==" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed." /></a></p>
+<p>RInno makes it easy to install local shiny apps by providing an interface between R, <a href="http://www.jrsoftware.org/isinfo.php">Inno Setup</a>, an installer for Windows programs (sorry Mac and Linux users), and <a href="https://electronjs.org/">Electron</a>, a modern desktop framework used by companies like Github, Slack, Microsoft, Facebook and Docker. RInno is designed to be simple to use (two lines of code at a minimum), yet comprehensive.</p>
 <p>If a user does not have R installed, the RInno installer can be configured to ask them to install R along with a shiny app, <code>include_R = TRUE</code>. And similar to Dr. Lee Pang’s <a href="https://github.com/wleepang/DesktopDeployR">DesktopDeployR</a> project, RInno provides a framework for managing software dependencies and error logging features. However, RInno also supports GitHub package dependencies, continuous installation (auto-update on start up), and it is easier to manage with <code>create_app</code>, the main RInno function. DesktopDeployR requires many manual adjustments and a deep understanding of the entire framework to use, but RInno can be learned incrementally and changes automatically flow down stream. You don’t need to remember the 100+ places impacted by changing <code>app_dir</code>. RInno only requires a high-level understanding of what you’d like to accomplish.</p>
 <div id="getting-started" class="section level2">
 <h2>Getting Started</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Require Package</span>
-<span class="kw">require</span>(RInno)
+<pre><code># Get remotes package
+install.packages(&quot;remotes&quot;); require(remotes)
 
-<span class="co"># Use RInno to get Inno Setup</span>
-RInno<span class="op">::</span><span class="kw">install_inno</span>()</code></pre></div>
+# Use install_github to get RInno
+install_github(&quot;ficonsulting/RInno&quot;)
+
+# Require Package
+require(RInno)
+
+# Use RInno to get Inno Setup
+install_inno()</code></pre>
 </div>
 <div id="minimal-example" class="section level2">
 <h2>Minimal example</h2>
 <p>Once you have developed a shiny app, you can build an installer with <code>create_app</code> followed by <code>compile_iss</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example app included with RInno package</span>
-<span class="kw">example_app</span>(<span class="dt">wd =</span> <span class="kw">getwd</span>())
+<pre><code># Example app included with RInno package
+example_app(app_dir = &quot;app&quot;)
 
-<span class="co"># Build an installer</span>
-<span class="kw">create_app</span>(<span class="dt">app_name =</span> <span class="st">&quot;Your appname&quot;</span>, <span class="dt">app_dir =</span> <span class="st">&quot;app&quot;</span>)
-<span class="kw">compile_iss</span>()</code></pre></div>
-<p><code>create_app</code> creates an installation framework in your app’s directory, <code>app_dir</code>. You can perform minor customizations before you call <code>compile_iss</code>. For example, you can replace the default/setup icon at <a href="http://www.flaticon.com/">Flaticon.com</a>, or you can customize the pre-/post- install messages, <em>infobefore.txt</em> and <em>infoafter.txt</em>. Just remember, the default values (i.e. <code>create_app(info_after = &quot;infobefore.txt&quot;)</code>) for those files have not changed. The Inno Setup Script (ISS), <em>app_name.iss</em>, will look for <em>default.ico</em> and try to use it until you update the script or call <code>create_app</code> with the new icon’s file name (i.e. <code>create_app(app_icon = &quot;new.ico&quot;)</code>).</p>
-<p>Chrome is the default browser used by RInno because of its app mode feature and development-minded features. IE/Edge often prevents icons and third party JavaScript libraries from loading because of various IT policies, which can result in bugs. The default <code>user_browser</code> setting will open Chrome in app mode, which looks more like a stand-alone app than when it opens in another tab of your default browser. Regardless of which browser you specify, RInno’s startup sequence will fall back on the user’s default browser if it is not installed.</p>
+# Build an installer
+create_app(app_name = &quot;Your appname&quot;, app_dir = &quot;app&quot;)
+compile_iss()</code></pre>
+<p><code>create_app</code> creates an installation framework in your app’s directory, <code>app_dir</code>. The main components are a file called “app_name.iss” and the “nativefier-app” directory. You can perform minor customizations before you call <code>compile_iss</code>. For example, you can replace the default/setup icon at <a href="http://www.flaticon.com/">Flaticon.com</a>, or you can customize the pre-/post- install messages, <em>infobefore.txt</em> and <em>infoafter.txt</em>. Just remember, the default values (i.e. <code>create_app(info_after = &quot;infobefore.txt&quot;)</code>) for those files have not changed. The Inno Setup Script (ISS), <em>app_name.iss</em>, will look for <em>default.ico</em> and try to use it until you update the script or call <code>create_app</code> with the new icon’s file name (i.e. <code>create_app(app_icon = &quot;new.ico&quot;)</code>). Likewise, the Electron app will need to be recompiled to capture any manual changes to files in <code>app_dir</code>.</p>
+<p>Electron is now used to render the shiny app’s UI. All other <code>user_browser</code> options will be deprecated in future releases.</p>
 </div>
 <div id="ui.r-requirements" class="section level2">
 <h2>ui.R Requirements</h2>
-<p>In order to replace Chrome’s logo with your app’s icon, add something like this to your ui.R file:</p>
+<p>In order to replace Electron’s logo with your app’s icon, add something like this to your ui.R file:</p>
 <pre><code>fluidPage(
   tags$head(
     tags$link(
@@ -116,99 +84,102 @@ RInno<span class="op">::</span><span class="kw">install_inno</span>()</code></pr
 <li>Add <code>session</code> to your <code>server</code> function</li>
 <li>Call <code>stopApp()</code> when the session ends</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">function</span>(input, output, session) {
+<pre><code>function(input, output, session) {
 
-  session<span class="op">$</span><span class="kw">onSessionEnded</span>(<span class="cf">function</span>() {
-      <span class="kw">stopApp</span>()
-      <span class="kw">q</span>(<span class="st">&quot;no&quot;</span>)
-  })
-}</code></pre></div>
+  if (!interactive()) {
+    session$onSessionEnded(function() {
+      stopApp()
+      q(&quot;no&quot;)
+    })
+  }
+}</code></pre>
 <p>If you forget to do this, users will complain that their icons are broken and rightly blame you for it (an R session will be running in the background hosting the app, but they will need to press ctrl + alt + delete and use their task manager to close it). <strong>Not cool</strong>.</p>
 </div>
 <div id="package-dependency-management" class="section level2">
 <h2>Package Dependency Management</h2>
-<p>Provide a list of packages to <code>create_app</code>, and RInno will install them with your shiny app. If the list does not have a version #, the default is <code>utils::packageVersion</code> to determine which version is installed in the development environment. Whereas if a specific package version is specified, i.e. <code>pkgs = c(shiny = &quot;==1.0.5&quot;, &quot;jsonlite&quot;, &quot;httr&quot;)</code>, RInno will respect that specification and use <code>utils::packageVersion</code> for the rest.</p>
+<p>Provide a named character vector of packages to <code>create_app</code>, and RInno will download them and install them with your shiny app. RInno downloads windows binaries from CRAN for the listed packages and their dependencies with <code>tools::package_dependencies(packages = pkgs, recursive = TRUE)</code>.</p>
 <pre><code>create_app(
   app_name = &quot;myapp&quot;, 
   app_dir = &quot;app&quot;,
   pkgs = c(&quot;shiny&quot;, &quot;jsonlite&quot;, &quot;httr&quot;)
 )</code></pre>
-<p>RInno will default to <code>shiny = paste0(&quot;&gt;=&quot;, utils::packageVersion(&quot;shiny&quot;))</code>, etc. if versions are not included. This provides a similar management strategy as developers use in the DESCRIPTION file’s <code>Imports:</code> section of an R package. For more information, see <a href="http://r-pkgs.had.co.nz/description.html">R Packages - Package Metadata</a> by Hadley Wickham.</p>
+<p>For <code>remotes</code>, Github source files are compiled into windows binaries. Bitbucket will be supported in a future release.</p>
 </div>
 <div id="custom-installations" class="section level2">
 <h2>Custom Installations</h2>
 <p>If you would like to create a custom installer from within R, you can slowly build up to it with <code>create_app</code>, like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">create_app</span>(
-  <span class="dt">app_name    =</span> <span class="st">&quot;My AppName&quot;</span>, 
-  <span class="dt">app_dir     =</span> <span class="st">&quot;My/app/path&quot;</span>,
-  <span class="dt">dir_out     =</span> <span class="st">&quot;wizard&quot;</span>,
-  <span class="dt">pkgs        =</span> <span class="kw">c</span>(<span class="st">&quot;jsonlite&quot;</span>, <span class="st">&quot;shiny&quot;</span>, <span class="st">&quot;magrittr&quot;</span>, <span class="st">&quot;xkcd&quot;</span>),  <span class="co"># CRAN-like repo packages</span>
-  <span class="dt">remotes     =</span> <span class="kw">c</span>(<span class="st">&quot;talgalili/installr&quot;</span>, <span class="st">&quot;daattali/shinyjs&quot;</span>), <span class="co"># GitHub packages</span>
-  <span class="dt">include_R   =</span> <span class="ot">TRUE</span>,     <span class="co"># Download R and install it with your app, if necessary</span>
-  <span class="dt">R_version   =</span> <span class="st">&quot;2.2.1&quot;</span>,  <span class="co"># Old versions of R</span>
-  <span class="dt">privilege   =</span> <span class="st">&quot;high&quot;</span>,   <span class="co"># Admin only installation</span>
-  <span class="dt">default_dir =</span> <span class="st">&quot;pf&quot;</span>)     <span class="co"># Install app in to Program Files</span></code></pre></div>
-<p><code>create_app</code> passes its arguments to most of the other support functions in RInno, so you can specify most things there and they will get passed on, or you can provide detailed instructions directly to those functions like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, app.R)</span>
-<span class="kw">copy_installation</span>(<span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>)
+<pre><code>create_app(
+  app_name    = &quot;My AppName&quot;, 
+  app_dir     = &quot;My/app/path&quot;,
+  dir_out     = &quot;wizard&quot;,
+  pkgs        = c(&quot;jsonlite&quot;, &quot;shiny&quot;, &quot;magrittr&quot;, &quot;xkcd&quot;),  # CRAN-like repo packages
+  remotes     = c(&quot;talgalili/installr&quot;, &quot;daattali/shinyjs&quot;), # GitHub packages
+  include_R   = TRUE,     # Download R and install it with your app, if necessary
+  R_version   = &quot;2.2.1&quot;,  # Old versions of R
+  privilege   = &quot;high&quot;,   # Admin only installation
+  default_dir = &quot;pf&quot;)     # Install app in to Program Files</code></pre>
+<p><code>create_app</code> passes its arguments to most of the other support functions in RInno. You can (and probably should) specify most things there and they will get passed on. Alternatively, you can provide instructions directly to those support functions like this:</p>
+<pre><code># Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, app.R)
+copy_installation(app_dir = &quot;my/app/path&quot;)
 
-<span class="co"># If your users need R installed:</span>
-<span class="kw">get_R</span>(<span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>, <span class="dt">R_version =</span> <span class="fl">2.2</span>.<span class="dv">1</span>)
+# If your users need R installed:
+get_R(app_dir = &quot;my/app/path&quot;, R_version = &quot;2.2.1&quot;)
 
-<span class="co"># Create batch file</span>
-<span class="kw">create_bat</span>(<span class="dt">app_name =</span> <span class="st">&quot;My AppName&quot;</span>, <span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>)
+# Create batch file
+create_bat(app_name = &quot;My AppName&quot;, app_dir = &quot;my/app/path&quot;)
 
-<span class="co"># Create app config file</span>
-<span class="kw">create_config</span>(<span class="dt">app_name =</span> <span class="st">&quot;My AppName&quot;</span>, <span class="dt">R_version =</span> <span class="st">&quot;2.2.1&quot;</span>, <span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>,
-  <span class="dt">pkgs =</span> <span class="kw">c</span>(<span class="st">&quot;jsonlite&quot;</span>, <span class="st">&quot;shiny&quot;</span>, <span class="st">&quot;magrittr&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;caret&quot;</span>, <span class="st">&quot;xkcd&quot;</span>))
+# Create app config file
+create_config(app_name = &quot;My AppName&quot;, R_version = &quot;2.2.1&quot;, app_dir = &quot;my/app/path&quot;,
+  pkgs = c(&quot;jsonlite&quot;, &quot;shiny&quot;, &quot;magrittr&quot;, &quot;dplyr&quot;, &quot;caret&quot;, &quot;xkcd&quot;))
 
-<span class="co"># Build the iss script</span>
-<span class="kw">start_iss</span>(<span class="dt">app_name =</span> <span class="st">&quot;My AppName&quot;</span>) <span class="op">%&gt;%</span>
+# Build the iss script
+start_iss(app_name = &quot;My AppName&quot;) %&gt;%
 
-<span class="st">  </span><span class="co"># C-like directives</span>
-<span class="st">  </span><span class="kw">directives_section</span>(<span class="dt">R_version   =</span> <span class="st">&quot;2.2.1&quot;</span>, 
-             <span class="dt">include_R   =</span> <span class="ot">TRUE</span>, 
-             <span class="dt">app_version =</span> <span class="st">&quot;0.1.2&quot;</span>,
-             <span class="dt">publisher   =</span> <span class="st">&quot;Your Company&quot;</span>, 
-             <span class="dt">main_url    =</span> <span class="st">&quot;yourcompany.com&quot;</span>) <span class="op">%&gt;%</span>
+  # C-like directives
+  directives_section(R_version   = &quot;2.2.1&quot;, 
+             include_R   = TRUE,
+             app_version = &quot;0.1.2&quot;,
+             publisher   = &quot;Your Company&quot;, 
+             main_url    = &quot;yourcompany.com&quot;) %&gt;%
 
-<span class="st">  </span><span class="co"># Setup Section</span>
-<span class="st">  </span><span class="kw">setup_section</span>(<span class="dt">output_dir  =</span> <span class="st">&quot;wizard&quot;</span>, 
-        <span class="dt">app_version =</span> <span class="st">&quot;0.1.2&quot;</span>,
-        <span class="dt">default_dir =</span> <span class="st">&quot;pf&quot;</span>, 
-        <span class="dt">privilege   =</span> <span class="st">&quot;high&quot;</span>,
-        <span class="dt">inst_readme =</span> <span class="st">&quot;pre-install instructions.txt&quot;</span>, 
-        <span class="dt">setup_icon  =</span> <span class="st">&quot;myicon.ico&quot;</span>,
-        <span class="dt">pub_url     =</span> <span class="st">&quot;mycompany.com&quot;</span>, 
-        <span class="dt">sup_url     =</span> <span class="st">&quot;mycompany.github.com/issues&quot;</span>,
-        <span class="dt">upd_url     =</span> <span class="st">&quot;mycompany.github.com&quot;</span>) <span class="op">%&gt;%</span>
+  # Setup Section
+  setup_section(output_dir  = &quot;wizard&quot;, 
+        app_version = &quot;0.1.2&quot;,
+        default_dir = &quot;pf&quot;, 
+        privilege   = &quot;high&quot;,
+        inst_readme = &quot;pre-install instructions.txt&quot;, 
+        setup_icon  = &quot;myicon.ico&quot;,
+        pub_url     = &quot;mycompany.com&quot;, 
+        sup_url     = &quot;mycompany.github.com/issues&quot;,
+        upd_url     = &quot;mycompany.github.com&quot;) %&gt;%
 
-<span class="st">  </span><span class="co"># Languages Section</span>
-<span class="st">  </span><span class="kw">languages_section</span>() <span class="op">%&gt;%</span>
+  # Languages Section
+  languages_section() %&gt;%
 
-<span class="st">  </span><span class="co"># Tasks Section</span>
-<span class="st">  </span><span class="kw">tasks_section</span>(<span class="dt">desktop_icon =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+  # Tasks Section
+  tasks_section(desktop_icon = FALSE) %&gt;%
 
-<span class="st">  </span><span class="co"># Files Section</span>
-<span class="st">  </span><span class="kw">files_section</span>(<span class="dt">app_dir =</span> <span class="st">&quot;my/app/path&quot;</span>, <span class="dt">file_list =</span> <span class="st">&quot;path/to/extra/files&quot;</span>) <span class="op">%&gt;%</span>
+  # Files Section
+  files_section(app_dir = &quot;my/app/path&quot;, file_list = &quot;path/to/extra/files&quot;) %&gt;%
 
-<span class="st">  </span><span class="co"># Icons Section</span>
-<span class="st">  </span><span class="kw">icons_section</span>(<span class="dt">app_desc       =</span> <span class="st">&quot;This is my local shiny app&quot;</span>,
-        <span class="dt">app_icon       =</span> <span class="st">&quot;notdefault.ico&quot;</span>,
-        <span class="dt">prog_menu_icon =</span> <span class="ot">FALSE</span>,
-        <span class="dt">desktop_icon   =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+  # Icons Section
+  icons_section(app_desc       = &quot;This is my local shiny app&quot;,
+        app_icon       = &quot;notdefault.ico&quot;,
+        prog_menu_icon = FALSE,
+        desktop_icon   = FALSE) %&gt;%
 
-<span class="st">  </span><span class="co"># Execution &amp; Pascal code to check registry during installation</span>
-<span class="st">  </span><span class="co"># If the user has R, don't give them an extra copy</span>
-<span class="st">  </span><span class="co"># If the user needs R, give it to them</span>
-<span class="st">  </span><span class="kw">run_section</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">code_section</span>() <span class="op">%&gt;%</span>
+  # Execution &amp; Pascal code to check registry during installation
+  # If the user has R, don't give them an extra copy
+  # If the user needs R, give it to them
+  run_section() %&gt;%
+  code_section() %&gt;%
 
-<span class="st">  </span><span class="co"># Write the Inno Setup script</span>
-<span class="st">  </span><span class="kw">writeLines</span>(<span class="kw">file.path</span>(<span class="st">&quot;my/app/path&quot;</span>, <span class="st">&quot;My AppName.iss&quot;</span>))
+  # Write the Inno Setup script
+  writeLines(file.path(&quot;my/app/path&quot;, &quot;My AppName.iss&quot;))
 
-  <span class="co"># Check your files, then</span>
-  <span class="kw">compile_iss</span>()</code></pre></div>
+  # Check your files, then
+  compile_iss()
+</code></pre>
 <p>Feel free to read the Inno Setup <a href="http://www.jrsoftware.org/ishelp/">documentation</a> and RInno’s documentation to get a sense for what is possible. Also, please suggest useful features or build them yourself! We have a very positive culture at FI Consulting, and we would love to get your feedback.</p>
 <p>Please note that this project has a <a href="https://github.com/ficonsulting/RInno/blob/master/CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>

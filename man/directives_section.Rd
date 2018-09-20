@@ -16,7 +16,7 @@ directives_section(app_name, include_R = FALSE,
 
 \item{include_R}{To include R in the installer, \code{include_R = TRUE}. The version of R specified by \code{R_version} is used. The installer will check each user's registry and only install R if necessary.}
 
-\item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
+\item{R_version}{R version to use. Supports inequalities. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 
 \item{include_Pandoc}{To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.}
 

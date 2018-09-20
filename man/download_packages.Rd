@@ -14,7 +14,7 @@ download_packages(app_dir, pkgs_path, pkgs, repo, remotes, auth_user,
 
 \item{pkgs}{Character vector of package dependencies. Remote development versions are supported via \code{remotes}. \code{pkgs} are downloaded into \code{file.path(app_dir, pkgs_path)} as Windows binary packages (.zip). If you build binary packages and store them there before calling \code{create_app}, they will be included as well.}
 
-\item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "http://cran.rstudio.com"}.}
+\item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "https://cran.rstudio.com"}.}
 
 \item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
 

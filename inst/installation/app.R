@@ -10,9 +10,13 @@ start_app <- function(
   user_browser = config$user_browser,
   chrome = reg_paths$chrome,
   ff = reg_paths$ff,
-  ie = reg_paths$ie) {
+  ie = reg_paths$ie,
+  electron = config$nativefier) {
 
-  if (user_browser == "chrome") {
+  if (user_browser == "electron") {
+    electron <- gsub("/", "\\\\", electron)
+
+  } else if (user_browser == "chrome") {
     if (chrome != "none") {
       chrome <- gsub("\\\\", "/", file.path(chrome, "chrome.exe", fsep = "\\"))
       options(browser = chrome)
@@ -43,9 +47,14 @@ start_app <- function(
       if (Sys.getenv("RSTUDIO_PANDOC") == "") {
         Sys.setenv(RSTUDIO_PANDOC = gsub("\\\\", "/", reg_paths$pandoc))
       }
-      rmarkdown::run(file.path(app_path, config$flex_file),
-        shiny_args = list(host = '0.0.0.0', launch.browser = launch_browser,
-                          port = 1984))
+      rmarkdown::run(
+        file = file.path(app_path, config$flex_file),
+        shiny_args = list(
+          host = '0.0.0.0',
+          launch.browser = launch_browser,
+          port = 1984
+        )
+      )
 
       # Shiny
     } else {
@@ -59,13 +68,28 @@ start_app <- function(
         Sys.setenv(RSTUDIO_PANDOC = gsub("\\\\", "/", reg_paths$pandoc))
       }
 
-      rmarkdown::run(paste0("./", config$flex_file),
-        shiny_args = list(host = '0.0.0.0', launch.browser = launch_browser,
-                          port = 1984))
+      rmarkdown::run(
+        file = paste0("./", config$flex_file),
+        shiny_args = list(
+          host = '0.0.0.0',
+          launch.browser = launch_browser,
+          port = 1984
+        )
+      )
 
       # Shiny
     } else {
-      shiny::runApp("./", launch.browser = launch_browser, port = 1984)
+      if (user_browser == "electron") {
+        # start app
+      	# applibpath variable is set in package_manager.R
+        # OPT: use `dput` to copy whole .libPaths() and .GlobalEnv contents
+        system(sprintf('R -e ".libPaths(c(\'%s\', .libPaths())); shiny::runApp(\'./\', port=1984)"', applibpath), wait = FALSE)
+        # start electron
+        system(sprintf('cmd /C "%s"', electron), wait = FALSE)
+
+      } else {
+        shiny::runApp("./", launch.browser = launch_browser, port = 1984)
+      }
     }
   }
 }

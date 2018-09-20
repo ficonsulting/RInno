@@ -4,7 +4,8 @@
 \alias{files_section}
 \title{Files Section of ISS}
 \usage{
-files_section(iss, app_name, app_dir, file_list = character())
+files_section(iss, app_name, app_dir, user_browser,
+  file_list = character())
 }
 \arguments{
 \item{iss}{Character vector which cumulatively becomes an Inno Setup Script (ISS).}
@@ -12,6 +13,8 @@ files_section(iss, app_name, app_dir, file_list = character())
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
 
 \item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
+
+\item{user_browser}{Character for the default browser. Options include "chrome", "firefox", and "ie."}
 
 \item{file_list}{Character vector. Extra files to be installed with the app.}
 }

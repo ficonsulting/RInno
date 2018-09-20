@@ -10,7 +10,7 @@ get_R(app_dir = getwd(), R_version = paste0(">=", R.version$major, ".",
 \arguments{
 \item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
+\item{R_version}{R version to use. Supports inequalities. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 }
 \value{
 \code{sprintf('R-\%s-win.exe', R_version)} in \code{app_dir}.

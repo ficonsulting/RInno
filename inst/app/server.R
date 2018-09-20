@@ -16,8 +16,10 @@ function(input, output, session) {
   })
 
   # Close the app when the session completes
-  session$onSessionEnded(function() {
-    stopApp()
-    q("no")
-  })
+  if(!interactive()) {
+    session$onSessionEnded(function() {
+      stopApp()
+      q("no")
+    })
+  }
 }

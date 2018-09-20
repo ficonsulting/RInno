@@ -1,26 +1,27 @@
 
-<img src="inst/app/www/RInno.png" width="101" />
+RInno <img src="inst/app/www/RInno.png" align="right" height=140/>
+==================================================================
 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ficonsulting/RInno?branch=master&svg=true)](https://ci.appveyor.com/project/ficonsulting/RInno) [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/RInno)](https://cran.r-project.org/package=RInno) [![Downloads](https://cranlogs.r-pkg.org/badges/RInno)](https://cran.rstudio.com/package=RInno) [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/RInno)](https://cran.rstudio.com/package=RInno) [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
-RInno makes it easy to install local shiny apps by providing an interface between R and [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs (sorry Mac and Linux users). It is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
+RInno makes it easy to install local shiny apps by providing an interface between R, [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs (sorry Mac and Linux users), and [Electron](https://electronjs.org/), a modern desktop framework used by companies like Github, Slack, Microsoft, Facebook and Docker. RInno is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
 If a user does not have R installed, the RInno installer can be configured to ask them to install R along with a shiny app, `include_R = TRUE`. And similar to Dr. Lee Pang's [DesktopDeployR](https://github.com/wleepang/DesktopDeployR) project, RInno provides a framework for managing software dependencies and error logging features. However, RInno also supports GitHub package dependencies, continuous installation (auto-update on start up), and it is easier to manage with `create_app`, the main RInno function. DesktopDeployR requires many manual adjustments and a deep understanding of the entire framework to use, but RInno can be learned incrementally and changes automatically flow down stream. You don't need to remember the 100+ places impacted by changing `app_dir`. RInno only requires a high-level understanding of what you'd like to accomplish.
 
 Getting Started
 ---------------
 
-    # If you don't have development tools, install them
-    install.packages("devtools"); require(devtools)
+    # Get remotes package
+    install.packages("remotes"); require(remotes)
 
     # Use install_github to get RInno
-    devtools::install_github("ficonsulting/RInno",  build_vignettes = TRUE)
+    install_github("ficonsulting/RInno")
 
     # Require Package
     require(RInno)
 
     # Use RInno to get Inno Setup
-    RInno::install_inno()
+    install_inno()
 
 Minimal example
 ---------------
@@ -28,20 +29,20 @@ Minimal example
 Once you have developed a shiny app, you can build an installer with `create_app` followed by `compile_iss`.
 
     # Example app included with RInno package
-    example_app(wd = getwd())
+    example_app(app_dir = "app")
 
     # Build an installer
     create_app(app_name = "Your appname", app_dir = "app")
     compile_iss()
 
-`create_app` creates an installation framework in your app's directory, `app_dir`. You can perform minor customizations before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-/post- install messages, *infobefore.txt* and *infoafter.txt*. Just remember, the default values (i.e. `create_app(info_after = "infobefore.txt")`) for those files have not changed. The Inno Setup Script (ISS), *app\_name.iss*, will look for *default.ico* and try to use it until you update the script or call `create_app` with the new icon's file name (i.e. `create_app(app_icon = "new.ico")`).
+`create_app` creates an installation framework in your app's directory, `app_dir`. The main components are a file called "app\_name.iss" and the "nativefier-app" directory. You can perform minor customizations before you call `compile_iss`. For example, you can replace the default/setup icon at [Flaticon.com](http://www.flaticon.com/), or you can customize the pre-/post- install messages, *infobefore.txt* and *infoafter.txt*. Just remember, the default values (i.e. `create_app(info_after = "infobefore.txt")`) for those files have not changed. The Inno Setup Script (ISS), *app\_name.iss*, will look for *default.ico* and try to use it until you update the script or call `create_app` with the new icon's file name (i.e. `create_app(app_icon = "new.ico")`). Likewise, the Electron app will need to be recompiled to capture any manual changes to files in `app_dir`.
 
-Chrome is the default browser used by RInno because of its app mode feature and development-minded focus. IE/Edge often prevents icons and third party JavaScript libraries from loading because of various IT policies, which can result in strange bugs in your app. The default `user_browser` setting will open Chrome in app mode, which looks more like a stand-alone app than when it opens in another tab of your default browser. Regardless of which browser you specify, RInno's startup sequence will fall back on the user's default browser if it is not installed.
+Electron is now used to render the shiny app's UI. All other `user_browser` options will be deprecated in future releases.
 
 ui.R Requirements
 -----------------
 
-In order to replace Chrome's logo with your app's icon, add something like this to your ui.R file:
+In order to replace Electron's logo with your app's icon, add something like this to your ui.R file:
 
     fluidPage(
       tags$head(
@@ -64,10 +65,12 @@ In order to close the app when your user's session completes:
 
     function(input, output, session) {
 
-      session$onSessionEnded(function() {
+      if (!interactive()) {
+        session$onSessionEnded(function() {
           stopApp()
           q("no")
-      })
+        })
+      }
     }
 
 If you forget to do this, users will complain that their icons are broken and rightly blame you for it (an R session will be running in the background hosting the app, but they will need to press ctrl + alt + delete and use their task manager to close it). **Not cool**.
@@ -75,7 +78,7 @@ If you forget to do this, users will complain that their icons are broken and ri
 Package Dependency Management
 -----------------------------
 
-Provide a named character vector of packages to `create_app`, and RInno will install them with your shiny app. If the vector does not have a version \#, the default is `utils::packageVersion`. Whereas if a specific package version is specified, i.e. `pkgs = c(shiny = "==1.0.5", "jsonlite", "httr")`, RInno will respect that specification and use `utils::packageVersion` for the rest.
+Provide a named character vector of packages to `create_app`, and RInno will download them and install them with your shiny app. RInno downloads windows binaries from CRAN for the listed packages and their dependencies with `tools::package_dependencies(packages = pkgs, recursive = TRUE)`.
 
     create_app(
       app_name = "myapp", 
@@ -83,7 +86,7 @@ Provide a named character vector of packages to `create_app`, and RInno will ins
       pkgs = c("shiny", "jsonlite", "httr")
     )
 
-RInno will default to `shiny = paste0(">=", utils::packageVersion("shiny"))`, etc. because versions are not included. This provides a similar management strategy as developers use in the DESCRIPTION file's `Imports:` section of an R package. For more information, please see [R Packages - Package Metadata](http://r-pkgs.had.co.nz/description.html) by Hadley Wickham.
+For `remotes`, Github source files are compiled into windows binaries. Bitbucket will be supported in a future release.
 
 Custom Installations
 --------------------
@@ -101,7 +104,7 @@ If you would like to create a custom installer from within R, you can slowly bui
       privilege   = "high",   # Admin only installation
       default_dir = "pf")     # Install app in to Program Files
 
-`create_app` passes its arguments to most of the other support functions in RInno, so you can specify most things there and they will get passed on, or you can provide detailed instructions directly to those functions like this:
+`create_app` passes its arguments to most of the other support functions in RInno. You can (and probably should) specify most things there and they will get passed on. Alternatively, you can provide instructions directly to those support functions like this:
 
     # Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, app.R)
     copy_installation(app_dir = "my/app/path")

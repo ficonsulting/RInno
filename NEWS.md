@@ -1,3 +1,9 @@
+# 1.0.0
+* Breaking change to dependency management. Moving towards a self-contained application with windows binaries of all dependencies (CRAN, Github, Bitbucket, etc.). This makes it easier for IT to create a security rule for the .exe, and removes the need for an internet connection to install dependencies from CRAN and Github/Bitbucket. They all come in one package together.
+* Huge shout out to [@trybik](https://github.com/trybik) for contributing multiple pull requests and having the vision to move towards a stand-alone Electron UI.
+* We're now using [nativefier](https://github.com/jiahaog/nativefier) to produce an Electron desktop app for shiny.
+* Many options will be deprecated in the next release. We're putting out notices in this release, so complain loudly if you want to keep `user_browser = "chrome"` or other options that are inferior to `user_browser = "electron"`.
+
 # 0.2.1
 * Numerous bug fixes over the past 6 months
 * Big shout outs to [@bthomasbailey](https://github.com/bthomasbailey), [@chasemc](https://github.com/chasemc), [@trybik](https://github.com/trybik) and [@Laurae2](https://github.com/Laurae2) for their pull requests and support of the project's issue submissions.

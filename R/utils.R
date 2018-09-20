@@ -1,4 +1,9 @@
+#' magrittr Pipes
+#'
 #' @importFrom magrittr %>%
+#' @param lhs A value or the magrittr placeholder.
+#' @param rhs A function call using the magrittr semantics.
+#' @seealso \code{\link[magrittr]{\%>\%}}
 #' @export
 `%>%` <- magrittr::`%>%`
 
@@ -82,7 +87,9 @@ standardize_pkgs <- function(pkgs, check_version = FALSE, string = FALSE) {
       stop(glue::glue("{pkg_name} is not installed. Make sure it is in `installed.pacakges()` and try again."), call. = F)
     }
     if (check_version) {
-      if (numeric_version(required_version) > cran_version(pkg_name)) {
+      pkg_cran_version <-  cran_version(pkg_name)
+      if (is.null(cran_version)) stop("Can't connect to CRAN")
+      if (numeric_version(required_version) > pkg_cran_version) {
         stop(glue::glue("{pkg_name} v{required_version} is ahead of CRAN - v{cran_version(pkg_name)}. Please add it to `remotes` to use {pkg_name}'s development version from Github/Bitbucket or decrease its version to one published on CRAN."), call. = FALSE)
       }
     }
@@ -280,28 +287,54 @@ check_app <- function(app_dir, pkgs_path) {
 #' @keywords internal
 check_pkg_version <- function(pkgs_path, repo) {
 
-  df <- data.frame(loc = list.files(pkgs_path, full.names = TRUE), stringsAsFactors = FALSE)
-  df$pkg <- gsub("_.*", "", basename(df$loc))
-  df$downloaded_versions <- gsub("-", "\\.", stringr::str_extract(df$loc, "[0-9]+[\\.-]?[0-9]+[\\.-]?[0-9]*[\\.-]?[0-9]*(?=.zip)"))
+  binary <- data.frame(loc = list.files(pkgs_path, full.names = TRUE), stringsAsFactors = FALSE)
+  binary$pkg <- gsub("_.*", "", basename(binary$loc))
+  binary$downloaded_versions <- gsub("-", "\\.", stringr::str_extract(binary$loc, "[0-9]+[\\.-]?[0-9]+[\\.-]?[0-9]*[\\.-]?[0-9]*(?=.zip)"))
 
-  lapply(df$loc, {
-    function(x) {
-      tryCatch(utils::unzip(x, list = TRUE),
-        error = function (e) {
-          utils::download.packages(df$pkg[df$loc == x], destdir = pkgs_path, repos = repo, type = "win.binary", quiet = TRUE)
-      })
-    }
-  })
+  # Validate successful downloads
+  for (loc in binary$loc) {
+    tryCatch(
 
-  df$installed_versions <- unlist(lapply(df$pkg, function(x) toString(utils::packageVersion(x))))
+      expr = utils::unzip(loc, list = TRUE),
 
-  df$different <- !df$downloaded_versions == df$installed_versions
+      error = function (e) {
+        pkg <- binary$pkg[binary$loc == loc]
+        file.remove(loc)
+        utils::download.packages(pkg, destdir = pkgs_path, repos = repo, type = "win.binary")
+      }
+    )
+  }
 
-  if (sum(df$different) != 0) {
+  binary$installed_versions <- unlist(lapply(binary$pkg, function(x) toString(utils::packageVersion(x))))
 
-    df <- df[df$different, ]
+  binary$different <- binary$downloaded_versions != binary$installed_versions
+
+  if (sum(binary$different) != 0) {
+
+    binary <- binary[binary$different, ]
 
     cat(glue::glue("\n\nThe following installed packages differ from those downloaded from {repo}:"), "\n")
-    cat(glue::glue("\n - {df$pkg}: \t{sapply(df$downloaded_versions, paste0, collapse = '')} (downloaded) \t{sapply(df$installed_versions, paste0, collapse = '')} (installed)\n"), sep = "\n")
+    cat(glue::glue("\n - {binary$pkg}: \t{sapply(binary$downloaded_versions, paste0, collapse = '')} (downloaded) \t{sapply(binary$installed_versions, paste0, collapse = '')} (installed)\n\n"), sep = "\n")
+
+    ans <- utils::menu(title = "It is recommended that you update these packages. Would you like to do so now?", choices = c("Yes", "No"))
+
+    if (ans == 1) {
+      utils::update.packages()
+      cat("\n\nYou should re-run and test your app to confirm that the updated packages work correctly. \n")
+    }
   }
+}
+
+#' @keywords internal
+node_exists <- function(npm = TRUE) {
+  tryCatch(
+    {
+      system("node -v", intern = TRUE)
+      if (npm) system("npm -v", intern = TRUE)
+      return(TRUE)
+    },
+    error = function(e) {
+      return(FALSE)
+    }
+  )
 }

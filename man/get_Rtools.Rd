@@ -11,7 +11,7 @@ get_Rtools(app_dir, Rtools_version, R_version)
 
 \item{Rtools_version}{Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.}
 
-\item{R_version}{R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
+\item{R_version}{R version to use. Supports inequalities. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.}
 }
 \value{
 \code{sprintf('Rtools\%s.exe', gsub("\\.", "", Rtools_version))} in \code{app_dir}.

@@ -20,14 +20,16 @@
 #' @param pkgs_path Default location inside the app working directory to install package dependencies This defaults to \code{pkgs_path = "bin"}
 #' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.
 #' @param include_R To include R in the installer, \code{include_R = TRUE}. The version of R specified by \code{R_version} is used. The installer will check each user's registry and only install R if necessary.
-#' @param R_version R version to use. Supports inequalities similar to \code{pkgs}. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.
+#' @param R_version R version to use. Supports inequalities. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.
 #' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.
 #' @param Pandoc_version Pandoc version to use, defaults to: \link[rmarkdown]{pandoc_available}.
 #' @param include_Chrome To include Chrome in the installer, \code{include_Chrome = TRUE}. If you would like to use Chrome's app mode, it is no longer supported by Google :(.
 #' @param include_Rtools To include Rtools in the installer, \code{include_Rtools = TRUE}. For some packages to build properly, you may need to include Rtools.
 #' @param Rtools_version Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.
 #' @param overwrite Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
-#' ?
+#' @param force_nativefier Boolean. Defaults to true and re-builds UI. If false, the UI is not rebuilt.
+#' @param nativefier_opts Character vector. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the vector should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.
+#'
 #' @param ... Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.
 #' @inheritParams create_config
 #' @examples
@@ -48,26 +50,29 @@
 #' @inherit setup_section seealso
 #' @author Jonathan M. Hill and Hanjo Odendaal
 #' @export
-create_app <- function(app_name,
-  app_dir      = getwd(),
-  dir_out      = "RInno_installer",
-  pkgs         = c("jsonlite", "shiny", "magrittr"),
-  pkgs_path    = "bin",
-  repo         = "http://cran.rstudio.com",
-  remotes      = "none",
-  app_repo_url = "none",
-  auth_user    = "none",
-  auth_pw      = "none",
-  auth_token   = devtools::github_pat(),
-  user_browser = "chrome",
-  include_R    = FALSE,
-  include_Pandoc = FALSE,
-  include_Chrome = FALSE,
-  include_Rtools = FALSE,
-  R_version = paste0(">=", R.version$major, ".", R.version$minor),
-  Pandoc_version = rmarkdown::pandoc_version(),
-  Rtools_version = "3.5",
-  overwrite = TRUE,
+create_app <- function(
+  app_name         = "myapp",
+  app_dir          = getwd(),
+  dir_out          = "RInno_installer",
+  pkgs             = c("jsonlite", "shiny", "magrittr"),
+  pkgs_path        = "bin",
+  repo             = "https://cran.rstudio.com",
+  remotes          = "none",
+  app_repo_url     = "none",
+  auth_user        = "none",
+  auth_pw          = "none",
+  auth_token       = github_pat(),
+  user_browser     = "electron",
+  include_R        = FALSE,
+  include_Pandoc   = FALSE,
+  include_Chrome   = FALSE,
+  include_Rtools   = FALSE,
+  R_version        = paste0(">=", R.version$major, ".", R.version$minor),
+  Pandoc_version   = rmarkdown::pandoc_version(),
+  Rtools_version   = "3.5",
+  overwrite        = TRUE,
+  force_nativefier = TRUE,
+  nativefier_opts  = c(),
   ...) {
 
   # To capture arguments for other function calls
@@ -101,11 +106,22 @@ create_app <- function(app_name,
   # Copy installation scripts
   copy_installation(app_dir, overwrite)
 
-  # Include separate installers for R, Pandoc, and Chrome if necessary
+  # Include separate installers for R, Pandoc, and Chrome
   if (include_R) get_R(app_dir, R_version)
   if (include_Pandoc) get_Pandoc(app_dir, Pandoc_version)
   if (include_Chrome) get_Chrome(app_dir)
   if (include_Rtools) get_Rtools(app_dir, Rtools_version, R_version)
+
+  # nativefy the app
+  if (user_browser == "electron" && interactive()) {
+    if (force_nativefier) {
+      nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+    } else {
+      if (!dir.exists(file.path(app_dir, "nativefier-app")))
+        nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+      cat("\nUsing previously built electron app...\n")
+    }
+  }
 
   # Create batch file
   create_bat(app_name, app_dir)
@@ -146,7 +162,7 @@ create_app <- function(app_name,
     prog_menu_icon = dots$prog_menu_icon, desktop_icon = dots$desktop_icon) %>%
 
   # Files Section
-  files_section(app_name, app_dir, file_list = dots$file_list) %>%
+  files_section(app_name, app_dir, user_browser, file_list = dots$file_list) %>%
 
 
   # Execution & Pascal code to check registry during installation
