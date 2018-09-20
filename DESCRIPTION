@@ -38,6 +38,7 @@ Imports:
     installr (>= 0.19.0),
     jsonlite (>= 1.5),
     magrittr (>= 1.5),
+    methods (>= 3.5.1),
     pkgbuild (>= 1.0.0),
     remotes (>= 1.1.1),
     rmarkdown (>= 1.6),
