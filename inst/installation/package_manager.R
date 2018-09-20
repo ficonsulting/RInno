@@ -70,7 +70,7 @@ appexit_msg <- tryCatch({
   close(pb)
 
   # Start the app
-  source(file.path(appwd, "utils/app.R"))
+  source(file.path(appwd, "utils/launch_app.R"))
 
   "application terminated normally"
 },

@@ -4,9 +4,6 @@ installed_pkgs = data.frame(installed.packages(applibpath), stringsAsFactors = F
 ensure <- function(pkgs, lib_loc = applibpath) {
 
   pkg_names <- gsub("_.*", "", basename(pkgs))
-  start <- attr(regexpr(".*_", pkgs), "match.length") + 1
-  stop <- attr(regexpr(".*", pkgs), "match.length") - 4
-  pkg_version <- substr(pkgs, start, stop)
 
   for (i in seq_along(pkgs)) {
     setWinProgressBar(pb,

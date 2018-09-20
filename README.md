@@ -106,7 +106,7 @@ If you would like to create a custom installer from within R, you can slowly bui
 
 `create_app` passes its arguments to most of the other support functions in RInno. You can (and probably should) specify most things there and they will get passed on. Alternatively, you can provide instructions directly to those support functions like this:
 
-    # Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, app.R)
+    # Copy installation scripts (JavaScript, icons, infobefore.txt, package_manager.R, launch_app.R)
     copy_installation(app_dir = "my/app/path")
 
     # If your users need R installed:

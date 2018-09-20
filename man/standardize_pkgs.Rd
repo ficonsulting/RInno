@@ -4,15 +4,13 @@
 \alias{standardize_pkgs}
 \title{Standardize package dependencies}
 \usage{
-standardize_pkgs(pkgs, check_version = FALSE, string = FALSE)
+standardize_pkgs(pkgs)
 }
 \arguments{
 \item{pkgs}{Processes \code{pkgs}, and \code{pkgs}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.}
-
-\item{check_version}{Boolean. If true, check to make sure the package version is not ahead of CRAN.}
 }
 \value{
-Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.
+Package dependency list
 }
 \description{
 Standardizes (named or not) character vectors of package dependencies and formats it for config.cfg.

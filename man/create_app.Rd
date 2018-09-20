@@ -7,8 +7,8 @@
 create_app(app_name = "myapp", app_dir = getwd(),
   dir_out = "RInno_installer", pkgs = c("jsonlite", "shiny",
   "magrittr"), pkgs_path = "bin", repo = "https://cran.rstudio.com",
-  remotes = "none", app_repo_url = "none", auth_user = "none",
-  auth_pw = "none", auth_token = github_pat(),
+  remotes = "none", locals = "none", app_repo_url = "none",
+  auth_user = "none", auth_pw = "none", auth_token = github_pat(),
   user_browser = "electron", include_R = FALSE,
   include_Pandoc = FALSE, include_Chrome = FALSE,
   include_Rtools = FALSE, R_version = paste0(">=", R.version$major,
@@ -30,6 +30,8 @@ create_app(app_name = "myapp", app_dir = getwd(),
 \item{repo}{Default repository to install CRAN package dependencies. Defaults to \code{repo = "https://cran.rstudio.com"}.}
 
 \item{remotes}{Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.}
+
+\item{locals}{Character vector of local package dependencies. Deprecated as of v1.0.0. Use \code{pkgs} instead.}
 
 \item{app_repo_url}{Repository address for continuous installations in the format \code{"https://bitbucket.org/username/repo"} (\code{repo = app_name}). Only Bitbucket and GitHub repositories are supported.}
 
