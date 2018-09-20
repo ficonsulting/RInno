@@ -155,41 +155,6 @@ sanitize_R_version <- function(R_version, clean = FALSE, R_version_min = "3.0.2"
 }
 
 
-#' Check CRAN for package version
-#'
-#' @param pkg_name String. Package name as published on CRAN.
-#' @param cran_url String. First part of the cannonical form of a package website on CRAN.
-#'
-#' @return The package's version as a \code{numeric_version}.
-#'
-#' @examples
-#' cran_version("shiny")
-#' @keywords internal
-#' @export
-cran_version = function(pkg_name, cran_url = "http://cran.r-project.org/package=") {
-
-  # Create URL
-  cran_pkg_loc = paste0(cran_url, pkg_name)
-
-  # Establish connection
-  suppressWarnings(conn <- try(url(cran_pkg_loc), silent = TRUE))
-
-  # If connection, read in webpage
-  if (all(class(conn) != "try-error") ) {
-    suppressWarnings(cran_pkg_page <- try(readLines(conn), silent = TRUE))
-    close(conn)
-  } else {
-    return(NULL)
-  }
-
-  # Use regex to find version info
-  version_line = cran_pkg_page[grep("Version:", cran_pkg_page) + 1]
-  version_line = gsub("<(td|\\/td)>","",version_line)
-  numeric_version(version_line)
-
-}
-
-
 #' Add package to named vector
 #'
 #' Adds (named or not) package dependencies to a named vector of packages.
