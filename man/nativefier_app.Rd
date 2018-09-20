@@ -12,7 +12,7 @@ nativefier_app(app_name, app_dir, nativefier_opts,
 
 \item{app_dir}{Development app's directory, defaults to \code{getwd()}.}
 
-\item{nativefier_opts}{Character vectors. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the character should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.}
+\item{nativefier_opts}{Character vector. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the vector should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.}
 
 \item{app_icon}{Filename of icon in \code{app_dir}, used for desktop and program menu shortcuts.}
 }

@@ -346,5 +346,5 @@ dir.exists <- function(paths) {
 }
 
 is_binary_pkg <- function(x) {
-  file_ext(x) %in% c("tgz", "zip")
+  tools::file_ext(x) %in% c("tgz", "zip")
 }

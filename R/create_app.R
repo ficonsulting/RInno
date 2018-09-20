@@ -28,7 +28,7 @@
 #' @param Rtools_version Rtools version to include. For more information, see \href{https://cran.r-project.org/bin/windows/Rtools/}{Building R for Windows}.
 #' @param overwrite Logical. Should existing installation files be overwritten? See \code{\link{copy_installation}} for details.
 #' @param force_nativefier Boolean. Defaults to true and re-builds UI. If false, the UI is not rebuilt.
-#' @param nativefier_opts Character vectors. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the character should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.
+#' @param nativefier_opts Character vector. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the vector should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.
 #'
 #' @param ... Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.
 #' @inheritParams create_config

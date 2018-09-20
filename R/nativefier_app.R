@@ -1,5 +1,6 @@
 #' Package app into electron with nativefier
 #' @inheritParams create_app
+#' @inheritParams icons_section
 #' @export
 nativefier_app <- function(app_name, app_dir, nativefier_opts, app_icon = "default.ico") {
   cat("\nBuilding stand-alone UI with Electron...\n")

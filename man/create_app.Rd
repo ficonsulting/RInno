@@ -59,7 +59,7 @@ create_app(app_name = "myapp", app_dir = getwd(),
 
 \item{force_nativefier}{Boolean. Defaults to true and re-builds UI. If false, the UI is not rebuilt.}
 
-\item{nativefier_opts}{Character vectors. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the character should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.}
+\item{nativefier_opts}{Character vector. Extra options to pass to nativefier when \code{user_browser = "electron"}. Each string in the vector should be a valid nativefier command. For example, \code{c('--no-overwrite', '--conceal', '--show-menu-bar')}. For more information, \code{system("nativefier --help")}.}
 
 \item{...}{Arguments passed on to \code{setup_section}, \code{files_section}, \code{directives_section}, \code{icons_section}, \code{languages_section}, \code{code_section}, \code{tasks_section}, and \code{run_section}.}
 }

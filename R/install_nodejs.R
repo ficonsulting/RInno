@@ -11,6 +11,8 @@
 #'
 #' @author Tal Galili, A. Jonathan R. Godfrey, and Jonathan M. Hill
 #'
+#' @param page_with_download_url nodejs download url.
+#'
 #' @param version character. "current" or "lts". Defaults to "lts"
 #'
 #' @param ... extra parameters to pass to \code{\link[installr]{install.URL}}

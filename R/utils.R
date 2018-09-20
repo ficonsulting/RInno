@@ -1,4 +1,9 @@
+#' magrittr Pipes
+#'
 #' @importFrom magrittr %>%
+#' @param lhs A value or the magrittr placeholder.
+#' @param rhs A function call using the magrittr semantics.
+#' @seealso \code{\link[magrittr]{\%>\%}}
 #' @export
 `%>%` <- magrittr::`%>%`
 
@@ -314,7 +319,7 @@ check_pkg_version <- function(pkgs_path, repo) {
     ans <- utils::menu(title = "It is recommended that you update these packages. Would you like to do so now?", choices = c("Yes", "No"))
 
     if (ans == 1) {
-      update.packages()
+      utils::update.packages()
       cat("\n\nYou should re-run and test your app to confirm that the updated packages work correctly. \n")
     }
   }
