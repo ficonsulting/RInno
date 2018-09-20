@@ -8,7 +8,6 @@
 #' @param auth_pw Bitbucket password matching the above username.
 #' @param auth_token To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others.
 #' @param user_browser Character for the default browser. Options include "chrome", "firefox", and "ie."
-#' @param ping_site <Deprecated> URL of a site to ping to check internet connectivity. Defaults to "www.ficonsulting.com".
 #'
 #' @author Jonathan M. Hill
 #'

@@ -3,7 +3,7 @@
 #' @importFrom magrittr %>%
 #' @param lhs A value or the magrittr placeholder.
 #' @param rhs A function call using the magrittr semantics.
-#' @seealso \code{\link[magrittr]{magr}}
+#' @seealso \code{\link[magrittr]{magrittr}}
 #' @export
 `%>%` <- magrittr::`%>%`
 

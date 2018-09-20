@@ -34,8 +34,6 @@ create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite",
 \item{auth_token}{To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others.}
 
 \item{user_browser}{Character for the default browser. Options include "chrome", "firefox", and "ie."}
-
-\item{ping_site}{<Deprecated> URL of a site to ping to check internet connectivity. Defaults to "www.ficonsulting.com".}
 }
 \value{
 A json file, \emph{config.cfg}, in \code{app_dir}/utils.
