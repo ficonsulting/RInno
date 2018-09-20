@@ -2,7 +2,7 @@ Package: RInno
 Type: Package
 OS_type: windows
 Title: An Installation Framework for Shiny Apps
-Version: 0.3.0.9000
+Version: 1.0.0.9000
 Authors@R: c(
     person("Jon", "Hill", email = "jon.mark.hill@gmail.com", role = c("aut", "cre", "cph")),
     person("W. Lee", "Pang", role = c("aut", "cph"), comment = "DesktopDeployR project at https://github.com/wleepang/DesktopDeployR"),

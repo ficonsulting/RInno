@@ -20,16 +20,10 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
   standard_deps <- standardize_pkgs(pkgs, check_version = TRUE, string = TRUE)
 
   # Find all the pkg dependencies
-  pkg_deps <-
-    unique(
-      unlist(
-        tools::package_dependencies(
-          packages = standard_deps, recursive = TRUE
-        )
-      )
-    )
+  pkg_deps <- tools::package_dependencies(packages = standard_deps, recursive = TRUE) %>%
+    unlist %>% unique
 
-  all_deps <- add_pkgs(pkg_deps, standard_deps)
+  all_deps <- pkg_deps %>% add_pkgs(standard_deps)
 
   avail_pkgs <- data.frame(utils::installed.packages(), stringsAsFactors = F)
   base_pkgs <- avail_pkgs[stats::complete.cases(avail_pkgs$Priority), ]

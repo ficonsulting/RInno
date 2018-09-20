@@ -115,10 +115,10 @@ create_app <- function(
   # nativefy the app
   if (user_browser == "electron" && interactive()) {
     if (force_nativefier) {
-      nativefier_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+      nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
     } else {
       if (!dir.exists(file.path(app_dir, "nativefier-app")))
-        nativefier_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+        nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
       cat("\nUsing previously built electron app...\n")
     }
   }

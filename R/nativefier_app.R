@@ -2,12 +2,12 @@
 #' @inheritParams create_app
 #' @inheritParams icons_section
 #' @export
-nativefier_app <- function(app_name, app_dir, nativefier_opts, app_icon = "default.ico") {
+nativefy_app <- function(app_name, app_dir, nativefier_opts, app_icon = "default.ico") {
   cat("\nBuilding stand-alone UI with Electron...\n")
 
   # Reset defaults if empty
-  for (formal in names(formals(nativefier_app))) {
-    if (length(get(formal)) == 0) assign(formal, formals(nativefier_app)[formal])
+  for (formal in names(formals(nativefy_app))) {
+    if (length(get(formal)) == 0) assign(formal, formals(nativefy_app)[formal])
   }
 
   # Get Nodejs, npm and nativefier
