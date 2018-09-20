@@ -7,7 +7,7 @@
 create_app(app_name = "myapp", app_dir = getwd(),
   dir_out = "RInno_installer", pkgs = c("jsonlite", "shiny",
   "magrittr"), pkgs_path = "bin", repo = "https://cran.rstudio.com",
-  remotes = "none", locals = "none", app_repo_url = "none",
+  remotes = "none", locals = NULL, app_repo_url = "none",
   auth_user = "none", auth_pw = "none", auth_token = github_pat(),
   user_browser = "electron", include_R = FALSE,
   include_Pandoc = FALSE, include_Chrome = FALSE,
@@ -72,7 +72,7 @@ This function manages installation and app start up. To accept all defaults, jus
 Creates the following files in \code{app_dir}:
 \itemize{
   \item Icons for installer and app, \emph{setup.ico} and \emph{default.ico} respectively.
-  \item Files that manage app start up, \emph{utils/package_manager.R}, \emph{utils/ensure.R}, and \emph{utils/app.R}.
+  \item Files that manage app start up, \emph{utils/package_manager.R}, \emph{utils/ensure.R}, and \emph{utils/launch_app.R}.
   \item First/last page of the installer, \emph{infobefore.txt} and \emph{infoafter.txt}.
   \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, \emph{utils/wsf/js/JSON.minify.js}.
   \item A configuration file, \emph{config.cfg}. See \code{\link{create_config}} for details.
