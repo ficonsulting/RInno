@@ -3,7 +3,7 @@
 #' @importFrom magrittr %>%
 #' @param lhs A value or the magrittr placeholder.
 #' @param rhs A function call using the magrittr semantics.
-#' @seealso \code{\link[magrittr]{\%>\%}}
+#' @seealso \code{\link[magrittr]{magr}}
 #' @export
 `%>%` <- magrittr::`%>%`
 
@@ -12,95 +12,37 @@
 #' Standardizes (named or not) character vectors of package dependencies and formats it for config.cfg.
 #'
 #' @param pkgs Processes \code{pkgs}, and \code{pkgs}, arguments of \code{\link{create_config}} and \code{\link{create_app}}.
-#' @param check_version Boolean. If true, check to make sure the package version is not ahead of CRAN.
 #'
-#' @return Package dependency list with version numbers and inequalities. Defaults to \code{paste0(">=", packageVersion(pkg))}.
+#' @return Package dependency list
 #'
 #' @author William Bradley and Jonathan Hill
 #' @keywords internal
 #' @export
-standardize_pkgs <- function(pkgs, check_version = FALSE, string = FALSE) {
+standardize_pkgs <- function(pkgs) {
 
   if (pkgs[1] == "none") return("none")
 
-  # remove spaces, create a list and vectors to control the process
-  pkgs <- gsub(" ", "", pkgs)
-  pkg_list <- as.list(pkgs)
-  no_version <- names(pkg_list) == ""
-  no_inequality <- !grepl("[<>=]", pkgs)
+  # deprecation message
+  if (!is.null(names(pkgs))) {
+    warning("Package versions are no longer supported. Please develop your app using the most recent CRAN version.", call. = FALSE)
 
-  # No versions are specified
-  if (length(no_version) == 0) {
+    version <- names(pkgs) != ""
 
-    tryCatch(
-      pkg_list <- lapply(pkg_list, utils::packageVersion),
-
-      error = function(e) {
-        stop(e$message,
-          "\n\nPlease provide versions of `pkgs` if they are not installed in the development environment.", call. = FALSE)
-      })
-
-    names(pkg_list) <- pkgs
-
-    # add greater than or equal to
-    pkg_list <- lapply(pkg_list, function(x) paste0(">=", x))
-
-  # Some versions are specified
-  } else if (sum(no_version) > 0) {
-
-    tryCatch(
-      pkg_list[no_version] <- lapply(pkg_list[no_version], utils::packageVersion),
-
-      error = function(e) {
-       stop(e$message, "\n\nPlease provide versions of `pkgs` if they are not installed in the development environment.", call. = FALSE)
-      })
-
-    names(pkg_list)[no_version] <- pkgs[no_version]
-
-    # add greater than or equal to
-    pkg_list[no_inequality] <- lapply(pkg_list[no_inequality], function(x) paste0(">=", x))
-
-    # All versions are specified
-  } else {
-    # add greater than or equal to
-    pkg_list[no_inequality] <- lapply(pkg_list[no_inequality], function(x) paste0(">=", x))
-  }
-
-  # convert to character for JSON
-  pkgs <- lapply(pkg_list, as.character)
-
-  # Make sure the results are valid
-  installed_pkgs <- data.frame(utils::installed.packages(), row.names = NULL)
-
-  check_pkgs <- function(pkg, pkg_name) {
-    breakpoint <- attr(regexpr("[<>=]+", pkg), "match.length")
-    inequality <- substr(pkg, 1, breakpoint)
-    required_version <- substr(pkg, breakpoint + 1, nchar(pkg))
-
-    if (nchar(inequality) > 2 | grepl("=[<>]", inequality)) {
-      stop(glue::glue("{pkg_name}'s inequality ({inequality}) is not a valid logical operator"), call. = F)
-    }
-    if (class(try(numeric_version(required_version), silent = TRUE)) == "try-error") {
-      stop(glue::glue("{required_version} is not a valid `numeric_version` for {pkg_name} "), call. = F)
-    }
-    if (!pkg_name %in% installed_pkgs$Package) {
-      stop(glue::glue("{pkg_name} is not installed. Make sure it is in `installed.pacakges()` and try again."), call. = F)
-    }
-    if (check_version) {
-      pkg_cran_version <-  cran_version(pkg_name)
-      if (is.null(cran_version)) stop("Can't connect to CRAN")
-      if (numeric_version(required_version) > pkg_cran_version) {
-        stop(glue::glue("{pkg_name} v{required_version} is ahead of CRAN - v{cran_version(pkg_name)}. Please add it to `remotes` to use {pkg_name}'s development version from Github/Bitbucket or decrease its version to one published on CRAN."), call. = FALSE)
-      }
+    if (length(version) != 0) {
+      pkgs[version] <- names(pkgs[version])
     }
   }
-  mapply(check_pkgs, pkgs, names(pkgs))
 
-  if (string) {
-    return(names(pkgs))
-  } else {
-    return(pkgs)
+  # Make sure pkgs are installed
+  installed_pkgs <- data.frame(utils::installed.packages(), row.names = NULL, stringsAsFactors = FALSE)
+  missing_pkgs <- !pkgs %in% installed_pkgs$Package
+  if (any(missing_pkgs)) {
+    stop(glue::glue("{pkgs[missing_pkgs]} is not installed. Please install it and try again."), call. = FALSE)
   }
+
+  names(pkgs) <- NULL
+
+  return(pkgs)
 }
 
 
@@ -173,10 +115,7 @@ sanitize_R_version <- function(R_version, clean = FALSE, R_version_min = "3.0.2"
 #' @export
 add_pkgs <- function(pkgs, pkg) {
 
-  pkg_strings <- pkg %in% pkgs
-  pkg_names <- pkg %in% names(pkgs)
-
-  needed_pkgs <- pkg[!(pkg_names | pkg_strings)]
+  needed_pkgs <- pkg[!pkg %in% pkgs]
 
   if (length(needed_pkgs) > 0) {
     pkgs <- c(pkgs, needed_pkgs)

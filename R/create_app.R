@@ -5,7 +5,7 @@
 #' Creates the following files in \code{app_dir}:
 #' \itemize{
 #'   \item Icons for installer and app, \emph{setup.ico} and \emph{default.ico} respectively.
-#'   \item Files that manage app start up, \emph{utils/package_manager.R}, \emph{utils/ensure.R}, and \emph{utils/app.R}.
+#'   \item Files that manage app start up, \emph{utils/package_manager.R}, \emph{utils/ensure.R}, and \emph{utils/launch_app.R}.
 #'   \item First/last page of the installer, \emph{infobefore.txt} and \emph{infoafter.txt}.
 #'   \item Batch support files, \emph{utils/wsf/run.wsf}, \emph{utils/wsf/js/run.js}, \emph{utils/wsf/js/json2.js}, \emph{utils/wsf/js/JSON.minify.js}.
 #'   \item A configuration file, \emph{config.cfg}. See \code{\link{create_config}} for details.
@@ -19,6 +19,7 @@
 #' @param pkgs Character vector of package dependencies. Remote development versions are supported via \code{remotes}. \code{pkgs} are downloaded into \code{file.path(app_dir, pkgs_path)} as Windows binary packages (.zip). If you build binary packages and store them there before calling \code{create_app}, they will be included as well.
 #' @param pkgs_path Default location inside the app working directory to install package dependencies This defaults to \code{pkgs_path = "bin"}
 #' @param remotes Character vector of GitHub repository addresses in the format \code{username/repo[/subdir][\@ref|#pull]} for GitHub package dependencies.
+#' @param locals Character vector of local package dependencies. Deprecated as of v1.0.0. Use \code{pkgs} instead.
 #' @param include_R To include R in the installer, \code{include_R = TRUE}. The version of R specified by \code{R_version} is used. The installer will check each user's registry and only install R if necessary.
 #' @param R_version R version to use. Supports inequalities. Defaults to: \code{paste0(">=", R.version$major, '.', R.version$minor)}.
 #' @param include_Pandoc To include Pandoc in the installer, \code{include_Pandoc = TRUE}. If installing a flexdashboard app, some users may need a copy of Pandoc. The installer will check the user's registry for the version of Pandoc specified in \code{Pandoc_version} and only install it if necessary.
@@ -58,6 +59,7 @@ create_app <- function(
   pkgs_path        = "bin",
   repo             = "https://cran.rstudio.com",
   remotes          = "none",
+  locals           = NULL,
   app_repo_url     = "none",
   auth_user        = "none",
   auth_pw          = "none",
@@ -78,11 +80,26 @@ create_app <- function(
   # To capture arguments for other function calls
   dots <- list(...)
 
+  # 1.0.0 deprecation messages
+  if (!is.null(locals)) {
+    warning("locals is deprecated. Please use pkgs instead.", call. = FALSE)
+    pkgs <- pkgs %>% standardize_pkgs %>% add_pkgs(locals)
+  }
+  if (user_browser != "electron") {
+    warning(glue::glue("user_browser = {glue::double_quote(user_browser)} will be deprecated in the next release. Please use user_browser = \"electron\" in the future."), call. = FALSE)
+  }
+  if (include_Chrome) {
+    warning("include_Chrome will be deprecated in the next release. Please use user_browser = \"electron\"", call. = FALSE)
+  }
+  if (!is.null(dots$ping_site)) {
+    warning("ping_site is deprecated in favor of self-contained dependency management in the .exe.", call. = FALSE)
+  }
+
   # If app_name is not a character, exit
-  if (class(app_name) != "character") stop("app_name must be a character.", call. = F)
+  if (class(app_name) != "character") stop("app_name must be a character.", call. = FALSE)
 
   # If dir_out is not a character, exit
-  if (class(dir_out) != "character") stop("dir_out must be a character.", call. = F)
+  if (class(dir_out) != "character") stop("dir_out must be a character.", call. = FALSE)
 
   # If not TRUE/FALSE, exit
   logicals <- c(
@@ -132,7 +149,7 @@ create_app <- function(
                 repo = repo, error_log = dots$error_log,
                 app_repo_url = app_repo_url, auth_user = auth_user,
                 auth_pw = auth_pw, auth_token = auth_token,
-                user_browser = user_browser, ping_site = dots$ping_site)
+                user_browser = user_browser)
 
   # Build the iss script
   start_iss(app_name) %>%
