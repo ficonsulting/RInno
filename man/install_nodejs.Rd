@@ -9,6 +9,8 @@
   version = "LTS", ...)
 }
 \arguments{
+\item{page_with_download_url}{nodejs download url.}
+
 \item{version}{character. "current" or "lts". Defaults to "lts"}
 
 \item{...}{extra parameters to pass to \code{\link[installr]{install.URL}}}
