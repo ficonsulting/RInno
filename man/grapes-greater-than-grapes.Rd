@@ -15,5 +15,5 @@ lhs \%>\% rhs
 magrittr Pipes
 }
 \seealso{
-\code{\link[magrittr]{\%>\%}}
+\code{\link[magrittr]{magrittr}}
 }

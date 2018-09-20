@@ -17,7 +17,7 @@ download_packages <- function(app_dir, pkgs_path, pkgs, repo, remotes, auth_user
   if (any(lapply(pkgs, class) != "character")) stop("`pkgs` must be a character vector.", call. = FALSE)
 
   # Standardize pkgs
-  standard_deps <- standardize_pkgs(pkgs, check_version = TRUE, string = TRUE)
+  standard_deps <- standardize_pkgs(pkgs)
 
   # Find all the pkg dependencies
   pkg_deps <- tools::package_dependencies(packages = standard_deps, recursive = TRUE) %>%

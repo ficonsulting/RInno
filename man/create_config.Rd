@@ -8,8 +8,7 @@ create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite",
   "remotes", "magrittr"), pkgs_path = "library", remotes = "none",
   repo = "https://cran.rstudio.com", error_log = "error.log",
   app_repo_url = "none", auth_user = "none", auth_pw = "none",
-  auth_token = "none", user_browser = "electron",
-  ping_site = "www.ficonsulting.com")
+  auth_token = "none", user_browser = "electron")
 }
 \arguments{
 \item{app_name}{The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.}
@@ -35,8 +34,6 @@ create_config(app_name, app_dir = getwd(), pkgs = c("jsonlite",
 \item{auth_token}{To install from a private Github repo, generate a personal access token (PAT) in \url{https://github.com/settings/tokens} and supply to this argument. This is safer than using a password because you can easily delete a PAT without affecting any others.}
 
 \item{user_browser}{Character for the default browser. Options include "chrome", "firefox", and "ie."}
-
-\item{ping_site}{URL of a site to ping to check internet connectivity. Defaults to "www.ficonsulting.com".}
 }
 \value{
 A json file, \emph{config.cfg}, in \code{app_dir}/utils.

@@ -45,7 +45,7 @@
     * Thanks Dean Attali ([@daattali](https://github.com/daattali/)) for this feature request
 * Fixed `error_log` so that its name can be customized properly
 * Cleaned up installation paths
-* Added Firefox to the browser search path in `app.R`:
+* Added Firefox to the browser search path in `launch_app.R`:
     1. Chrome
     2. Firefox
     3. Internet Explorer

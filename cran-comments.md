@@ -1,8 +1,8 @@
 ## This update
-* numerous bug fixes and feature requests
+* major release with updates to package dependency management strategy and user interface
 
 ## Test environments
-* local OS Windows 7 x64, R 3.5.0
+* local OS Windows 7 x64, R 3.5.1
 
 ## R CMD check results
 There were 0 errors, 0 Warnings and 0 NOTES on Windows OS. There are warnings/notes on Mac/Linux
