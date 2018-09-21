@@ -1,5 +1,5 @@
 ## This update
-* major release with updates to package dependency management strategy and user interface
+* quick hotfix related to dependency version numbers
 
 ## Test environments
 * local OS Windows 7 x64, R 3.5.1
