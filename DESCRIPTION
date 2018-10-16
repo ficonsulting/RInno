@@ -23,7 +23,7 @@ Authors@R: c(
     person("Mango Solutions", role = "cph")
     )
 Maintainer: Jon Hill <jon.mark.hill@gmail.com>
-URL: www.ficonsulting.com
+URL: https://ficonsulting.github.io/RInno/
 BugReports: https://github.com/ficonsulting/RInno/issues
 Description: Installs shiny apps packaged as stand-alone Electron apps using Inno Setup, an open source software that builds installers for Windows programs <http://www.jrsoftware.org/ishelp/>.
 License: GPL-3 | file LICENSE
