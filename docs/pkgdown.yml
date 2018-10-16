@@ -1,0 +1,7 @@
+pandoc: 2.2.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  cont-installation: cont-installation.html
+  Introduction: Introduction.html
+
