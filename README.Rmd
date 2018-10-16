@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
   fig.path = "README-")
 ```
 
-# RInno <img src="inst/app/www/RInno.png" align="right" height=140/>
+# RInno <img src="man/figures/RInno.png" align="right" height=140/>
 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ficonsulting/RInno?branch=master&svg=true)](https://ci.appveyor.com/project/ficonsulting/RInno)
 [![codecov](https://codecov.io/github/ficonsulting/RInno/branch/master/graphs/badge.svg)](https://codecov.io/github/ficonsulting/RInno)
