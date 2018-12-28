@@ -15,6 +15,7 @@
 #'
 #' @param app_name The name of the app. It will be displayed throughout the installer's window titles, wizard pages, and dialog boxes. See \href{http://www.jrsoftware.org/ishelp/topic_setup_appname.htm}{[Setup]:AppName} for details. For continuous installations, \code{app_name} is used to check for an R package of the same name, and update it. The Continuous Installation vignette has more details.
 #' @param app_dir Development app's directory, defaults to \code{getwd()}.
+#' @param app_port The port number on which the app is broadcasted, defaults to 1984.
 #' @param dir_out Installer's directory. A sub-directory of \code{app_dir}, which will be created if it does not exist. Defaults to 'RInno_installer'.
 #' @param pkgs Character vector of package dependencies. Remote development versions are supported via \code{remotes}. \code{pkgs} are downloaded into \code{file.path(app_dir, pkgs_path)} as Windows binary packages (.zip). If you build binary packages and store them there before calling \code{create_app}, they will be included as well.
 #' @param pkgs_path Default location inside the app working directory to install package dependencies This defaults to \code{pkgs_path = "bin"}
@@ -54,6 +55,7 @@
 create_app <- function(
   app_name         = "myapp",
   app_dir          = getwd(),
+  app_port         = 1984,
   dir_out          = "RInno_installer",
   pkgs             = c("jsonlite", "shiny", "magrittr"),
   pkgs_path        = "bin",
@@ -132,10 +134,10 @@ create_app <- function(
   # nativefy the app
   if (user_browser == "electron" && interactive()) {
     if (force_nativefier) {
-      nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+      nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon, app_port = app_port)
     } else {
       if (!dir.exists(file.path(app_dir, "nativefier-app")))
-        nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+        nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon, app_port = app_port)
       cat("\nUsing previously built electron app...\n")
     }
   }
