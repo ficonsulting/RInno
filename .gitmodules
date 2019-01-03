@@ -1,0 +1,3 @@
+[submodule "inst/r-shiny-electron"]
+	path = inst/r-shiny-electron
+	url = https://github.com/ficonsulting/r-shiny-electron
