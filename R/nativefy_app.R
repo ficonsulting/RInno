@@ -2,7 +2,7 @@
 #' @inheritParams create_app
 #' @inheritParams icons_section
 #' @export
-nativefy_app <- function(app_name, app_dir, nativefier_opts, app_icon = "default.ico") {
+nativefy_app <- function(app_name, app_dir, nativefier_opts, app_icon = "default.ico", app_port = 1984) {
   cat("\nBuilding stand-alone UI with Electron...\n")
 
   # Reset defaults if empty
@@ -18,14 +18,14 @@ nativefy_app <- function(app_name, app_dir, nativefier_opts, app_icon = "default
   system(glue::glue("npm install nativefier -g"))
 
   # start the app in a separate R session
-  system(paste0("R -e ", '"shiny::runApp(', sprintf("'%s', port=1984)", app_dir)), wait = FALSE)
+  system(paste0("R -e ", '"shiny::runApp(', sprintf("'%s', port=%i)", app_dir, app_port)), wait = FALSE)
 
   # use nativefier to package it into an electron app
   oldwd <- getwd()
   setwd(app_dir)
 
   nativefier_loc <- "nativefier-app"
-  local_url <- "http://127.0.0.1:1984/"
+  local_url <- paste0("http://127.0.0.1:", app_port, "/")
   opts_str <- paste(nativefier_opts, collapse = " ")
 
   cmd <- glue::glue(
