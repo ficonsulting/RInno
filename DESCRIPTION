@@ -13,7 +13,7 @@ Authors@R: c(
     person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb"),
     person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = "ctb"),
     person("Jonathan", "Godfrey", email = "a.j.godfrey@massey.ac.nz", role = "ctb", comment = "https://github.com/ajrgodfrey"),
-    person("Gábor", "Csárdi", , "csardi.gabor@gmail.com", role = c("aut")),
+    person("Gábor", "Csárdi", email = "csardi.gabor@gmail.com", role = c("aut")),
     person("Hadley", "Wickham", role = c("aut")),
     person("Winston", "Chang", role = "aut"),
     person("Jim", "Hester", role = "aut"),
