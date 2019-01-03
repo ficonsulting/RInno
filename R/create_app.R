@@ -136,9 +136,20 @@ create_app <- function(
     } else {
       if (!dir.exists(file.path(app_dir, "nativefier-app")))
         nativefy_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
-      cat("\nUsing previously built electron app...\n")
+      cat("\nUsing previously built nativefier app...\n")
     }
   }
+
+  # # electron app
+  # if (user_browser == "electron" && interactive()) {
+  #   if (force_electron) {
+  #     electron_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+  #   } else {
+  #     if (!dir.exists(file.path(app_dir, "electron-app")))
+  #       electron_app(app_name, app_dir, nativefier_opts, app_icon = dots$app_icon)
+  #     cat("\nUsing previously built electron app...\n")
+  #   }
+  # }
 
   # Create batch file
   create_bat(app_name, app_dir)
