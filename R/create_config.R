@@ -24,9 +24,7 @@ create_config <- function(app_name, app_dir = getwd(),
   auth_pw = "none", auth_token = "none", user_browser = "electron") {
 
   # Reset defaults if empty
-  for (formal in names(formals(create_config))) {
-    if (length(get(formal)) == 0) assign(formal, formals(create_config)[formal])
-  }
+  reset_formals(create_config)
 
   # Check pkgs/locals class
   if (any(lapply(pkgs, class) != "character")) stop("`pkgs` must be a character vector.", call. = FALSE)
@@ -81,19 +79,19 @@ create_config <- function(app_name, app_dir = getwd(),
 
   jsonlite::write_json(
     list(
-      appname = app_name,
-      pkgs = list(
+      appname      = app_name,
+      pkgs         = list(
         pkgs_names = standardize_pkgs(pkgs),
-        pkgs_loc = file.path(pkgs_path, list.files(file.path(app_dir, pkgs_path)))
+        pkgs_loc   = file.path(pkgs_path, list.files(file.path(app_dir, pkgs_path)))
       ),
-      logging = error_log,
-      host = host,
-      app_repo = app_repo,
-      auth_user = auth_user,
-      auth_pw = auth_pw,
-      auth_token = auth_token,
+      logging      = error_log,
+      host         = host,
+      app_repo     = app_repo,
+      auth_user    = auth_user,
+      auth_pw      = auth_pw,
+      auth_token   = auth_token,
       user_browser = tolower(user_browser),
-      nativefier = file.path("nativefier-app", list.files(file.path(app_dir, "nativefier-app"), pattern = ".exe", recursive = TRUE)),
-      flex_file = flex_file),
+      nativefier   = file.path("nativefier-app", list.files(file.path(app_dir, "nativefier-app"), pattern = ".exe", recursive = TRUE)),
+      flex_file    = flex_file),
     file.path(app_dir, "utils/config.cfg"), pretty = T, auto_unbox = T)
 }

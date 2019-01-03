@@ -242,3 +242,11 @@ node_exists <- function(npm = TRUE) {
     }
   )
 }
+
+#' @keywords internal
+reset_formals <- function(fun) {
+  for (formal in names(formals(fun))) {
+    if (length(get(formal, envir = parent.frame())) == 0) assign(formal, formals(fun)[formal], envir = parent.frame())
+  }
+}
+

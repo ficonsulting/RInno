@@ -52,7 +52,7 @@ get_R <- function(app_dir = getwd(),
 
           If this doesn't help please submit an issue: {packageDescription('RInno', fields = 'BugReports')}
 
-          - Thanks!"))
+          - Thanks!\n"))
     })
 
     if (!file.exists(filename)) stop(glue::glue("{filename} failed to download."), call. = FALSE)
