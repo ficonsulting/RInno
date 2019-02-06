@@ -4,24 +4,24 @@ OS_type: windows
 Title: An Installation Framework for Shiny Apps
 Version: 1.0.1
 Authors@R: c(
-    person("Jon", "Hill", email = "jon.mark.hill@gmail.com", role = c("aut", "cre", "cph")),
-    person("W. Lee", "Pang", role = c("aut", "cph"), comment = "DesktopDeployR project at https://github.com/wleepang/DesktopDeployR"),
-    person("Hanjo", "Odendaal", email = "hanjo.oden@gmail.com", role = "ctb"),
-    person("William", "Bradley", email = "bradley@ficonsulting.com", role = "ctb"),
-    person("Brent (Tom)", "Bailey", email = "bailey@ficonsulting.com", role = "ctb"),
-    person("Mikolaj", "Rybinski", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
-    person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb"),
-    person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = "ctb"),
-    person("Jonathan", "Godfrey", email = "a.j.godfrey@massey.ac.nz", role = "ctb", comment = "https://github.com/ajrgodfrey"),
-    person("Gábor", "Csárdi", email = "csardi.gabor@gmail.com", role = c("aut")),
-    person("Hadley", "Wickham", role = c("aut")),
-    person("Winston", "Chang", role = "aut"),
-    person("Jim", "Hester", role = "aut"),
-    person("RStudio", role = "cph"),
-    person("Martin", "Morgan", role = "aut"),
-    person("Dan", "Tenenbaum", role = "aut"),
-    person("Mango Solutions", role = "cph")
-    )
+  person("Jon", "Hill", email = "jon.mark.hill@gmail.com", role = c("aut", "cre", "cph")),
+  person("W. Lee", "Pang", role = c("aut", "cph"), comment = "DesktopDeployR project at https://github.com/wleepang/DesktopDeployR"),
+  person("Hanjo", "Odendaal", email = "hanjo.oden@gmail.com", role = "ctb"),
+  person("William", "Bradley", email = "bradley@ficonsulting.com", role = "ctb"),
+  person("Brent (Tom)", "Bailey", email = "bailey@ficonsulting.com", role = "ctb"),
+  person("Mikolaj", "Rybinski", email = "mikolaj.rybinski@id.ethz.ch", role = "ctb"),
+  person("Chase", "Clark", email = "chasec288@gmail.com", role = "ctb"),
+  person("Damien", "Soukhavong", email = "damien.soukhavong@skema.edu", role = "ctb"),
+  person("Jonathan", "Godfrey", email = "a.j.godfrey@massey.ac.nz", role = "ctb", comment = "https://github.com/ajrgodfrey"),
+  person("Gábor", "Csárdi", email = "csardi.gabor@gmail.com", role = c("aut")),
+  person("Hadley", "Wickham", role = c("aut")),
+  person("Winston", "Chang", role = "aut"),
+  person("Jim", "Hester", role = "aut"),
+  person("RStudio", role = "cph"),
+  person("Martin", "Morgan", role = "aut"),
+  person("Dan", "Tenenbaum", role = "aut"),
+  person("Mango Solutions", role = "cph")
+  )
 Maintainer: Jon Hill <jon.mark.hill@gmail.com>
 URL: https://ficonsulting.github.io/RInno/
 BugReports: https://github.com/ficonsulting/RInno/issues
@@ -30,25 +30,25 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends:
-    R (>= 3.3.0)
+  R (>= 3.3.0)
 Imports:
-    curl,
-    glue (>= 1.2.0),
-    httr,
-    installr,
-    jsonlite,
-    magrittr,
-    methods,
-    pkgbuild,
-    remotes,
-    rmarkdown,
-    shiny,
-    stringr ,
-    utils
+  curl,
+  glue (>= 1.2.0),
+  httr,
+  installr,
+  jsonlite,
+  magrittr,
+  methods,
+  pkgbuild,
+  remotes,
+  rmarkdown,
+  shiny,
+  stringr ,
+  utils
 Suggests:
-    knitr,
-    stringi,
-    covr,
-    testthat
+  knitr,
+  stringi,
+  covr,
+  testthat
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
