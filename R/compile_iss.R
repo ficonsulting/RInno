@@ -37,7 +37,8 @@ compile_iss <- function() {
 
 find_inno <- function(){
   progs <- c(list.dirs("C:/Program Files", TRUE, FALSE),
-             list.dirs("C:/Program Files (x86)", TRUE, FALSE))
+             list.dirs("C:/Program Files (x86)", TRUE, FALSE),
+             list.dirs(paste(Sys.getenv("LOCALAPPDATA"), "Programs", sep="/"), TRUE, FALSE))
 
   inno <- progs[grep("Inno Setup", progs)]
 
