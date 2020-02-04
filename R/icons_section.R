@@ -60,7 +60,7 @@ icons_section <- function(iss, app_dir,
   if (as.logical(prog_menu_icon)) {
     iss <- glue::glue('
                       {iss}
-                      Name: "{{commonprograms}}\\{{#MyAppName}}"; Filename: \\
+                      Name: "{{autoprograms}}\\{{#MyAppName}}"; Filename: \\
                       "{{app}}\\{{#MyAppExeName}}"; {icon_string}
                       ')
   }
@@ -68,7 +68,7 @@ icons_section <- function(iss, app_dir,
   if (as.logical(desktop_icon)) {
     iss <- glue::glue('
                       {iss}
-                      Name: "{{commondesktop}}\\{{#MyAppName}}"; Filename: \\
+                      Name: "{{autodesktop}}\\{{#MyAppName}}"; Filename: \\
                       "{{app}}\\{{#MyAppExeName}}"; Tasks: desktopicon; {icon_string}
                       ')
   }
