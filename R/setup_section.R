@@ -112,7 +112,8 @@ setup_section <- function(iss, app_dir, dir_out,
 
     # Find the Inno Setup folder
     progs <- c(list.dirs("C:/Program Files", T, F),
-               list.dirs("C:/Program Files (x86)", T, F))
+               list.dirs("C:/Program Files (x86)", T, F),
+               list.dirs(paste(Sys.getenv("LOCALAPPDATA"), "Programs", sep="/"), T, F))
     inno <- progs[grep("Inno Setup", progs)]
 
     # Check for the encryption Module
