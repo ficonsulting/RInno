@@ -21,10 +21,10 @@ get_R <- function(app_dir = getwd(),
   R_version <- sanitize_R_version(R_version, clean = TRUE)
 
   latest_R_version <- readLines("https://cran.rstudio.com/bin/windows/base/", warn = F) %>%
-    stringr::str_extract("[1-3]\\.[0-9]+\\.[0-9]+") %>% stats::na.omit() %>% unique()
+    stringr::str_extract("[1-4]\\.[0-9]+\\.[0-9]+") %>% stats::na.omit() %>% unique()
 
   old_R_versions <- readLines("https://cran.rstudio.com/bin/windows/base/old/", warn = F) %>%
-    stringr::str_extract("[1-3]\\.[0-9]+\\.[0-9]+") %>% stats::na.omit()
+    stringr::str_extract("[1-4]\\.[0-9]+\\.[0-9]+") %>% stats::na.omit()
 
   if (latest_R_version == R_version) {
     base_url <- glue::glue("https://cran.r-project.org/bin/windows/base/R-{R_version}-win.exe")
