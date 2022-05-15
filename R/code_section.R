@@ -28,8 +28,8 @@ code_section <- function(iss, R_version = paste0(">=", R.version$major, ".", R.v
   # Get available versions of R
   R_versions <-
     c(
-      unique(stats::na.omit(stringr::str_extract(readLines("https://cran.rstudio.com/bin/windows/base/", warn = F), "[1-3]\\.[0-9]+\\.[0-9]+"))),
-      stats::na.omit(stringr::str_extract(readLines("https://cran.rstudio.com/bin/windows/base/old/", warn = F), "[1-3]\\.[0-9]+\\.[0-9]+")))
+      unique(stats::na.omit(stringr::str_extract(readLines("https://cran.rstudio.com/bin/windows/base/", warn = F), "[1-4]\\.[0-9]+\\.[0-9]+"))),
+      stats::na.omit(stringr::str_extract(readLines("https://cran.rstudio.com/bin/windows/base/old/", warn = F), "[1-4]\\.[0-9]+\\.[0-9]+")))
 
   # Determine which versions are acceptable
   inequality <- substr(R_version, 1, attr(regexpr("[<>=]+", R_version), "match.length"))
