@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/RInno)](https://cran.r-project.org/package=RInno)
 [![Downloads](https://cranlogs.r-pkg.org/badges/RInno)](https://cran.rstudio.com/package=RInno)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/RInno)](https://cran.rstudio.com/package=RInno)
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Project Status: Unsupported – The project has reached a stable, usable state but the author(s) have ceased all work on it. A new maintainer may be desired.](https://www.repostatus.org/badges/latest/unsupported.svg)](https://www.repostatus.org/#unsupported)
 
 RInno makes it easy to install local shiny apps by providing an interface between R, [Inno Setup](http://www.jrsoftware.org/isinfo.php), an installer for Windows programs (sorry Mac and Linux users), and [Electron](https://electronjs.org/), a modern desktop framework used by companies like Github, Slack, Microsoft, Facebook and Docker. RInno is designed to be simple to use (two lines of code at a minimum), yet comprehensive.
 
