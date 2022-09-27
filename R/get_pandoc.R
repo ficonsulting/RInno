@@ -15,7 +15,7 @@
 #' @export
 
 get_Pandoc <- function(app_dir, Pandoc_version = rmarkdown::pandoc_version()) {
-  Pandoc_url <- sprintf("https://github.com/jgm/pandoc/releases/download/%s/pandoc-%s-windows.msi", Pandoc_version, Pandoc_version)
+  Pandoc_url <- sprintf("https://github.com/jgm/pandoc/releases/download/%s/pandoc-%s-windows-x86_64.msi", Pandoc_version, Pandoc_version)
 
   filename <- file.path(app_dir, sprintf("pandoc-%s-windows.msi", Pandoc_version))
 
